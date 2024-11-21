@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane id="AnchorPane" prefHeight="724.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="timefastdesktop.FXMLPrincipalController">
+   <children>
+      <Pane prefHeight="724.0" prefWidth="150.0" style="-fx-background-color: #205375;">
+         <children>
+            <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#f56b0f" height="684.0" layoutX="19.0" layoutY="19.0" stroke="#f66b0e" strokeType="INSIDE" width="100.0" />
+            <Rectangle arcHeight="70.0" arcWidth="70.0" fill="#205375" height="70.0" layoutX="24.0" layoutY="22.0" stroke="#205375" strokeType="INSIDE" width="90.0" />
+            <Rectangle fx:id="selector" arcHeight="32.0" arcWidth="32.0" fill="#205375" height="70.0" layoutX="28.0" layoutY="116.0" stroke="#205375" strokeType="INSIDE" width="100.0" />
+            <ImageView fx:id="itemEnvios" fitHeight="60.0" fitWidth="60.0" layoutX="40.0" layoutY="280.0" onMouseClicked="#seleccionado" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@recursos/iconsMenu/envios.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="itemUsuarios" fitHeight="60.0" fitWidth="60.0" layoutX="40.0" layoutY="360.0" onMouseClicked="#seleccionado" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@recursos/iconsMenu/usuarios.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="itemPaquetes" fitHeight="60.0" fitWidth="60.0" layoutX="40.0" layoutY="440.0" onMouseClicked="#seleccionado" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@recursos/iconsMenu/paquetes.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="itemLogOut" fitHeight="60.0" fitWidth="60.0" layoutX="40.0" layoutY="631.0" onMouseClicked="#btnLogOut" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@recursos/iconsMenu/cerrarSesion.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="itemColaboradores" fitHeight="60.0" fitWidth="60.0" layoutX="40.0" layoutY="120.0" onMouseClicked="#seleccionado" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@recursos/iconsMenu/colaboradorActivo.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="itemUnidades" fitHeight="60.0" fitWidth="60.0" layoutX="40.0" layoutY="204.0" onMouseClicked="#seleccionado" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@recursos/iconsMenu/unidad.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane fx:id="paneSustituto" layoutX="150.0" prefHeight="724.0" prefWidth="974.0" style="-fx-background-color: #205375;" />
+   </children>
+</AnchorPane>

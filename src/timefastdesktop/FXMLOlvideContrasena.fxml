@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="724.0" prefWidth="1020.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/22" fx:controller="timefastdesktop.FXMLOlvideContrasenaController">
+   <children>
+      <Pane prefHeight="727.0" prefWidth="1024.0">
+         <children>
+            <ImageView fitHeight="804.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@recursos/fondo.png" />
+               </image>
+            </ImageView>
+            <Pane layoutX="336.0" layoutY="89.0" prefHeight="550.0" prefWidth="350.0" style="-fx-background-color: #fff; -fx-background-radius: 8px;">
+               <children>
+                  <Label layoutX="32.0" layoutY="52.0" text="Olvide Contraseña">
+                     <font>
+                        <Font name="Roboto Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbTexto" layoutX="37.0" layoutY="156.0" prefHeight="55.0" prefWidth="283.0" text="Ingrese el correo de su cuenta para recuperar la contraseña:" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font name="Roboto Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txCorreo" layoutX="37.0" layoutY="211.0" prefHeight="32.0" prefWidth="286.0" promptText="correo@dominio.com" style="-fx-background-color: ddd; -fx-background-radius: 4px;">
+                     <font>
+                        <Font name="Roboto" size="15.0" />
+                     </font>
+                  </TextField>
+                  <Button fx:id="btnRecuperarC" layoutX="122.0" layoutY="302.0" mnemonicParsing="false" onAction="#btnRecuperar" prefHeight="32.0" prefWidth="110.0" style="-fx-background-color: #205375; -fx-text-fill: white; -fx-background-radius: 4px;" text="Recuperar">
+                     <font>
+                        <Font name="Roboto Bold" size="15.0" />
+                     </font>
+                  </Button>
+                  <Label fx:id="lbCorreoError" layoutX="38.0" layoutY="243.0" prefHeight="15.0" prefWidth="285.0" textFill="#e47979">
+                     <font>
+                        <Font name="Roboto" size="12.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btnCancelar" layoutX="122.0" layoutY="353.0" mnemonicParsing="false" onAction="#btnRegresar" prefHeight="32.0" prefWidth="110.0" style="-fx-background-color: #ec542f; -fx-text-fill: white; -fx-background-radius: 4px;" text="Cancelar">
+                     <font>
+                        <Font name="Roboto Bold" size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

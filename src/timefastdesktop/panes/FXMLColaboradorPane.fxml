@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="724.0" prefWidth="974.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="timefastdesktop.panes.FXMLColaboradorPaneController">
+   <children>
+      <Rectangle arcHeight="80.0" arcWidth="80.0" fill="#112b3c" height="87.0" layoutX="20.0" layoutY="20.0" stroke="#112b3c" strokeType="INSIDE" width="934.0" />
+      <Label layoutX="44.0" layoutY="40.0" text="Colaboradores" textFill="WHITE">
+         <font>
+            <Font name="Roboto Bold" size="40.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbUsuario" layoutX="708.0" layoutY="55.0" text="Miguel Vásquez" textFill="WHITE">
+         <font>
+            <Font name="Roboto Bold" size="18.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="858.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/iconHeader.png" />
+         </image>
+      </ImageView>
+      <GridPane hgap="8.0" layoutX="20.0" layoutY="116.0" prefHeight="600.0" prefWidth="550.0" style="-fx-background-color: #112B3C; -fx-background-radius: 12px;" vgap="8.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="102.0" minWidth="10.0" prefWidth="99.97760009765625" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="103.02239990234375" minWidth="10.0" prefWidth="103.02239990234375" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="103.02239990234375" minWidth="10.0" prefWidth="103.02239990234375" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="186.6729736328125" minHeight="10.0" prefHeight="47.988616943359375" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="460.23594665527344" minHeight="10.0" prefHeight="245.51138305664062" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="312.4991455078125" minHeight="10.0" prefHeight="270.5796813964844" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextField focusTraversable="false" prefHeight="29.0" prefWidth="317.0" promptText="Buscar Colaborador" style="-fx-background-color: white; -fx-background-radius: 8px;" GridPane.columnSpan="4">
+               <font>
+                  <Font name="Roboto" size="15.0" />
+               </font>
+            </TextField>
+            <Button mnemonicParsing="false" prefHeight="29.0" prefWidth="97.0" style="-fx-background-color: #F66B0E; -fx-background-radius: 12px;" text="Buscar" textFill="WHITE" GridPane.columnIndex="4">
+               <font>
+                  <Font name="Roboto Bold" size="15.0" />
+               </font>
+            </Button>
+            <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fff; -fx-background-radius: 12px;" GridPane.columnSpan="2" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="60.0" layoutX="70.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/colaboradorPerfil.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="13.0" layoutY="80.0" prefHeight="20.0" text="Nombre:">
+                     <font>
+                        <Font name="Roboto" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="13.0" layoutY="100.0" prefHeight="20.0" text="CURP:">
+                     <font>
+                        <Font name="Roboto" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="13.0" layoutY="120.0" prefHeight="20.0" text="Núm. Personal:">
+                     <font>
+                        <Font name="Roboto" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="13.0" layoutY="140.0" prefHeight="20.0" text="Correo:">
+                     <font>
+                        <Font name="Roboto" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="13.0" layoutY="160.0" prefHeight="20.0" text="Rol:">
+                     <font>
+                        <Font name="Roboto" size="12.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="13.0" layoutY="197.0" mnemonicParsing="false" onAction="#btnEditar" prefWidth="80.0" style="-fx-background-radius: 8px; -fx-background-color: #F66B0E;" text="Editar" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="107.0" layoutY="197.0" mnemonicParsing="false" onAction="#btnEliminar" prefWidth="80.0" style="-fx-background-radius: 8px; -fx-background-color: #F6160E;" text="Eliminar" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto" size="12.0" />
+                     </font>
+                  </Button>
+                  <Label fx:id="lbNombreInformacion" alignment="CENTER_RIGHT" layoutX="73.0" layoutY="80.0" prefHeight="20.0" prefWidth="120.0" text="Miguel Vásquez Rosas">
+                     <font>
+                        <Font name="Roboto" size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbCurpInformacion" alignment="CENTER_RIGHT" layoutX="73.0" layoutY="100.0" prefHeight="20.0" prefWidth="120.0" text="VARM110230HVZSSDA1">
+                     <font>
+                        <Font name="Roboto" size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbNumPersonalInformacion" alignment="CENTER_RIGHT" layoutX="96.0" layoutY="120.0" prefHeight="20.0" prefWidth="97.0" text="123456789">
+                     <font>
+                        <Font name="Roboto" size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbCorreoInformacion" alignment="CENTER_RIGHT" layoutX="73.0" layoutY="140.0" prefHeight="20.0" prefWidth="120.0" text="mario@gmail.com">
+                     <font>
+                        <Font name="Roboto" size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbRolInformacion" alignment="CENTER_RIGHT" layoutX="73.0" layoutY="160.0" prefHeight="20.0" prefWidth="120.0" text="Conductor">
+                     <font>
+                        <Font name="Roboto" size="10.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+         <padding>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </padding>
+      </GridPane>
+      <ScrollPane hbarPolicy="NEVER" layoutX="597.0" layoutY="116.0" pannable="true" prefHeight="590.0" prefViewportHeight="590.0" prefWidth="360.0" style="-fx-background-color: #205375; -fx-background-radius: 12px;">
+         <content>
+            <Pane prefHeight="700.0" prefWidth="350.0" style="-fx-background-color: #112B3C; -fx-background-radius: 12px;">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="100.0" layoutX="124.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/colaboradorPerfil.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="113.0" layoutY="107.0" text="Seleccionar Fotografía" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="75.0" layoutY="130.0" prefWidth="200.0" text="Información Personal" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="Roboto Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="72.0" layoutY="318.0" prefWidth="200.0" text="Información de Usuario" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="Roboto Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="20.0" layoutY="160.0" prefHeight="28.0" text="Nombre:" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="20.0" layoutY="200.0" prefHeight="28.0" text="Apellido Paterno:" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="17.0" layoutY="240.0" prefHeight="28.0" text="Apellido Materno:" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="20.0" layoutY="278.0" prefHeight="28.0" text="CURP:" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txNombre" focusTraversable="false" layoutX="130.0" layoutY="160.0" prefHeight="28.0" prefWidth="200.0" promptText="Buscar Colaborador" style="-fx-background-color: white; -fx-background-radius: 8px;">
+                     <font>
+                        <Font name="Roboto" size="15.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txPaterno" focusTraversable="false" layoutX="130.0" layoutY="200.0" prefHeight="28.0" prefWidth="200.0" promptText="Buscar Colaborador" style="-fx-background-color: white; -fx-background-radius: 8px;">
+                     <font>
+                        <Font name="Roboto" size="15.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txMaterno" focusTraversable="false" layoutX="130.0" layoutY="240.0" prefHeight="28.0" prefWidth="200.0" promptText="Buscar Colaborador" style="-fx-background-color: white; -fx-background-radius: 8px;">
+                     <font>
+                        <Font name="Roboto" size="15.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txCurp" focusTraversable="false" layoutX="130.0" layoutY="278.0" prefHeight="28.0" prefWidth="200.0" promptText="Buscar Colaborador" style="-fx-background-color: white; -fx-background-radius: 8px;">
+                     <font>
+                        <Font name="Roboto" size="15.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="20.0" layoutY="342.0" prefHeight="28.0" text="Núm. Personal:" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="20.0" layoutY="382.0" prefHeight="28.0" text="Correo:" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="20.0" layoutY="422.0" prefHeight="28.0" text="Contraseña:" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="20.0" layoutY="460.0" prefHeight="28.0" text="Confirmar Cont:" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txNumPersonal" focusTraversable="false" layoutX="130.0" layoutY="342.0" prefHeight="28.0" prefWidth="200.0" promptText="Buscar Colaborador" style="-fx-background-color: white; -fx-background-radius: 8px;">
+                     <font>
+                        <Font name="Roboto" size="15.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="psCorreo" focusTraversable="false" layoutX="130.0" layoutY="382.0" prefHeight="28.0" prefWidth="200.0" promptText="Buscar Colaborador" style="-fx-background-color: white; -fx-background-radius: 8px;">
+                     <font>
+                        <Font name="Roboto" size="15.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txPassword" focusTraversable="false" layoutX="130.0" layoutY="422.0" prefHeight="28.0" prefWidth="200.0" promptText="Buscar Colaborador" style="-fx-background-color: white; -fx-background-radius: 8px;">
+                     <font>
+                        <Font name="Roboto" size="15.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="psPasswordConfirm" focusTraversable="false" layoutX="130.0" layoutY="460.0" prefHeight="28.0" prefWidth="200.0" promptText="Buscar Colaborador" style="-fx-background-color: white; -fx-background-radius: 8px;">
+                     <font>
+                        <Font name="Roboto" size="15.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="20.0" layoutY="498.0" prefHeight="28.0" text="Rol:" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto" size="12.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="cbRol" layoutX="130.0" layoutY="497.0" prefHeight="28.0" prefWidth="200.0" promptText="Rol" style="-fx-background-color: #fff; -fx-background-radius: 12px;" />
+                  <Label layoutX="20.0" layoutY="537.0" prefHeight="28.0" text="¿Es conductor?" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto" size="12.0" />
+                     </font>
+                  </Label>
+                  <CheckBox fx:id="chConductor" layoutX="312.0" layoutY="542.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="8.0" />
+                  <Label layoutX="20.0" layoutY="574.0" prefHeight="28.0" text="Confirmar Cont:" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txLicencia" focusTraversable="false" layoutX="130.0" layoutY="574.0" prefHeight="28.0" prefWidth="200.0" promptText="Número de Licencia" style="-fx-background-color: white; -fx-background-radius: 8px;">
+                     <font>
+                        <Font name="Roboto" size="15.0" />
+                     </font>
+                  </TextField>
+                  <Button layoutX="25.0" layoutY="625.0" mnemonicParsing="false" onAction="#btnGuardarColaborador" prefWidth="300.0" style="-fx-background-color: #F66B0E; -fx-background-radius: 8px;" text="Button">
+                     <font>
+                        <Font name="Roboto Bold" size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
+         </content>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </ScrollPane>
+   </children>
+</AnchorPane>
