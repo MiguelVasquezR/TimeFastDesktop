@@ -10,10 +10,13 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import timefastdesktop.utilidades.Utilidades;
 
 /**
  * FXML Controller class
@@ -26,16 +29,6 @@ public class FXMLColaboradorPaneController implements Initializable {
 
     @FXML
     private Label lbUsuario;
-    @FXML
-    private Label lbNombreInformacion;
-    @FXML
-    private Label lbCurpInformacion;
-    @FXML
-    private Label lbNumPersonalInformacion;
-    @FXML
-    private Label lbCorreoInformacion;
-    @FXML
-    private Label lbRolInformacion;
     @FXML
     private TextField txNombre;
     @FXML
@@ -58,22 +51,21 @@ public class FXMLColaboradorPaneController implements Initializable {
     private CheckBox chConductor;
     @FXML
     private TextField txLicencia;
+    @FXML
+    private TextField tfBuscar;
+    @FXML
+    private Button btnBuscar;
+    @FXML
+    private ScrollPane scroll;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        Utilidades.estilizarBarraScroll(scroll);
     }    
 
-    @FXML
-    private void btnEditar(ActionEvent event) {
-    }
-
-    @FXML
-    private void btnEliminar(ActionEvent event) {
-    }
 
     @FXML
     private void btnGuardarColaborador(ActionEvent event) {
