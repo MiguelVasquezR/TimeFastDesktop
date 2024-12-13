@@ -5,8 +5,8 @@ public class Cliente {
     private Integer id;
     private Integer idPersona;
     private Integer idDireccion;
-    private Persona persona;
     private String telefono;
+    private Persona persona;
     private Direccion direccion;
 
     public Cliente() {
@@ -68,5 +68,12 @@ public class Cliente {
     public void setDireccion(Direccion direccion) {
         this.direccion = direccion;
     }
+
+    @Override
+    public String toString() {
+        return "Cliente{" + "id=" + id + ", idPersona=" + idPersona + ", idDireccion=" + idDireccion + ", telefono=" + telefono + ", persona=" + persona + ", direccion=" + direccion + '}';
+    }
+    
+    
 
 }

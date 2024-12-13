@@ -1,29 +1,38 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package timefastdesktop.panes;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
+import timefastdesktop.modelo.dao.ClienteDAO;
+import timefastdesktop.panes.card.FXMLCardClienteController;
 import timefastdesktop.pojo.Cliente;
 import timefastdesktop.pojo.Direccion;
+import timefastdesktop.pojo.Mensaje;
+import timefastdesktop.pojo.Persona;
 import timefastdesktop.utilidades.Utilidades;
+import timefastdesktop.observador.NotificadorOperacion;
 
-/**
- * FXML Controller class
- *
- * @author vasquez
- */
-public class FXMLUsuariosPaneController implements Initializable {
+public class FXMLUsuariosPaneController implements Initializable, NotificadorOperacion {
 
     @FXML
     private Label lbUsuario;
@@ -77,33 +86,55 @@ public class FXMLUsuariosPaneController implements Initializable {
     private Label lbErrorCorreo;
     @FXML
     private TextField tfMaterno;
+    @FXML
+    private AnchorPane contenedorClientes;
+
+    private List<Cliente> listaCliente = new ArrayList<Cliente>();
+
+    @FXML
+    private ScrollPane scrollClientes;
+    @FXML
+    private FlowPane fpClientes;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Utilidades.estilizarBarraScroll(scroll);
         resetearLabelErrors();
+        llenarContenedorClientes();
+        Utilidades.estilizarBarraScroll(scroll);
+        Utilidades.estilizarBarraScroll(scrollClientes);
     }
 
     public void llenarPojo() {
-        Direccion direccion = new Direccion(
-                tfCalle.getText(),
-                tfColonia.getText(),
-                tfNumero.getText(),
-                tfCP.getText(),
-                tfCiudad.getText(),
-                tfEstado.getText()
-        );
 
-       /* Cliente cliente = new Cliente(
-                tfNombre.getText(),
-                tfPaterno.getText(),
-                tfMaterno.getText(),
-                direccion,
-                tfTelefono.getText(),
-                tfCorreo.getText()
-        );*/
+        Direccion direccion = new Direccion();
+        direccion.setCalle(tfCalle.getText());
+        direccion.setColonia(tfColonia.getText());
+        direccion.setNumero(tfNumero.getText());
+        direccion.setCodigoPostal(tfCP.getText());
+        direccion.setCiudad(tfCiudad.getText());
+        direccion.setEstado(tfEstado.getText());
 
-    
+        Persona persona = new Persona();
+        persona.setNombre(tfNombre.getText());
+        persona.setApellidoPaterno(tfPaterno.getText());
+        persona.setApellidoMaterno(tfMaterno.getText());
+        persona.setCorreo(tfCorreo.getText());
+
+        Cliente cliente = new Cliente();
+        cliente.setPersona(persona);
+        cliente.setDireccion(direccion);
+        cliente.setTelefono(tfTelefono.getText());
+
+        Mensaje msj = ClienteDAO.agregarCliente(cliente);
+
+        if (msj.getError() == false) {
+            Utilidades.mostrarAlertaSimple("Cliente Registrado!", "El cliente " + persona.getNombre() + " ha sido registrado exitosamente", Alert.AlertType.INFORMATION);
+            limpiarCampos();
+            llenarContenedorClientes();
+        } else {
+            Utilidades.mostrarAlertaSimple("Cliente No Registrado!", "El cliente " + persona.getNombre() + " no ha sido registrado, intentelo más tarde", Alert.AlertType.ERROR);
+        }
+
     }
 
     public boolean validarFormulario() {
@@ -212,11 +243,61 @@ public class FXMLUsuariosPaneController implements Initializable {
         lbErrorCorreo.setText("");
     }
 
+    private void limpiarCampos() {
+        tfBuscar.clear();
+        tfCalle.clear();
+        tfColonia.clear();
+        tfNumero.clear();
+        tfCP.clear();
+        tfCiudad.clear();
+        tfEstado.clear();
+        tfNombre.clear();
+        tfPaterno.clear();
+        tfMaterno.clear();
+        tfTelefono.clear();
+        tfCorreo.clear();
+    }
+
     @FXML
     private void botonPresionado(ActionEvent event) {
         if (validarFormulario()) {
             llenarPojo();
         }
+    }
+
+    //Cargar clientes en el pane
+    private void llenarContenedorClientes() {
+        listaCliente = ClienteDAO.obtenerClientes();
+        fpClientes.getChildren().clear();
+        if (listaCliente != null) {
+            if (listaCliente.size() == 0) {
+                Utilidades.mostrarAlertaSimple("No hay registro", "Por el momento no se tiene registros de clientes", Alert.AlertType.INFORMATION);
+            } else {
+                llenarTarjetasClientes();
+            }
+        } else {
+            Utilidades.mostrarAlertaSimple("Problemas al obtener clientes",
+                    "Por el momento no se pueden obtener los clientes, intente más tarde, por favor.", Alert.AlertType.INFORMATION);
+        }
+    }
+
+    private void llenarTarjetasClientes() {
+        try {
+            for (Cliente cliente : listaCliente) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/timefastdesktop/panes/card/FXMLCardCliente.fxml"));
+                Parent tarjetaPresentacion = loader.load();
+                FXMLCardClienteController controller = loader.getController();
+                controller.setClienteData(this, cliente);
+                fpClientes.getChildren().add(tarjetaPresentacion);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void notificacionOperacion(String titulo, String nombre) {
+        llenarContenedorClientes();
     }
 
 }

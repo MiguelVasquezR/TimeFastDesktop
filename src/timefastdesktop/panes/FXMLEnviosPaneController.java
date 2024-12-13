@@ -169,6 +169,7 @@ public class FXMLEnviosPaneController implements Initializable {
     }
 
     private void llenarPojos() {
+        /*
         Direccion origen = new Direccion(
                 tfCalle.getText(),
                 tfColonia.getText(),
@@ -194,8 +195,8 @@ public class FXMLEnviosPaneController implements Initializable {
                 tfNumGuia.getText(),
                 tfPrecio.getText()
         );
+         */
 
-        
     }
 
     @FXML

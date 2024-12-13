@@ -8,10 +8,8 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
@@ -33,38 +31,6 @@
             <Image url="@../recursos/iconHeader.png" />
          </image>
       </ImageView>
-      <GridPane layoutX="30.0" layoutY="130.0" prefWidth="600.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.0" minWidth="10.0" prefWidth="104.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints maxHeight="43.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="17.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-         <children>
-            <TextField fx:id="tfBuscar" prefHeight="32.0" prefWidth="312.0" promptText="Búscar envío" style="-fx-background-color: white; -fx-background-radius: 8px;" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-               <font>
-                  <Font name="Roboto" size="15.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-               </GridPane.margin>
-            </TextField>
-            <Button fx:id="btnBuscar" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #F66B0E; -fx-background-radius: 12px;" text="Búscar" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-               <font>
-                  <Font name="Roboto Bold" size="15.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-               </GridPane.margin>
-            </Button>
-         </children>
-      </GridPane>
       <ScrollPane fx:id="scroll" fitToHeight="true" fitToWidth="true" layoutX="654.0" layoutY="120.0" prefHeight="584.0" prefWidth="300.0" style="-fx-background-radius: 12; -fx-border-radius: 12; -fx-background-color: #112b3c; -fx-border-color: #112b3c;" vbarPolicy="ALWAYS">
          <content>
             <AnchorPane prefHeight="150.0" prefWidth="270.0" style="-fx-background-color: #112b3c;">
@@ -240,13 +206,43 @@
                               <Insets left="4.0" />
                            </padding>
                         </Label>
-                        <Label layoutX="20.0" layoutY="582.0" text="Dirección" textFill="WHITE">
+                        <Label layoutX="20.0" layoutY="582.0" text="Extras" textFill="WHITE">
                            <font>
                               <Font name="Roboto Bold" size="15.0" />
                            </font>
                         </Label>
                      </children>
                   </Pane>
+               </children>
+            </AnchorPane>
+         </content>
+         <padding>
+            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+         </padding>
+      </ScrollPane>
+      <Pane layoutX="20.0" layoutY="120.0" prefWidth="600.0">
+         <children>
+            <Button fx:id="btnBuscar" contentDisplay="CENTER" layoutX="493.0" layoutY="1.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #F66B0E; -fx-background-radius: 12px;" text="Búscar" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Roboto Bold" size="15.0" />
+               </font>
+            </Button>
+            <TextField fx:id="tfBuscar" layoutX="4.0" prefHeight="32.0" prefWidth="473.0" promptText="Búscar envío" style="-fx-background-color: white; -fx-background-radius: 8px;">
+               <font>
+                  <Font name="Roboto" size="15.0" />
+               </font>
+            </TextField>
+         </children>
+      </Pane>
+      <ScrollPane fx:id="scrollClientes" fitToHeight="true" fitToWidth="true" layoutX="20.0" layoutY="170.0" prefHeight="540.0" prefWidth="600.0" style="-fx-background-radius: 12; -fx-border-radius: 12; -fx-background-color: #112b3c; -fx-border-color: #112b3c;" vbarPolicy="ALWAYS">
+         <content>
+            <AnchorPane fx:id="contenedorClientes" prefWidth="600.0" style="-fx-background-color: #112b3c;">
+               <children>
+                  <FlowPane fx:id="fpClientes" alignment="TOP_CENTER" hgap="12.0" prefWidth="560.0" vgap="12.0">
+                     <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </AnchorPane>
          </content>

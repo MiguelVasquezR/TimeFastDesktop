@@ -2,23 +2,33 @@ package timefastdesktop.pojo;
 
 public class Persona {
 
+    private Integer idPersona;
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
-    private Direccion direccion;
-    private String telefono;
     private String correo;
+    private String CURP;
+    private String fotoBase64;
 
     public Persona() {
     }
 
-    public Persona(String nombre, String apellidoPaterno, String apellidoMaterno, Direccion direccion, String telefono, String correo) {
+    public Persona(Integer idPersona, String nombre, String apellidoPaterno, String apellidoMaterno, String correo, String CURP, String fotoBase64) {
+        this.idPersona = idPersona;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
-        this.direccion = direccion;
-        this.telefono = telefono;
         this.correo = correo;
+        this.CURP = CURP;
+        this.fotoBase64 = fotoBase64;
+    }
+
+    public Integer getIdPersona() {
+        return idPersona;
+    }
+
+    public void setIdPersona(Integer idPersona) {
+        this.idPersona = idPersona;
     }
 
     public String getNombre() {
@@ -45,28 +55,33 @@ public class Persona {
         this.apellidoMaterno = apellidoMaterno;
     }
 
-    public Direccion getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(Direccion direccion) {
-        this.direccion = direccion;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
     public String getCorreo() {
         return correo;
     }
 
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+
+    public String getCURP() {
+        return CURP;
+    }
+
+    public void setCURP(String CURP) {
+        this.CURP = CURP;
+    }
+
+    public String getFotoBase64() {
+        return fotoBase64;
+    }
+
+    public void setFotoBase64(String fotoBase64) {
+        this.fotoBase64 = fotoBase64;
+    }
+
+    @Override
+    public String toString() {
+        return "Persona{" + "idPersona=" + idPersona + ", nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", correo=" + correo + ", CURP=" + CURP + '}';
     }
 
 }

@@ -2,6 +2,7 @@ package timefastdesktop.utilidades;
 
 import javafx.application.Platform;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Alert;
 
 public class Utilidades {
 
@@ -24,6 +25,14 @@ public class Utilidades {
             scroll.lookupAll(".scroll-bar .increment-button").forEach(button -> button.setOpacity(0));
             scroll.lookupAll(".scroll-bar .decrement-button").forEach(button -> button.setOpacity(0));
         });
+    }
+    
+    public static void mostrarAlertaSimple(String title, String contentenido, Alert.AlertType tipo){
+        Alert alerta = new Alert(tipo);
+        alerta.setTitle(title);
+        alerta.setHeaderText(null);
+        alerta.setContentText(contentenido);
+        alerta.showAndWait();
     }
 
 }

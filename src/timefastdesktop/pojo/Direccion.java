@@ -2,6 +2,7 @@ package timefastdesktop.pojo;
 
 public class Direccion {
 
+    private Integer idDireccion;
     private String calle;
     private String colonia;
     private String numero;
@@ -12,13 +13,22 @@ public class Direccion {
     public Direccion() {
     }
 
-    public Direccion(String calle, String colonia, String numero, String codigoPostal, String ciudad, String estado) {
+    public Direccion(Integer idDireccion, String calle, String colonia, String numero, String codigoPostal, String ciudad, String estado) {
+        this.idDireccion = idDireccion;
         this.calle = calle;
         this.colonia = colonia;
         this.numero = numero;
         this.codigoPostal = codigoPostal;
         this.ciudad = ciudad;
         this.estado = estado;
+    }
+
+    public Integer getIdDireccion() {
+        return idDireccion;
+    }
+
+    public void setIdDireccion(Integer idDireccion) {
+        this.idDireccion = idDireccion;
     }
 
     public String getCalle() {
@@ -68,5 +78,12 @@ public class Direccion {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    @Override
+    public String toString() {
+        return "Direccion{" + "idDireccion=" + idDireccion + ", calle=" + calle + ", colonia=" + colonia + ", numero=" + numero + ", codigoPostal=" + codigoPostal + ", ciudad=" + ciudad + ", estado=" + estado + '}';
+    }
+    
+    
 
 }
