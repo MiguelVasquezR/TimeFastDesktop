@@ -5,8 +5,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,12 +15,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.RowConstraints;
 import timefastdesktop.modelo.dao.ClienteDAO;
 import timefastdesktop.panes.card.FXMLCardClienteController;
 import timefastdesktop.pojo.Cliente;
@@ -88,13 +83,16 @@ public class FXMLUsuariosPaneController implements Initializable, NotificadorOpe
     private TextField tfMaterno;
     @FXML
     private AnchorPane contenedorClientes;
-
-    private List<Cliente> listaCliente = new ArrayList<Cliente>();
-
     @FXML
     private ScrollPane scrollClientes;
     @FXML
     private FlowPane fpClientes;
+    @FXML
+    private Button btnFormulario;
+    
+    private List<Cliente> listaCliente = new ArrayList<Cliente>();
+    private Boolean estaEditando = false;
+    private Cliente clienteEditar;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -125,14 +123,31 @@ public class FXMLUsuariosPaneController implements Initializable, NotificadorOpe
         cliente.setDireccion(direccion);
         cliente.setTelefono(tfTelefono.getText());
 
-        Mensaje msj = ClienteDAO.agregarCliente(cliente);
-
-        if (msj.getError() == false) {
-            Utilidades.mostrarAlertaSimple("Cliente Registrado!", "El cliente " + persona.getNombre() + " ha sido registrado exitosamente", Alert.AlertType.INFORMATION);
-            limpiarCampos();
-            llenarContenedorClientes();
+        if (this.estaEditando) {
+            cliente.setId(clienteEditar.getId());
+            cliente.setIdDireccion(clienteEditar.getIdDireccion());
+            cliente.setIdPersona(clienteEditar.getIdPersona());
+            cliente.getPersona().setIdPersona(clienteEditar.getIdPersona());
+            cliente.getDireccion().setIdDireccion(clienteEditar.getIdDireccion());
+            Mensaje msj = ClienteDAO.editarCliente(cliente);
+            if (msj.getError() == false) {
+                Utilidades.mostrarAlertaSimple("Cliente Actualizado!", "El cliente " + persona.getNombre() + " ha sido actualizado exitosamente", Alert.AlertType.INFORMATION);
+                limpiarCampos();
+                llenarContenedorClientes();
+            } else {
+                Utilidades.mostrarAlertaSimple("Cliente No Actualizado!", "El cliente " + persona.getNombre() + " no ha sido actualizado, intentelo más tarde", Alert.AlertType.ERROR);
+            }
+            this.estaEditando = false;
+            btnBuscar.setText("Guardar");
         } else {
-            Utilidades.mostrarAlertaSimple("Cliente No Registrado!", "El cliente " + persona.getNombre() + " no ha sido registrado, intentelo más tarde", Alert.AlertType.ERROR);
+            Mensaje msj = ClienteDAO.agregarCliente(cliente);
+            if (msj.getError() == false) {
+                Utilidades.mostrarAlertaSimple("Cliente Registrado!", "El cliente " + persona.getNombre() + " ha sido registrado exitosamente", Alert.AlertType.INFORMATION);
+                limpiarCampos();
+                llenarContenedorClientes();
+            } else {
+                Utilidades.mostrarAlertaSimple("Cliente No Registrado!", "El cliente " + persona.getNombre() + " no ha sido registrado, intentelo más tarde", Alert.AlertType.ERROR);
+            }
         }
 
     }
@@ -273,7 +288,7 @@ public class FXMLUsuariosPaneController implements Initializable, NotificadorOpe
             if (listaCliente.size() == 0) {
                 Utilidades.mostrarAlertaSimple("No hay registro", "Por el momento no se tiene registros de clientes", Alert.AlertType.INFORMATION);
             } else {
-                llenarTarjetasClientes();
+                llenarTarjetasClientes(this.listaCliente);
             }
         } else {
             Utilidades.mostrarAlertaSimple("Problemas al obtener clientes",
@@ -281,13 +296,14 @@ public class FXMLUsuariosPaneController implements Initializable, NotificadorOpe
         }
     }
 
-    private void llenarTarjetasClientes() {
+    private void llenarTarjetasClientes(List<Cliente> lista) {
         try {
-            for (Cliente cliente : listaCliente) {
+            for (Cliente cliente : lista) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/timefastdesktop/panes/card/FXMLCardCliente.fxml"));
                 Parent tarjetaPresentacion = loader.load();
                 FXMLCardClienteController controller = loader.getController();
                 controller.setClienteData(this, cliente);
+                controller.setPadreController(this);
                 fpClientes.getChildren().add(tarjetaPresentacion);
             }
         } catch (IOException ex) {
@@ -298,6 +314,77 @@ public class FXMLUsuariosPaneController implements Initializable, NotificadorOpe
     @Override
     public void notificacionOperacion(String titulo, String nombre) {
         llenarContenedorClientes();
+    }
+
+    //Buscar Cliente
+    private void buscarCliente(String busqueda) {
+        ArrayList<Cliente> listaFiltrada = new ArrayList<>();
+        if (listaCliente.size() == 0) {
+            Utilidades.mostrarAlertaSimple("No hay clientes", "No hay clientes para su búsqueda", Alert.AlertType.INFORMATION);
+        } else {
+            listaFiltrada.clear();
+            fpClientes.getChildren().clear();
+            for (Cliente cliente : listaCliente) {
+                String nombreCompleto = cliente.getPersona().getNombre() + " " + cliente.getPersona().getApellidoPaterno() + " " + cliente.getPersona().getApellidoPaterno();
+                String correo = cliente.getPersona().getCorreo();
+                String telefono = cliente.getTelefono();
+                if (telefono.contains(busqueda)) {
+                    listaFiltrada.add(cliente);
+                } else if (correo.contains(busqueda)) {
+                    listaFiltrada.add(cliente);
+                } else if (nombreCompleto.contains(busqueda)) {
+                    listaFiltrada.add(cliente);
+                }
+            }
+            if (listaFiltrada.size() > 0) {
+                llenarTarjetasClientes(listaFiltrada);
+            }
+        }
+    }
+
+    @FXML
+    private void evtBuscarCliente(ActionEvent event) {
+        String busqueda = tfBuscar.getText();
+        if (!busqueda.isEmpty() && !busqueda.equals(" ")) {
+            buscarCliente(busqueda);
+        } else {
+            fpClientes.getChildren().clear();
+            llenarContenedorClientes();
+        }
+    }
+
+    @FXML
+    private void textoCambia(KeyEvent event) {
+        String texto = tfBuscar.getText();
+        if (texto.isEmpty()) {
+            fpClientes.getChildren().clear();
+            llenarContenedorClientes();
+        }
+    }
+
+    //Editar cliente
+    public void obtenerClienteHijo(Cliente cliente, Boolean estaEditando) {
+        this.estaEditando = estaEditando;
+        llenarFormularioEditarCliente(cliente);
+        if (this.estaEditando) {
+            btnFormulario.setText("Actualizar");
+            this.clienteEditar = cliente;
+        }
+    }
+
+    public void llenarFormularioEditarCliente(Cliente cliente) {
+        limpiarCampos();
+        tfNombre.setText(cliente.getPersona().getNombre());
+        tfPaterno.setText(cliente.getPersona().getApellidoPaterno());
+        tfMaterno.setText(cliente.getPersona().getApellidoMaterno());
+        tfCalle.setText(cliente.getDireccion().getCalle());
+        tfColonia.setText(cliente.getDireccion().getColonia());
+        tfNumero.setText(cliente.getDireccion().getNumero());
+        tfCP.setText(cliente.getDireccion().getCodigoPostal());
+        tfCiudad.setText(cliente.getDireccion().getCiudad());
+        tfEstado.setText(cliente.getDireccion().getEstado());
+        tfTelefono.setText(cliente.getTelefono());
+        tfCorreo.setText(cliente.getPersona().getCorreo());
     }
 
 }

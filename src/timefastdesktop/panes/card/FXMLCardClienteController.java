@@ -16,6 +16,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import timefastdesktop.modelo.dao.ClienteDAO;
 import timefastdesktop.observador.NotificadorOperacion;
+import timefastdesktop.panes.FXMLUsuariosPaneController;
 import timefastdesktop.pojo.Cliente;
 import timefastdesktop.pojo.Mensaje;
 import timefastdesktop.utilidades.Alertas;
@@ -41,6 +42,11 @@ public class FXMLCardClienteController implements Initializable {
 
     private Cliente cliente;
     private NotificadorOperacion observador;
+    private FXMLUsuariosPaneController controlerUsuariosPane;
+
+    public void setPadreController(FXMLUsuariosPaneController controlerUsuariosPane) {
+        this.controlerUsuariosPane = controlerUsuariosPane;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -75,7 +81,9 @@ public class FXMLCardClienteController implements Initializable {
 
     @FXML
     private void btnEditar(ActionEvent event) {
-
+        if (controlerUsuariosPane != null) {
+            controlerUsuariosPane.obtenerClienteHijo(this.cliente, true);
+        }
     }
 
     @FXML

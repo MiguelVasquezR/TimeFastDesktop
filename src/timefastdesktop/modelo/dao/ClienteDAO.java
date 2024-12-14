@@ -68,4 +68,24 @@ public class ClienteDAO {
         return msj;
     }
 
+    public static Mensaje editarCliente(Cliente cliente) {
+        Mensaje msj = new Mensaje();
+        String url = Constantes.URL_WS + "/cliente/actualizar-cliente";
+        Gson gson = new Gson();
+        try {
+            String parametros = gson.toJson(cliente);
+            RespuestaHTTP respuesta = ConexionWS.peticionPUTJSON(url, parametros);
+            if (respuesta.getCodigoRespuesta() == HttpURLConnection.HTTP_OK) {
+                msj = gson.fromJson(respuesta.getContenido(), Mensaje.class);
+            } else {
+                msj.setError(true);
+                msj.setMensaje(respuesta.getContenido());
+            }
+        } catch (Exception e) {
+            msj.setError(true);
+            msj.setMensaje(e.getMessage());
+        }
+        return msj;
+    }
+
 }

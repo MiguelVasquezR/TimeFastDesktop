@@ -145,7 +145,7 @@
                               <Font name="Roboto Bold" size="15.0" />
                            </font>
                         </Label>
-                        <Button layoutX="104.0" layoutY="693.0" mnemonicParsing="false" onAction="#botonPresionado" prefHeight="29.0" prefWidth="84.0" style="-fx-background-color: #F66B0E; -fx-background-radius: 12px;" text="Guardar" textAlignment="CENTER" textFill="WHITE">
+                        <Button fx:id="btnFormulario" layoutX="94.0" layoutY="693.0" mnemonicParsing="false" onAction="#botonPresionado" prefHeight="29.0" prefWidth="100.0" style="-fx-background-color: #F66B0E; -fx-background-radius: 12px;" text="Guardar" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font name="Roboto Bold" size="15.0" />
                            </font>
@@ -222,12 +222,12 @@
       </ScrollPane>
       <Pane layoutX="20.0" layoutY="120.0" prefWidth="600.0">
          <children>
-            <Button fx:id="btnBuscar" contentDisplay="CENTER" layoutX="493.0" layoutY="1.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #F66B0E; -fx-background-radius: 12px;" text="Búscar" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="btnBuscar" contentDisplay="CENTER" layoutX="493.0" layoutY="1.0" mnemonicParsing="false" onAction="#evtBuscarCliente" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #F66B0E; -fx-background-radius: 12px;" text="Búscar" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Roboto Bold" size="15.0" />
                </font>
             </Button>
-            <TextField fx:id="tfBuscar" layoutX="4.0" prefHeight="32.0" prefWidth="473.0" promptText="Búscar envío" style="-fx-background-color: white; -fx-background-radius: 8px;">
+            <TextField fx:id="tfBuscar" layoutX="4.0" onKeyReleased="#textoCambia" prefHeight="32.0" prefWidth="473.0" promptText="Búscar envío" style="-fx-background-color: white; -fx-background-radius: 8px;">
                <font>
                   <Font name="Roboto" size="15.0" />
                </font>
