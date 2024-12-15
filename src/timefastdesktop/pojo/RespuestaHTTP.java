@@ -29,4 +29,11 @@ public class RespuestaHTTP {
         this.contenido = contenido;
     }
 
+    @Override
+    public String toString() {
+        return "RespuestaHTTP{" + "codigoRespuesta=" + codigoRespuesta + ", contenido=" + contenido + '}';
+    }
+    
+    
+
 }
