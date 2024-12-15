@@ -100,6 +100,39 @@ public class ConexionWS {
         return respuesta;
     }
 
+    public static RespuestaHTTP peticionPUTJPEG(String url, byte[] imagenBytes) {
+        RespuestaHTTP respuesta = new RespuestaHTTP();
+        try {
+            URL urlDestino = new URL(url);
+            HttpURLConnection conexionHttp = (HttpURLConnection) urlDestino.openConnection();
+            conexionHttp.setRequestMethod("PUT");
+            conexionHttp.setRequestProperty("Content-Type", "image/jpeg");
+            conexionHttp.setDoOutput(true);
+
+            try (OutputStream os = conexionHttp.getOutputStream()) {
+                os.write(imagenBytes); 
+                os.flush();
+            }
+
+            
+            int codigoRespuesta = conexionHttp.getResponseCode();
+            respuesta.setCodigoRespuesta(codigoRespuesta);
+            if (codigoRespuesta == HttpURLConnection.HTTP_OK) {
+                respuesta.setContenido(obtenerContenidoWS(conexionHttp.getInputStream()));
+            } else {
+                respuesta.setContenido("Código de respuesta HTTP: " + codigoRespuesta);
+            }
+
+        } catch (MalformedURLException e) {
+            respuesta.setCodigoRespuesta(Constantes.ERROR_URL);
+            respuesta.setContenido("Error en la URL de la solicitud.");
+        } catch (IOException io) {
+            respuesta.setCodigoRespuesta(Constantes.ERROR_PETICION);
+            respuesta.setContenido("Error al realizar la solicitud.");
+        }
+        return respuesta;
+    }
+
     public static RespuestaHTTP peticionDELETE(String url, String parametros) {
         RespuestaHTTP respuesta = new RespuestaHTTP();
         try {
@@ -132,7 +165,7 @@ public class ConexionWS {
         }
         return respuesta;
     }
-    
+
     public static RespuestaHTTP peticionDELETEJSON(String url, String parametros) {
         RespuestaHTTP respuesta = new RespuestaHTTP();
         try {
