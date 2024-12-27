@@ -11,6 +11,7 @@ import timefastdesktop.utilidades.Constantes;
 import timefastdesktop.pojo.Cliente;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
+import java.net.URLEncoder;
 
 public class ClienteDAO {
 
@@ -81,6 +82,27 @@ public class ClienteDAO {
                 msj.setError(true);
                 msj.setMensaje(respuesta.getContenido());
             }
+        } catch (Exception e) {
+            msj.setError(true);
+            msj.setMensaje(e.getMessage());
+        }
+        return msj;
+    }
+
+    public static Mensaje buscarClienteNombre(String nombre) {
+        Mensaje msj = new Mensaje();
+        String url = Constantes.URL_WS + "/cliente/obtener-cliente-nombre";
+        Gson gson = new Gson();
+        try {
+            String parametros = "nombre=" + URLEncoder.encode(nombre, "UTF-8");
+            RespuestaHTTP respuesta = ConexionWS.peticionPOST(url, parametros);
+            if (respuesta.getCodigoRespuesta() == HttpURLConnection.HTTP_OK) {
+                msj = gson.fromJson(respuesta.getContenido(), Mensaje.class);
+            } else {
+                msj.setError(true);
+                msj.setMensaje(respuesta.getContenido());
+            }
+
         } catch (Exception e) {
             msj.setError(true);
             msj.setMensaje(e.getMessage());

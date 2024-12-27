@@ -15,7 +15,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import timefastdesktop.modelo.dao.LoginDAO;
+import timefastdesktop.pojo.Mensaje;
 import timefastdesktop.utilidades.Navegacion;
+import timefastdesktop.utilidades.Utilidades;
 
 public class FXMLLoginController implements Initializable {
 
@@ -36,7 +39,15 @@ public class FXMLLoginController implements Initializable {
 
     @FXML
     private void btnIngresar(ActionEvent event) {
-        Navegacion.cambiarPantalla(lbErrorEmail, "TimeFast | Pantalla Principal", "FXMLPrincipal.fxml", this.getClass());
+        if(!camposVacios()){
+            Mensaje msj = LoginDAO.iniciarSesion(txEmail.getText(), psPassword.getText());
+            if(msj.getError() == false){
+                Utilidades.mostrarAlertaSimple("Sesión Iniciada", msj.getMensaje(), Alert.AlertType.CONFIRMATION);
+                Navegacion.cambiarPantalla(lbErrorEmail, "TimeFast | Pantalla Principal", "FXMLPrincipal.fxml", this.getClass());
+            }else{
+                Utilidades.mostrarAlertaSimple("Error al iniciar sesión", msj.getMensaje(), Alert.AlertType.ERROR);
+            }
+        }
     }
 
     private boolean camposVacios() {
