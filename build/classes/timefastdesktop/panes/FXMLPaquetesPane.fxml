@@ -70,20 +70,20 @@
          <content>
             <AnchorPane prefHeight="150.0" prefWidth="270.0" style="-fx-background-color: #112b3c;">
                <children>
-                  <Pane prefHeight="673.0" prefWidth="270.0">
+                  <Pane prefHeight="865.0" prefWidth="270.0">
                      <children>
                         <Label layoutX="63.0" layoutY="14.0" text="Registrar paquete" textFill="WHITE">
                            <font>
                               <Font name="Roboto Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Label layoutX="20.0" layoutY="335.0" text="Alto" textFill="WHITE">
+                        <Label layoutX="20.0" layoutY="440.0" text="Alto" textFill="WHITE">
                            <font>
                               <Font name="Roboto Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="tfAlto" layoutX="20.0" layoutY="355.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
-                        <Label fx:id="lbErrorAlto" layoutX="20.0" layoutY="382.0" prefWidth="230.0" text="La calle es necesaria" textFill="#da4040">
+                        <TextField fx:id="tfAlto" layoutX="20.0" layoutY="460.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
+                        <Label fx:id="lbErrorAlto" layoutX="20.0" layoutY="487.0" prefWidth="230.0" text="La calle es necesaria" textFill="#da4040">
                            <font>
                               <Font name="Roboto" size="12.0" />
                            </font>
@@ -91,13 +91,13 @@
                               <Insets left="4.0" />
                            </padding>
                         </Label>
-                        <Label layoutX="20.0" layoutY="404.0" prefWidth="230.0" text="Ancho" textFill="WHITE">
+                        <Label layoutX="20.0" layoutY="509.0" prefWidth="230.0" text="Ancho" textFill="WHITE">
                            <font>
                               <Font name="Roboto Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="tfAncho" layoutX="20.0" layoutY="425.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
-                        <Label fx:id="lbErrorAncho" layoutX="20.0" layoutY="452.0" prefWidth="230.0" text="La colonia es necesaria" textFill="#da4040">
+                        <TextField fx:id="tfAncho" layoutX="20.0" layoutY="530.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
+                        <Label fx:id="lbErrorAncho" layoutX="20.0" layoutY="557.0" prefWidth="230.0" text="La colonia es necesaria" textFill="#da4040">
                            <font>
                               <Font name="Roboto" size="12.0" />
                            </font>
@@ -105,13 +105,13 @@
                               <Insets left="4.0" />
                            </padding>
                         </Label>
-                        <Label layoutX="20.0" layoutY="52.0" text="Seleccione envío:" textFill="WHITE">
+                        <Label layoutX="20.0" layoutY="157.0" text="Seleccione envío:" textFill="WHITE">
                            <font>
                               <Font name="Roboto Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="tfEnvio" layoutX="20.0" layoutY="70.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
-                        <Label fx:id="lbErrorEnvio" layoutX="20.0" layoutY="100.0" prefWidth="230.0" text="Cliente necesario" textFill="#da4040">
+                        <TextField fx:id="tfEnvio" layoutX="20.0" layoutY="175.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
+                        <Label fx:id="lbErrorEnvio" layoutX="20.0" layoutY="205.0" prefWidth="230.0" text="Cliente necesario" textFill="#da4040">
                            <font>
                               <Font name="Roboto" size="12.0" />
                            </font>
@@ -119,18 +119,18 @@
                               <Insets left="4.0" />
                            </padding>
                         </Label>
-                        <Label layoutX="20.0" layoutY="313.0" text="Dimensiones" textFill="WHITE">
+                        <Label layoutX="20.0" layoutY="418.0" text="Dimensiones" textFill="WHITE">
                            <font>
                               <Font name="Roboto Bold" size="15.0" />
                            </font>
                         </Label>
-                        <Label layoutX="20.0" layoutY="474.0" prefWidth="230.0" text="Profundidad" textFill="WHITE">
+                        <Label layoutX="20.0" layoutY="579.0" prefWidth="230.0" text="Profundidad" textFill="WHITE">
                            <font>
                               <Font name="Roboto Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="tfProfundidad" layoutX="20.0" layoutY="495.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
-                        <Label fx:id="lbErrorProfundidad" layoutX="20.0" layoutY="522.0" prefWidth="230.0" text="La número de guía es necesaria" textFill="#da4040">
+                        <TextField fx:id="tfProfundidad" layoutX="20.0" layoutY="600.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
+                        <Label fx:id="lbErrorProfundidad" layoutX="20.0" layoutY="627.0" prefWidth="230.0" text="La número de guía es necesaria" textFill="#da4040">
                            <font>
                               <Font name="Roboto" size="12.0" />
                            </font>
@@ -138,13 +138,13 @@
                               <Insets left="4.0" />
                            </padding>
                         </Label>
-                        <Label layoutX="20.0" layoutY="545.0" prefWidth="230.0" text="Peso" textFill="WHITE">
+                        <Label layoutX="20.0" layoutY="650.0" prefWidth="230.0" text="Peso" textFill="WHITE">
                            <font>
                               <Font name="Roboto Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="tfPeso" layoutX="20.0" layoutY="566.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
-                        <Label fx:id="lbErrorPeso" layoutX="20.0" layoutY="593.0" prefWidth="230.0" text="El precio es necesaria" textFill="#da4040">
+                        <TextField fx:id="tfPeso" layoutX="20.0" layoutY="671.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
+                        <Label fx:id="lbErrorPeso" layoutX="20.0" layoutY="698.0" prefWidth="230.0" text="El precio es necesaria" textFill="#da4040">
                            <font>
                               <Font name="Roboto" size="12.0" />
                            </font>
@@ -152,18 +152,40 @@
                               <Insets left="4.0" />
                            </padding>
                         </Label>
-                        <Button fx:id="btnGuardar" layoutX="96.0" layoutY="624.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="84.0" style="-fx-background-color: #F66B0E; -fx-background-radius: 12px;" text="Guardar" textAlignment="CENTER" textFill="WHITE">
+                        <Button fx:id="btnGuardar" layoutX="96.0" layoutY="729.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="84.0" style="-fx-background-color: #F66B0E; -fx-background-radius: 12px;" text="Guardar" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font name="Roboto Bold" size="15.0" />
                            </font>
                         </Button>
-                        <TextArea fx:id="taDescripcion" layoutX="20.0" layoutY="144.0" prefHeight="132.0" prefWidth="230.0" style="-fx-background-color: #fff; -fx-background-radius: 12; -fx-border-radius: 12;" />
-                        <Label layoutX="20.0" layoutY="127.0" text="Descripción" textFill="WHITE">
+                        <TextArea fx:id="taDescripcion" layoutX="20.0" layoutY="249.0" prefHeight="132.0" prefWidth="230.0" style="-fx-background-color: #fff; -fx-background-radius: 12; -fx-border-radius: 12;" />
+                        <Label layoutX="20.0" layoutY="232.0" text="Descripción" textFill="WHITE">
                            <font>
                               <Font name="Roboto Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lbErrorDescripcion" layoutX="20.0" layoutY="280.0" prefWidth="230.0" text="Cliente necesario" textFill="#da4040">
+                        <Label fx:id="lbErrorDescripcion" layoutX="20.0" layoutY="385.0" prefWidth="230.0" text="Cliente necesario" textFill="#da4040">
+                           <font>
+                              <Font name="Roboto" size="12.0" />
+                           </font>
+                           <padding>
+                              <Insets left="4.0" />
+                           </padding>
+                        </Label>
+                        <Label layoutX="19.0" layoutY="59.0" text="Búscar Cliente:" textFill="WHITE">
+                           <font>
+                              <Font name="Roboto Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tfCliente" layoutX="19.0" layoutY="77.0" onKeyPressed="#buscarCliente" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
+                        <Label fx:id="lbErrorCliente" layoutX="19.0" layoutY="107.0" prefWidth="230.0" text="Cliente necesario" textFill="#da4040">
+                           <font>
+                              <Font name="Roboto" size="12.0" />
+                           </font>
+                           <padding>
+                              <Insets left="4.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="lbDatosDireccionCliente" alignment="TOP_LEFT" layoutX="18.0" layoutY="110.0" prefHeight="43.0" prefWidth="230.0" text="Cliente necesario" textFill="WHITE" wrapText="true">
                            <font>
                               <Font name="Roboto" size="12.0" />
                            </font>
