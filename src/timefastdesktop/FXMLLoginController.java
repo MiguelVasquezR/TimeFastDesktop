@@ -39,11 +39,12 @@ public class FXMLLoginController implements Initializable {
 
     @FXML
     private void btnIngresar(ActionEvent event) {
+        Navegacion.cambiarPantalla(lbErrorEmail, "TimeFast | Pantalla Principal", "FXMLPrincipal.fxml", this.getClass());
         if(!camposVacios()){
             Mensaje msj = LoginDAO.iniciarSesion(txEmail.getText(), psPassword.getText());
             if(msj.getError() == false){
                 Utilidades.mostrarAlertaSimple("Sesión Iniciada", msj.getMensaje(), Alert.AlertType.CONFIRMATION);
-                Navegacion.cambiarPantalla(lbErrorEmail, "TimeFast | Pantalla Principal", "FXMLPrincipal.fxml", this.getClass());
+                
             }else{
                 Utilidades.mostrarAlertaSimple("Error al iniciar sesión", msj.getMensaje(), Alert.AlertType.ERROR);
             }
