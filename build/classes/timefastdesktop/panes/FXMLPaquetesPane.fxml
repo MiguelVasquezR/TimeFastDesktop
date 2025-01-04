@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
@@ -10,13 +11,14 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="724.0" prefWidth="974.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="timefastdesktop.panes.FXMLPaquetesPaneController">
+<AnchorPane id="AnchorPane" prefHeight="724.0" prefWidth="974.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="timefastdesktop.panes.FXMLPaquetesPaneController">
    <children>
       <Rectangle arcHeight="80.0" arcWidth="80.0" fill="#112b3c" height="87.0" layoutX="20.0" layoutY="20.0" stroke="#112b3c" strokeType="INSIDE" width="934.0" />
       <Label layoutX="44.0" layoutY="40.0" text="Paquetes" textFill="WHITE">
@@ -48,7 +50,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <TextField fx:id="tfBuscar" prefHeight="32.0" prefWidth="312.0" promptText="Búscar envío" style="-fx-background-color: white; -fx-background-radius: 8px;" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <TextField fx:id="tfBuscar" prefHeight="32.0" prefWidth="312.0" promptText="Buscar paquete por su envío" style="-fx-background-color: white; -fx-background-radius: 8px;" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
                   <Font name="Roboto" size="15.0" />
                </font>
@@ -56,7 +58,7 @@
                   <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                </GridPane.margin>
             </TextField>
-            <Button fx:id="btnBuscar" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #F66B0E; -fx-background-radius: 12px;" text="Búscar" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <Button fx:id="btnBuscar" contentDisplay="CENTER" mnemonicParsing="false" onAction="#evtBuscarCliente" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #F66B0E; -fx-background-radius: 12px;" text="Búscar" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
                   <Font name="Roboto Bold" size="15.0" />
                </font>
@@ -83,7 +85,7 @@
                            </font>
                         </Label>
                         <TextField fx:id="tfAlto" layoutX="20.0" layoutY="460.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
-                        <Label fx:id="lbErrorAlto" layoutX="20.0" layoutY="487.0" prefWidth="230.0" text="La calle es necesaria" textFill="#da4040">
+                        <Label fx:id="lbErrorAlto" layoutX="20.0" layoutY="487.0" prefWidth="230.0" text="El alto es necesario" textFill="#da4040">
                            <font>
                               <Font name="Roboto" size="12.0" />
                            </font>
@@ -97,7 +99,7 @@
                            </font>
                         </Label>
                         <TextField fx:id="tfAncho" layoutX="20.0" layoutY="530.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
-                        <Label fx:id="lbErrorAncho" layoutX="20.0" layoutY="557.0" prefWidth="230.0" text="La colonia es necesaria" textFill="#da4040">
+                        <Label fx:id="lbErrorAncho" layoutX="20.0" layoutY="557.0" prefWidth="230.0" text="El ancho es necesario" textFill="#da4040">
                            <font>
                               <Font name="Roboto" size="12.0" />
                            </font>
@@ -110,8 +112,7 @@
                               <Font name="Roboto Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="tfEnvio" layoutX="20.0" layoutY="175.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
-                        <Label fx:id="lbErrorEnvio" layoutX="20.0" layoutY="205.0" prefWidth="230.0" text="Cliente necesario" textFill="#da4040">
+                        <Label fx:id="lbErrorEnvio" layoutX="20.0" layoutY="205.0" prefWidth="230.0" text="Envio necesario" textFill="#da4040">
                            <font>
                               <Font name="Roboto" size="12.0" />
                            </font>
@@ -130,7 +131,7 @@
                            </font>
                         </Label>
                         <TextField fx:id="tfProfundidad" layoutX="20.0" layoutY="600.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
-                        <Label fx:id="lbErrorProfundidad" layoutX="20.0" layoutY="627.0" prefWidth="230.0" text="La número de guía es necesaria" textFill="#da4040">
+                        <Label fx:id="lbErrorProfundidad" layoutX="20.0" layoutY="627.0" prefWidth="230.0" text="La profundidad es necesaria" textFill="#da4040">
                            <font>
                               <Font name="Roboto" size="12.0" />
                            </font>
@@ -144,7 +145,7 @@
                            </font>
                         </Label>
                         <TextField fx:id="tfPeso" layoutX="20.0" layoutY="671.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
-                        <Label fx:id="lbErrorPeso" layoutX="20.0" layoutY="698.0" prefWidth="230.0" text="El precio es necesaria" textFill="#da4040">
+                        <Label fx:id="lbErrorPeso" layoutX="20.0" layoutY="698.0" prefWidth="230.0" text="El precio es necesario" textFill="#da4040">
                            <font>
                               <Font name="Roboto" size="12.0" />
                            </font>
@@ -152,18 +153,18 @@
                               <Insets left="4.0" />
                            </padding>
                         </Label>
-                        <Button fx:id="btnGuardar" layoutX="96.0" layoutY="729.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="84.0" style="-fx-background-color: #F66B0E; -fx-background-radius: 12px;" text="Guardar" textAlignment="CENTER" textFill="WHITE">
+                        <Button fx:id="btnGuardar" layoutX="96.0" layoutY="729.0" mnemonicParsing="false" onAction="#botonPresionado" prefHeight="29.0" prefWidth="84.0" style="-fx-background-color: #F66B0E; -fx-background-radius: 12px;" text="Guardar" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font name="Roboto Bold" size="15.0" />
                            </font>
                         </Button>
-                        <TextArea fx:id="taDescripcion" layoutX="20.0" layoutY="249.0" prefHeight="132.0" prefWidth="230.0" style="-fx-background-color: #fff; -fx-background-radius: 12; -fx-border-radius: 12;" />
+                        <TextArea fx:id="taDescripcion" layoutX="20.0" layoutY="249.0" prefHeight="132.0" prefWidth="230.0" />
                         <Label layoutX="20.0" layoutY="232.0" text="Descripción" textFill="WHITE">
                            <font>
                               <Font name="Roboto Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lbErrorDescripcion" layoutX="20.0" layoutY="385.0" prefWidth="230.0" text="Cliente necesario" textFill="#da4040">
+                        <Label fx:id="lbErrorDescripcion" layoutX="20.0" layoutY="385.0" prefWidth="230.0" text="Descripcion necesaria" textFill="#da4040">
                            <font>
                               <Font name="Roboto" size="12.0" />
                            </font>
@@ -176,7 +177,7 @@
                               <Font name="Roboto Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="tfCliente" layoutX="19.0" layoutY="77.0" onKeyPressed="#buscarCliente" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
+                        <TextField fx:id="tfCliente" layoutX="19.0" layoutY="77.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
                         <Label fx:id="lbErrorCliente" layoutX="19.0" layoutY="107.0" prefWidth="230.0" text="Cliente necesario" textFill="#da4040">
                            <font>
                               <Font name="Roboto" size="12.0" />
@@ -185,16 +186,25 @@
                               <Insets left="4.0" />
                            </padding>
                         </Label>
-                        <Label fx:id="lbDatosDireccionCliente" alignment="TOP_LEFT" layoutX="18.0" layoutY="110.0" prefHeight="43.0" prefWidth="230.0" text="Cliente necesario" textFill="WHITE" wrapText="true">
-                           <font>
-                              <Font name="Roboto" size="12.0" />
-                           </font>
-                           <padding>
-                              <Insets left="4.0" />
-                           </padding>
-                        </Label>
+                        <ComboBox fx:id="cbEnvios" layoutX="20.0" layoutY="175.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4;" />
                      </children>
                   </Pane>
+               </children>
+            </AnchorPane>
+         </content>
+         <padding>
+            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+         </padding>
+      </ScrollPane>
+      <ScrollPane fx:id="scrollClientes" fitToHeight="true" fitToWidth="true" layoutX="30.0" layoutY="180.0" prefHeight="540.0" prefWidth="600.0" style="-fx-background-radius: 12; -fx-border-radius: 12; -fx-background-color: #112b3c; -fx-border-color: #112b3c;" vbarPolicy="ALWAYS">
+         <content>
+            <AnchorPane fx:id="contenedorClientes" prefWidth="600.0" style="-fx-background-color: #112b3c;">
+               <children>
+                  <FlowPane fx:id="fpPaquetes" alignment="TOP_CENTER" hgap="12.0" prefWidth="560.0" vgap="12.0">
+                     <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </AnchorPane>
          </content>

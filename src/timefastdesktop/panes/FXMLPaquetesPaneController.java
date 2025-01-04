@@ -1,52 +1,51 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package timefastdesktop.panes;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.FlowPane;
+import timefastdesktop.modelo.dao.PaqueteDAO;
+import timefastdesktop.panes.card.FXMLCardPaquetesController;
+import timefastdesktop.pojo.Mensaje;
+import timefastdesktop.pojo.Paquete;
+import timefastdesktop.utilidades.Utilidades;
+
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
+import java.util.stream.Collectors;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import timefastdesktop.modelo.dao.ClienteDAO;
-import timefastdesktop.pojo.Cliente;
-import timefastdesktop.pojo.Direccion;
-import timefastdesktop.pojo.Mensaje;
-import timefastdesktop.utilidades.Utilidades;
+import javafx.scene.layout.AnchorPane;
 
-/**
- * FXML Controller class
- *
- * @author vasquez
- */
 public class FXMLPaquetesPaneController implements Initializable {
 
     @FXML
-    private Label lbUsuario;
+    private ScrollPane scroll;
     @FXML
     private TextField tfBuscar;
     @FXML
-    private Button btnBuscar;
+    private FlowPane fpPaquetes;
+
+    private List<Paquete> listaPaquetes = new ArrayList<>();
     @FXML
-    private ScrollPane scroll;
+    private Label lbUsuario;
+    @FXML
+    private Button btnBuscar;
     @FXML
     private TextField tfAlto;
     @FXML
@@ -76,80 +75,254 @@ public class FXMLPaquetesPaneController implements Initializable {
     @FXML
     private Label lbErrorCliente;
     @FXML
-    private Label lbDatosDireccionCliente;
-
-    private Cliente datosCliente;
+    private ComboBox<String> cbEnvios;
     @FXML
-    private ComboBox<?> cbEnvios;
+    private ScrollPane scrollClientes;
+    @FXML
+    private AnchorPane contenedorClientes;
+
+    private Paquete paqueteEditar;
+    private Boolean estaEditando = false;
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Utilidades.estilizarBarraScroll(scroll);
-        vaciarLabels();
+        cargarPaquetes();
+        cargarIdsEnvio();
+        resetearLabelErrors();
     }
     
-    public void vaciarLabels() {
-    lbUsuario.setText("");
-    lbErrorAlto.setText("");
-    lbErrorAncho.setText("");
-    lbErrorEnvio.setText("");
-    lbErrorProfundidad.setText("");
-    lbErrorPeso.setText("");
-    lbErrorDescripcion.setText("");
-    lbErrorCliente.setText("");
-    lbDatosDireccionCliente.setText("");
-}
+    private void resetearLabelErrors() {
+        lbErrorAlto.setText("");
+        lbErrorAncho.setText("");
+        lbErrorEnvio.setText("");
+        lbErrorProfundidad.setText("");
+        lbErrorPeso.setText("");
+        lbErrorDescripcion.setText("");
+        lbErrorCliente.setText("");
+    }
 
+    private boolean validarFormulario() {
+        boolean esValido = true;
+        resetearLabelErrors();
 
-    //Búsqueda de cliente
-    private Cliente buscarClienteNombre(String nombre) {
-        Mensaje msj = ClienteDAO.buscarClienteNombre(nombre);
-        Integer idCliente = null;
-        if (!msj.getError()) {
-            Gson gson = new Gson();
+        if (tfAlto.getText().trim().isEmpty()) {
+            lbErrorAlto.setText("El alto es obligatorio.");
+            esValido = false;
+        } else {
             try {
-                Object objeto = msj.getObjeto();
-                JsonObject jsonObject = gson.fromJson(objeto.toString(), JsonObject.class);
-                JsonObject valueJsonObject = jsonObject.getAsJsonObject("value");
-                return gson.fromJson(valueJsonObject, Cliente.class);
-            } catch (JsonSyntaxException e) {
-                e.printStackTrace();
-                Utilidades.mostrarAlertaSimple("Error de Formato", "El formato de los datos es incorrecto.", Alert.AlertType.ERROR);
-            } catch (ClassCastException | NullPointerException e) {
-                Utilidades.mostrarAlertaSimple("Error Interno", "El objeto devuelto no tiene el formato esperado.", Alert.AlertType.ERROR);
+                Double.parseDouble(tfAlto.getText());
+            } catch (NumberFormatException e) {
+                lbErrorAlto.setText("El alto debe ser un valor numérico.");
+                esValido = false;
+            }
+        }
+
+        if (tfAncho.getText().trim().isEmpty()) {
+            lbErrorAncho.setText("El ancho es obligatorio.");
+            esValido = false;
+        } else {
+            try {
+                Double.parseDouble(tfAncho.getText());
+            } catch (NumberFormatException e) {
+                lbErrorAncho.setText("El ancho debe ser un valor numérico.");
+                esValido = false;
+            }
+        }
+
+        if (tfProfundidad.getText().trim().isEmpty()) {
+            lbErrorProfundidad.setText("La profundidad es obligatoria.");
+            esValido = false;
+        } else {
+            try {
+                Double.parseDouble(tfProfundidad.getText());
+            } catch (NumberFormatException e) {
+                lbErrorProfundidad.setText("La profundidad debe ser un valor numérico.");
+                esValido = false;
+            }
+        }
+
+        if (tfPeso.getText().trim().isEmpty()) {
+            lbErrorPeso.setText("El peso es obligatorio.");
+            esValido = false;
+        } else {
+            try {
+                Double.parseDouble(tfPeso.getText());
+            } catch (NumberFormatException e) {
+                lbErrorPeso.setText("El peso debe ser un valor numérico.");
+                esValido = false;
+            }
+        }
+
+        if (taDescripcion.getText().trim().isEmpty()) {
+            lbErrorDescripcion.setText("La descripción es obligatoria.");
+            esValido = false;
+        }
+
+        if (tfCliente.getText().trim().isEmpty()) {
+            lbErrorCliente.setText("El cliente es obligatorio.");
+            esValido = false;
+        }
+
+        if (cbEnvios.getValue() == null) {
+            lbErrorEnvio.setText("Debe seleccionar un tipo de envío.");
+            esValido = false;
+        }
+
+        return esValido;
+    }
+
+    private void cargarPaquetes() {
+        listaPaquetes = PaqueteDAO.obtenerPaquetes();
+        fpPaquetes.getChildren().clear();
+
+        if (listaPaquetes != null) {
+            if (listaPaquetes.isEmpty()) {
+                Utilidades.mostrarAlertaSimple("Sin Paquetes", "No se encontraron paquetes registrados.", Alert.AlertType.INFORMATION);
+            } else {
+                llenarTarjetasPaquetes(listaPaquetes);
             }
         } else {
-            Utilidades.mostrarAlertaSimple("Error Obtener Cliente", msj.getMensaje(), Alert.AlertType.ERROR);
-            vaciarLabels();
+            Utilidades.mostrarAlertaSimple("Error", "No se pudieron obtener los paquetes. Intente más tarde.", Alert.AlertType.ERROR);
         }
-        return null;
     }
 
-    private void llenarCampoDatosCliente() {
-        String direccion = String.format("%s #%s Col. %s, C.P. %s, %s, %s",
-                this.datosCliente.getDireccion().getCalle() != null ? this.datosCliente.getDireccion().getCalle() : "N/A",
-                this.datosCliente.getDireccion().getNumero() != null ? this.datosCliente.getDireccion().getNumero() : "N/A",
-                this.datosCliente.getDireccion().getColonia() != null ? this.datosCliente.getDireccion().getColonia() : "N/A",
-                this.datosCliente.getDireccion().getCodigoPostal() != null ? this.datosCliente.getDireccion().getCodigoPostal() : "N/A",
-                this.datosCliente.getDireccion().getCiudad() != null ? this.datosCliente.getDireccion().getCiudad() : "N/A",
-                this.datosCliente.getDireccion().getEstado() != null ? this.datosCliente.getDireccion().getEstado() : "N/A");
-        lbDatosDireccionCliente.setText(direccion);
+    private void llenarTarjetasPaquetes(List<Paquete> paquetes) {
+        try {
+            for (Paquete paquete : paquetes) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/timefastdesktop/panes/card/FXMLCardPaquetes.fxml"));
+                Parent tarjeta = loader.load();
+
+                FXMLCardPaquetesController controller = loader.getController();
+                controller.setPaqueteData(null, paquete); 
+
+                fpPaquetes.getChildren().add(tarjeta);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            Utilidades.mostrarAlertaSimple("Error", "No se pudieron cargar las tarjetas de paquetes.", Alert.AlertType.ERROR);
+        }
     }
-    
-    private void llenarComboBox(){
-        
+
+    private void buscarPaquete() {
+        String textoBusqueda = tfBuscar.getText().trim();
+
+        if (textoBusqueda.isEmpty()) {
+            cargarPaquetes(); 
+            return;
+        }
+
+        List<Paquete> paquetesFiltrados = new ArrayList<>();
+        for (Paquete paquete : listaPaquetes) {
+            if (paquete.getDescripcion() != null && paquete.getDescripcion().toLowerCase().contains(textoBusqueda.toLowerCase())) {
+                paquetesFiltrados.add(paquete);
+            }
+        }
+
+        if (paquetesFiltrados.isEmpty()) {
+            Utilidades.mostrarAlertaSimple("Sin Resultados", "No se encontraron paquetes que coincidan con la búsqueda.", Alert.AlertType.INFORMATION);
+        } else {
+            llenarTarjetasPaquetes(paquetesFiltrados);
+        }
+    }
+
+    private void cargarIdsEnvio() {
+        Mensaje mensaje = PaqueteDAO.obtenerTodosLosIdEnvio();
+
+        if (!mensaje.getError()) {
+            List<Integer> idsEnvio = (List<Integer>) mensaje.getObjeto();
+
+            if (idsEnvio != null && !idsEnvio.isEmpty()) {
+                cbEnvios.getItems().clear();
+                ObservableList<String> idsEnvioObservableList = FXCollections.observableArrayList(
+                        idsEnvio.stream()
+                                .map(String::valueOf)
+                                .collect(Collectors.toList())
+                );
+                cbEnvios.setItems(idsEnvioObservableList);  
+            } else {
+                Utilidades.mostrarAlertaSimple("Sin IDs de Envío", "No se encontraron IDs de envío disponibles.", Alert.AlertType.INFORMATION);
+            }
+        } else {
+            Utilidades.mostrarAlertaSimple("Error", "No se pudieron obtener los IDs de envío. Intente más tarde.", Alert.AlertType.ERROR);
+        }
     }
 
     @FXML
-    private void buscarCliente(KeyEvent event) {
-        if (event.getCode() == KeyCode.ENTER) {
-            if (!tfCliente.getText().isEmpty() || !tfCliente.getText().equals("")) {
-                this.datosCliente = buscarClienteNombre(tfCliente.getText());
-                if (this.datosCliente != null) {
-                    llenarCampoDatosCliente();
-                }
+    private void evtBuscarCliente(ActionEvent event) {
+        buscarPaquete();
+    }
+
+@FXML
+private void botonPresionado(ActionEvent event) {
+    if (validarFormulario()) {
+        Paquete paquete = new Paquete();
+
+        paquete.setDescripcion(taDescripcion.getText());
+        paquete.setDimensiones(tfAlto.getText() + "x" + tfAncho.getText() + "x" + tfProfundidad.getText());
+        paquete.setPeso(Double.parseDouble(tfPeso.getText()));
+        paquete.setIdEnvio(Integer.parseInt(cbEnvios.getValue()));
+
+        if (estaEditando) {
+            paquete.setId(paqueteEditar.getId()); 
+            Mensaje msj = PaqueteDAO.editarPaquete(paquete);
+            if (msj.getError() == false) {
+                Utilidades.mostrarAlertaSimple("Paquete Actualizado", "El paquete ha sido actualizado exitosamente.", Alert.AlertType.INFORMATION);
+            } else {
+                Utilidades.mostrarAlertaSimple("Error", "El paquete no se ha podido actualizar. Intente más tarde.", Alert.AlertType.ERROR);
+            }
+            this.estaEditando = false;
+            btnGuardar.setText("Guardar"); 
+        } else {
+            Mensaje msj = PaqueteDAO.agregarPaquete(paquete);
+            if (msj.getError() == false) {
+                Utilidades.mostrarAlertaSimple("Paquete Registrado", "El paquete ha sido registrado exitosamente.", Alert.AlertType.INFORMATION);
+            } else {
+                Utilidades.mostrarAlertaSimple("Error", "El paquete no se ha registrado. Intente más tarde.", Alert.AlertType.ERROR);
             }
         }
+
+        limpiarCampos();
+        cargarPaquetes();
+    }
+}
+    public void obtenerPaqueteHijo(Paquete paquete, Boolean estaEditando) {
+        this.estaEditando = estaEditando;
+        this.paqueteEditar = paquete;
+
+        
+        if (paquete != null) {
+            System.out.println("entro");
+            llenarFormularioEditarPaquete(paquete); 
+
+            
+            if (this.estaEditando) {
+                btnGuardar.setText("Actualizar");  
+            }
+        } else {
+            System.out.println("Paquete es nulo. No se puede editar.");
+        }
+    }
+
+        private void llenarFormularioEditarPaquete(Paquete paquete) {
+            tfAlto.setText(paquete.getDimensiones().split("x")[0]);  
+            tfAncho.setText(paquete.getDimensiones().split("x")[1]);
+            tfProfundidad.setText(paquete.getDimensiones().split("x")[2]);
+            tfPeso.setText(String.valueOf(paquete.getPeso()));
+            taDescripcion.setText(paquete.getDescripcion());
+            //cbEnvios.getSelectionModel().select(String.valueOf(paquete.getIdEnvio()));  
+        }
+
+
+    private void limpiarCampos() {
+        tfAlto.clear();
+        tfAncho.clear();
+        tfProfundidad.clear();
+        tfPeso.clear();
+        taDescripcion.clear();
+        tfCliente.clear();
+        cbEnvios.getSelectionModel().clearSelection();
     }
 
 }
