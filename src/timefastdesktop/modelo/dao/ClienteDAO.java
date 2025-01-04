@@ -17,7 +17,6 @@ public class ClienteDAO {
 
     public static Mensaje agregarCliente(Cliente cliente) {
         Mensaje msj = new Mensaje();
-
         String url = Constantes.URL_WS + "/cliente/agregar";
         Gson gson = new Gson();
         try {
