@@ -18,7 +18,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="724.0" prefWidth="974.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="timefastdesktop.panes.FXMLPaquetesPaneController">
+<AnchorPane id="AnchorPane" prefHeight="724.0" prefWidth="974.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="timefastdesktop.panes.FXMLPaquetesPaneController">
    <children>
       <Rectangle arcHeight="80.0" arcWidth="80.0" fill="#112b3c" height="87.0" layoutX="20.0" layoutY="20.0" stroke="#112b3c" strokeType="INSIDE" width="934.0" />
       <Label layoutX="44.0" layoutY="40.0" text="Paquetes" textFill="WHITE">
@@ -172,7 +172,7 @@
                               <Insets left="4.0" />
                            </padding>
                         </Label>
-                        <ComboBox fx:id="cbEnvios" layoutX="20.0" layoutY="72.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4;" />
+                        <ComboBox fx:id="cbEnvios" layoutX="20.0" layoutY="72.0" onAction="#cbCambio" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4;" />
                      </children>
                   </Pane>
                </children>

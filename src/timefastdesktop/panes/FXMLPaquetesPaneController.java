@@ -33,9 +33,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import timefastdesktop.observador.NotificadorOperacion;
+import timefastdesktop.pojo.Envio;
 
 public class FXMLPaquetesPaneController implements Initializable, NotificadorOperacion {
-
 
     @FXML
     private ScrollPane scroll;
@@ -74,7 +74,7 @@ public class FXMLPaquetesPaneController implements Initializable, NotificadorOpe
     @FXML
     private Label lbErrorDescripcion;
     @FXML
-    private ComboBox<String> cbEnvios;
+    private ComboBox<Envio> cbEnvios;
     @FXML
     private ScrollPane scrollClientes;
     @FXML
@@ -82,7 +82,7 @@ public class FXMLPaquetesPaneController implements Initializable, NotificadorOpe
 
     private Paquete paqueteEditar;
     private Boolean estaEditando = false;
-
+    private Envio envioSeleccionado;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -91,13 +91,13 @@ public class FXMLPaquetesPaneController implements Initializable, NotificadorOpe
         cargarIdsEnvio();
         resetearLabelErrors();
     }
-    
+
     @Override
     public void notificacionOperacion(String titulo, String mensaje) {
-        cargarPaquetes(); 
+        cargarPaquetes();
         Utilidades.mostrarAlertaSimple(titulo, mensaje, Alert.AlertType.INFORMATION);
     }
-    
+
     private void resetearLabelErrors() {
         lbErrorAlto.setText("");
         lbErrorAncho.setText("");
@@ -172,86 +172,76 @@ public class FXMLPaquetesPaneController implements Initializable, NotificadorOpe
         return esValido;
     }
 
-public void cargarPaquetes() {
-    listaPaquetes = PaqueteDAO.obtenerPaquetes(); 
-    fpPaquetes.getChildren().clear();
+    public void cargarPaquetes() {
+        listaPaquetes = PaqueteDAO.obtenerPaquetes();
+        fpPaquetes.getChildren().clear();
 
-    if (listaPaquetes != null) {
-        if (listaPaquetes.isEmpty()) {
-            Utilidades.mostrarAlertaSimple("Sin Paquetes", "No se encontraron paquetes registrados.", Alert.AlertType.INFORMATION);
+        if (listaPaquetes != null) {
+            if (listaPaquetes.isEmpty()) {
+                Utilidades.mostrarAlertaSimple("Sin Paquetes", "No se encontraron paquetes registrados.", Alert.AlertType.INFORMATION);
+            } else {
+                llenarTarjetasPaquetes(listaPaquetes); // Llenar las tarjetas con la lista completa
+            }
         } else {
-            llenarTarjetasPaquetes(listaPaquetes); // Llenar las tarjetas con la lista completa
+            Utilidades.mostrarAlertaSimple("Error", "No se pudieron obtener los paquetes. Intente más tarde.", Alert.AlertType.ERROR);
         }
-    } else {
-        Utilidades.mostrarAlertaSimple("Error", "No se pudieron obtener los paquetes. Intente más tarde.", Alert.AlertType.ERROR);
     }
-}
 
+    private void llenarTarjetasPaquetes(List<Paquete> paquetes) {
+        try {
+            for (Paquete paquete : paquetes) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/timefastdesktop/panes/card/FXMLCardPaquetes.fxml"));
+                Parent tarjeta = loader.load();
 
-private void llenarTarjetasPaquetes(List<Paquete> paquetes) {
-    try {
-        for (Paquete paquete : paquetes) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/timefastdesktop/panes/card/FXMLCardPaquetes.fxml"));
-            Parent tarjeta = loader.load();
+                FXMLCardPaquetesController controller = loader.getController();
+                controller.setPaqueteData(this, paquete);
+                controller.setPadreController(this);
 
-            FXMLCardPaquetesController controller = loader.getController();
-            controller.setPaqueteData(this, paquete); 
-
-            fpPaquetes.getChildren().add(tarjeta);
+                fpPaquetes.getChildren().add(tarjeta);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            Utilidades.mostrarAlertaSimple("Error", "No se pudieron cargar las tarjetas de paquetes.", Alert.AlertType.ERROR);
         }
-    } catch (IOException ex) {
-        ex.printStackTrace();
-        Utilidades.mostrarAlertaSimple("Error", "No se pudieron cargar las tarjetas de paquetes.", Alert.AlertType.ERROR);
-    }
-}
-
-
-
-private void buscarPaquete() {
-    String textoBusqueda = tfBuscar.getText().trim();
-    
-    fpPaquetes.getChildren().clear();
-
-    if (textoBusqueda.isEmpty()) {
-        
-        cargarPaquetes();
-        return;
     }
 
-    List<Paquete> paquetesFiltrados = listaPaquetes.stream()
-            .filter(paquete -> paquete.getEnvio() != null && paquete.getEnvio().getNumGuia() != null
-                    && paquete.getEnvio().getNumGuia().toLowerCase().contains(textoBusqueda.toLowerCase()))
-            .collect(Collectors.toList());
+    private void buscarPaquete() {
+        String textoBusqueda = tfBuscar.getText().trim();
 
-    if (paquetesFiltrados.isEmpty()) {
-        Utilidades.mostrarAlertaSimple("Sin Resultados", "No se encontraron paquetes con el número de guía ingresado.", Alert.AlertType.INFORMATION);
-    } else {
-        llenarTarjetasPaquetes(paquetesFiltrados);
+        fpPaquetes.getChildren().clear();
+
+        if (textoBusqueda.isEmpty()) {
+
+            cargarPaquetes();
+            return;
+        }
+
+        List<Paquete> paquetesFiltrados = listaPaquetes.stream()
+                .filter(paquete -> paquete.getEnvio() != null && paquete.getEnvio().getNumGuia() != null
+                && paquete.getEnvio().getNumGuia().toLowerCase().contains(textoBusqueda.toLowerCase()))
+                .collect(Collectors.toList());
+
+        if (paquetesFiltrados.isEmpty()) {
+            Utilidades.mostrarAlertaSimple("Sin Resultados", "No se encontraron paquetes con el número de guía ingresado.", Alert.AlertType.INFORMATION);
+        } else {
+            llenarTarjetasPaquetes(paquetesFiltrados);
+        }
     }
-}
-
-
-
 
     private void cargarIdsEnvio() {
-        Mensaje mensaje = PaqueteDAO.obtenerTodosLosIdEnvio();
-
+        Mensaje mensaje = PaqueteDAO.obtenerTodosEnvio();
         if (!mensaje.getError()) {
-            List<Integer> idsEnvio = (List<Integer>) mensaje.getObjeto();
+            List<Envio> idsEnvio = (List<Envio>) mensaje.getObjeto();
 
             if (idsEnvio != null && !idsEnvio.isEmpty()) {
                 cbEnvios.getItems().clear();
-                ObservableList<String> idsEnvioObservableList = FXCollections.observableArrayList(
-                        idsEnvio.stream()
-                                .map(String::valueOf)
-                                .collect(Collectors.toList())
-                );
-                cbEnvios.setItems(idsEnvioObservableList);  
+                ObservableList<Envio> idsEnvioObservableList = FXCollections.observableArrayList(idsEnvio);
+                cbEnvios.setItems(idsEnvioObservableList);
             } else {
-                Utilidades.mostrarAlertaSimple("Sin IDs de Envío", "No se encontraron IDs de envío disponibles.", Alert.AlertType.INFORMATION);
+                Utilidades.mostrarAlertaSimple("Sin Envíos", "No se encontraron envíos disponibles.", Alert.AlertType.INFORMATION);
             }
         } else {
-            Utilidades.mostrarAlertaSimple("Error", "No se pudieron obtener los IDs de envío. Intente más tarde.", Alert.AlertType.ERROR);
+            Utilidades.mostrarAlertaSimple("Error", "No se pudieron obtener los envíos. Intente más tarde.", Alert.AlertType.ERROR);
         }
     }
 
@@ -260,88 +250,93 @@ private void buscarPaquete() {
         buscarPaquete();
     }
 
-@FXML
-private void textoCambia(KeyEvent event) {
-    String textoBusqueda = tfBuscar.getText().trim();
+    private void textoCambia(KeyEvent event) {
+        String textoBusqueda = tfBuscar.getText().trim();
 
-    fpPaquetes.getChildren().clear();
+        fpPaquetes.getChildren().clear();
 
-    if (textoBusqueda.isEmpty()) {
-        cargarPaquetes();
+        if (textoBusqueda.isEmpty()) {
+            cargarPaquetes();
+        }
     }
-}
 
-
-    
     private String construirDimensiones(String alto, String ancho, String profundidad) {
         return String.format("%sx%sx%s", alto.trim(), ancho.trim(), profundidad.trim());
     }
-    
-@FXML
-private void botonPresionado(ActionEvent event) {
-    if (validarFormulario()) {
-        Paquete paquete = new Paquete();
 
-        paquete.setDescripcion(taDescripcion.getText());
-        paquete.setDimensiones(construirDimensiones(tfAlto.getText(), tfAncho.getText(), tfProfundidad.getText()));
-        paquete.setPeso(Double.parseDouble(tfPeso.getText()));
-        paquete.setIdEnvio(Integer.parseInt(cbEnvios.getValue()));
+    @FXML
+    private void botonPresionado(ActionEvent event) {
+        if (validarFormulario()) {
+            Paquete paquete = new Paquete();
 
-        
-        if (estaEditando) {
-            paquete.setId(paqueteEditar.getId());
-            Mensaje msj = PaqueteDAO.editarPaquete(paquete);
-            System.out.println(paquete+"este fue el paquete   ");
-            System.out.println(msj);
-            if (!msj.getError()) {
-                Utilidades.mostrarAlertaSimple("Paquete Actualizado", "El paquete ha sido actualizado exitosamente.", Alert.AlertType.INFORMATION);
+            paquete.setDescripcion(taDescripcion.getText());
+            paquete.setDimensiones(construirDimensiones(tfAlto.getText(), tfAncho.getText(), tfProfundidad.getText()));
+            paquete.setPeso(Double.parseDouble(tfPeso.getText()));
+
+            if (cbEnvios.getValue() != null) {
+                paquete.setIdEnvio(cbEnvios.getValue().getIdEnvio());
             } else {
-                Utilidades.mostrarAlertaSimple("Error", "El paquete no se ha podido actualizar. Intente más tarde.", Alert.AlertType.ERROR);
+                paquete.setIdEnvio(this.paqueteEditar.getEnvio().getIdEnvio());
             }
-            estaEditando = false;
-            btnGuardar.setText("Guardar");
+
+            if (estaEditando) {
+                paquete.setId(this.paqueteEditar.getIdPaquete());
+                paquete.setIdPaquete(this.paqueteEditar.getIdPaquete());
+
+                Mensaje msj = PaqueteDAO.editarPaquete(paquete);
+                System.out.println(paquete + "este fue el paquete   ");
+                System.out.println(msj);
+                if (!msj.getError()) {
+                    Utilidades.mostrarAlertaSimple("Paquete Actualizado", "El paquete ha sido actualizado exitosamente.", Alert.AlertType.INFORMATION);
+                } else {
+                    Utilidades.mostrarAlertaSimple("Error", "El paquete no se ha podido actualizar. Intente más tarde.", Alert.AlertType.ERROR);
+                }
+                estaEditando = false;
+                btnGuardar.setText("Guardar");
+            } else {
+                Mensaje msj = PaqueteDAO.agregarPaquete(paquete);
+                if (!msj.getError()) {
+                    Utilidades.mostrarAlertaSimple("Paquete Registrado", "El paquete ha sido registrado exitosamente.", Alert.AlertType.INFORMATION);
+                } else {
+                    Utilidades.mostrarAlertaSimple("Error", "El paquete no se ha registrado. Intente más tarde.", Alert.AlertType.ERROR);
+                }
+            }
+
+            limpiarCampos();
+            cargarPaquetes();
+        }
+    }
+
+    public void obtenerPaqueteHijo(Paquete paquete, Boolean estaEditando) {
+        if (paquete != null) {
+            this.estaEditando = estaEditando;
+            this.paqueteEditar = paquete;
+            llenarFormularioEditarPaquete(paquete);
+
+            if (estaEditando) {
+                btnGuardar.setText("Actualizar");
+            }
         } else {
-            Mensaje msj = PaqueteDAO.agregarPaquete(paquete);
-            if (!msj.getError()) {
-                Utilidades.mostrarAlertaSimple("Paquete Registrado", "El paquete ha sido registrado exitosamente.", Alert.AlertType.INFORMATION);
-            } else {
-                Utilidades.mostrarAlertaSimple("Error", "El paquete no se ha registrado. Intente más tarde.", Alert.AlertType.ERROR);
-            }
+            Utilidades.mostrarAlertaSimple("Error", "El paquete no existe o no se puede editar.", Alert.AlertType.ERROR);
+        }
+    }
+
+    private void llenarFormularioEditarPaquete(Paquete paquete) {
+        try {
+            String[] dimensiones = paquete.getDimensiones().split("x");
+            System.out.println(dimensiones);
+            tfAlto.setText(dimensiones[0]);
+            tfAncho.setText(dimensiones[1]);
+            tfProfundidad.setText(dimensiones[2]);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Utilidades.mostrarAlertaSimple("Error", "Las dimensiones del paquete no tienen el formato esperado.", Alert.AlertType.ERROR);
         }
 
-        limpiarCampos();
-        cargarPaquetes();
+        tfPeso.setText(String.valueOf(paquete.getPeso()));
+        taDescripcion.setText(paquete.getDescripcion());
+        cbEnvios.getSelectionModel().select(paquete.getEnvio());
     }
-}
-public void obtenerPaqueteHijo(Paquete paquete, Boolean estaEditando) {
-    if (paquete != null) {
-        this.estaEditando = estaEditando;
-        this.paqueteEditar = paquete;
-        llenarFormularioEditarPaquete(paquete);
-
-        if (estaEditando) {
-            btnGuardar.setText("Actualizar");
-        }
-    } else {
-        Utilidades.mostrarAlertaSimple("Error", "El paquete no existe o no se puede editar.", Alert.AlertType.ERROR);
-    }
-}
-
-private void llenarFormularioEditarPaquete(Paquete paquete) {
-    try {
-        String[] dimensiones = paquete.getDimensiones().split("x");
-        tfAlto.setText(dimensiones[0]);
-        tfAncho.setText(dimensiones[1]);
-        tfProfundidad.setText(dimensiones[2]);
-    } catch (Exception e) {
-        Utilidades.mostrarAlertaSimple("Error", "Las dimensiones del paquete no tienen el formato esperado.", Alert.AlertType.ERROR);
-    }
-
-    tfPeso.setText(String.valueOf(paquete.getPeso()));
-    taDescripcion.setText(paquete.getDescripcion());
-    cbEnvios.getSelectionModel().select(String.valueOf(paquete.getIdEnvio()));
-}
-
 
     private void limpiarCampos() {
         tfAlto.clear();
@@ -349,9 +344,12 @@ private void llenarFormularioEditarPaquete(Paquete paquete) {
         tfProfundidad.clear();
         tfPeso.clear();
         taDescripcion.clear();
-        cbEnvios.getSelectionModel().clearSelection();
+        cbEnvios.getSelectionModel().select(-1);
     }
 
-
+    @FXML
+    private void cbCambio(ActionEvent event) {
+        this.envioSeleccionado = cbEnvios.getValue();
+    }
 
 }

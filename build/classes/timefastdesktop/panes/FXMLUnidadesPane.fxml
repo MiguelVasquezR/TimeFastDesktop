@@ -46,7 +46,7 @@
             <RowConstraints maxHeight="43.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <TextField fx:id="tfBuscar" onKeyReleased="#textoCambia" prefHeight="32.0" prefWidth="312.0" promptText="Búscar Unidad" style="-fx-background-color: white; -fx-background-radius: 8px;" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <TextField fx:id="tfBuscar" onKeyReleased="#textoCambia" prefHeight="32.0" prefWidth="312.0" promptText="Búscar Unidad por VIN, Marca o NII" style="-fx-background-color: white; -fx-background-radius: 8px;" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
                   <Font name="Roboto" size="15.0" />
                </font>
