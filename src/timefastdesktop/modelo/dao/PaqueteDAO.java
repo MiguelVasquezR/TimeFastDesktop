@@ -145,40 +145,37 @@ public class PaqueteDAO {
     }
     
     public static Mensaje obtenerTodosLosIdEnvio() {
-        Mensaje mensaje = new Mensaje();
-        String url = Constantes.URL_WS + "/envios/todos-id-envio";
-        RespuestaHTTP respuestaWS = ConexionWS.peticionGET(url);
+            Mensaje mensaje = new Mensaje();
+            String url = Constantes.URL_WS + "/envios/todos-id-envio";
+            RespuestaHTTP respuestaWS = ConexionWS.peticionGET(url);
+            if (respuestaWS.getCodigoRespuesta() == HttpURLConnection.HTTP_OK) {
+                Gson gson = new Gson();
+                try {
+                    Type tipoRespuesta = new TypeToken<Mensaje>() {}.getType();
+                    Mensaje respuestaServidor = gson.fromJson(respuestaWS.getContenido(), tipoRespuesta);
+                    if (!respuestaServidor.getError()) {
 
-        if (respuestaWS.getCodigoRespuesta() == HttpURLConnection.HTTP_OK) {
-            Gson gson = new Gson();
-            try {
-                Type tipoRespuesta = new TypeToken<Mensaje>() {}.getType();
-                Mensaje respuestaServidor = gson.fromJson(respuestaWS.getContenido(), tipoRespuesta);
-
-                if (!respuestaServidor.getError()) {
-                    
-                    String objetoComoString = (String) respuestaServidor.getObjeto();
-                    List<Integer> idsEnvio = Arrays.stream(objetoComoString.split("\\s+"))
-                                                   .map(Integer::parseInt)
-                                                   .collect(Collectors.toList());
-
-                    mensaje.setObjeto(idsEnvio);
-                    mensaje.setError(false);
-                    mensaje.setMensaje("IDs de envío obtenidos exitosamente");
-                } else {
+                        String objetoComoString = (String) respuestaServidor.getObjeto();
+                        List<Integer> idsEnvio = Arrays.stream(objetoComoString.split("\\s+"))
+                                                       .map(Integer::parseInt)
+                                                       .collect(Collectors.toList());
+                        mensaje.setObjeto(idsEnvio);
+                        mensaje.setError(false);
+                        mensaje.setMensaje("IDs de envío obtenidos exitosamente");
+                    } else {
+                        mensaje.setError(true);
+                        mensaje.setMensaje(respuestaServidor.getMensaje());
+                    }
+                } catch (Exception e) {
                     mensaje.setError(true);
-                    mensaje.setMensaje(respuestaServidor.getMensaje());
+                    mensaje.setMensaje(e.getMessage());
                 }
-            } catch (Exception e) {
+            } else {
                 mensaje.setError(true);
-                mensaje.setMensaje(e.getMessage());
+                mensaje.setMensaje("Error al obtener los IDs de envío.");
             }
-        } else {
-            mensaje.setError(true);
-            mensaje.setMensaje("Error al obtener los IDs de envío.");
+            return mensaje;
         }
-        return mensaje;
-    }
     
     public static Mensaje obtenerPaquetesPorEnvio(int idEnvio) {
     Mensaje mensaje = new Mensaje();

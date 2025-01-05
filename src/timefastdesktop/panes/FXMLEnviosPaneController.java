@@ -1,21 +1,46 @@
 package timefastdesktop.panes;
 
+import com.google.gson.Gson;
+import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ScrollPane;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
+import timefastdesktop.modelo.dao.EnviosDAO;
+import timefastdesktop.panes.card.FXMLCardEnviosController;
 import timefastdesktop.pojo.Direccion;
 import timefastdesktop.pojo.Envio;
+import timefastdesktop.pojo.Mensaje;
 import timefastdesktop.utilidades.Utilidades;
+import timefastdesktop.observador.NotificadorOperacion;
+import java.lang.reflect.Type;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.util.Map;
 
-public class FXMLEnviosPaneController implements Initializable {
+import timefastdesktop.modelo.dao.ClienteDAO;
+import timefastdesktop.pojo.Cliente;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import timefastdesktop.pojo.Persona;
+
+
+
+public class FXMLEnviosPaneController implements Initializable, NotificadorOperacion {
 
     @FXML
     private ScrollPane scroll;
@@ -50,11 +75,9 @@ public class FXMLEnviosPaneController implements Initializable {
     @FXML
     private Label lbErrorEstado;
     @FXML
-    private TextField tfCliente;
-    @FXML
     private Label lbErrorCliente;
     @FXML
-    private ComboBox<Direccion> cbOrigen;
+    private ComboBox<String> cbOrigen;
     @FXML
     private Label lbErrorOrigen;
     @FXML
@@ -65,145 +88,211 @@ public class FXMLEnviosPaneController implements Initializable {
     private TextField tfPrecio;
     @FXML
     private Label lbErrorPrecio;
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        Utilidades.estilizarBarraScroll(scroll);
-        resetearLabelError();
-    }
-
-    private void resetearLabelError() {
-        lbErrorCalle.setText("");
-        lbErrorColonia.setText("");
-        lbErrorNumero.setText("");
-        lbErrorCP.setText("");
-        lbErrorCiudad.setText("");
-        lbErrorEstado.setText("");
-        lbErrorCliente.setText("");
-        lbErrorOrigen.setText("");
-        lbErrorNumGuia.setText("");
-        lbErrorPrecio.setText("");
-    }
-
-    private Boolean validarDatos() {
-        boolean esValido = true;
-
-        resetearLabelError();
-
-        if (tfCalle.getText() == null || tfCalle.getText().trim().isEmpty()) {
-            lbErrorCalle.setText("La calle no puede estar vacía.");
-            esValido = false;
-        }
-
-        if (tfColonia.getText() == null || tfColonia.getText().trim().isEmpty()) {
-            lbErrorColonia.setText("La colonia no puede estar vacía.");
-            esValido = false;
-        }
-
-        if (tfNumero.getText() == null || tfNumero.getText().trim().isEmpty()) {
-            lbErrorNumero.setText("El número no puede estar vacío.");
-            esValido = false;
-        } else {
-            try {
-                Integer.parseInt(tfNumero.getText());
-            } catch (NumberFormatException e) {
-                lbErrorNumero.setText("El número debe ser un valor numérico.");
-                esValido = false;
-            }
-        }
-
-        if (tfCP.getText() == null || tfCP.getText().trim().isEmpty()) {
-            lbErrorCP.setText("El código postal no puede estar vacío.");
-            esValido = false;
-        } else if (tfCP.getText().length() != 5) {
-            lbErrorCP.setText("El código postal debe tener 5 dígitos.");
-            esValido = false;
-        } else {
-            try {
-                Integer.parseInt(tfCP.getText());
-            } catch (NumberFormatException e) {
-                lbErrorCP.setText("El código postal debe ser un valor numérico.");
-                esValido = false;
-            }
-        }
-
-        if (tfCiudad.getText() == null || tfCiudad.getText().trim().isEmpty()) {
-            lbErrorCiudad.setText("La ciudad no puede estar vacía.");
-            esValido = false;
-        }
-
-        if (tfEstado.getText() == null || tfEstado.getText().trim().isEmpty()) {
-            lbErrorEstado.setText("El estado no puede estar vacío.");
-            esValido = false;
-        }
-
-        if (tfCliente.getText() == null || tfCliente.getText().trim().isEmpty()) {
-            lbErrorCliente.setText("El cliente no puede estar vacío.");
-            esValido = false;
-        }
-
-        if (cbOrigen.getValue() == null) {
-            lbErrorOrigen.setText("Debe seleccionar un origen.");
-            esValido = false;
-        }
-
-        if (tfNumGuia.getText() == null || tfNumGuia.getText().trim().isEmpty()) {
-            lbErrorNumGuia.setText("El número de guía no puede estar vacío.");
-            esValido = false;
-        }
-
-        if (tfPrecio.getText() == null || tfPrecio.getText().trim().isEmpty()) {
-            lbErrorPrecio.setText("El precio no puede estar vacío.");
-            esValido = false;
-        } else {
-            try {
-                Double.parseDouble(tfPrecio.getText());
-            } catch (NumberFormatException e) {
-                lbErrorPrecio.setText("El precio debe ser un valor numérico.");
-                esValido = false;
-            }
-        }
-
-        return esValido;
-
-    }
-
-    private void llenarPojos() {
-        /*
-        Direccion origen = new Direccion(
-                tfCalle.getText(),
-                tfColonia.getText(),
-                tfNumero.getText(),
-                tfCP.getText(),
-                tfCiudad.getText(),
-                tfEstado.getText()
-        );
-
-        Direccion destino = new Direccion(
-                "Calle de ejemplo",
-                "Colonia de ejemplo",
-                "123",
-                "45678",
-                "Ciudad de ejemplo",
-                "Estado de ejemplo"
-        );
-
-        Envio envio = new Envio(
-                tfCliente.getText(),
-                origen,
-                destino,
-                tfNumGuia.getText(),
-                tfPrecio.getText()
-        );
-         */
-
-    }
+    @FXML
+    private ScrollPane scrollEnvios;
+    @FXML
+    private AnchorPane contenedorEnvios;
+    @FXML
+    private FlowPane fpEnvios;
 
     @FXML
-    private void botonPresionado(ActionEvent event) {
-        if (validarDatos()) {
-            llenarPojos();
+    private ComboBox<String> cbCliente; 
+
+    private List<Cliente> listaClientes;
+
+@Override
+public void initialize(URL url, ResourceBundle rb) {
+    Utilidades.estilizarBarraScroll(scrollEnvios);
+    llenarContenedorEnvios();
+    esconderLabelsDeError();
+    cargarClientes();
+    cargarDireccionesOrigen(); 
+}
+
+
+    
+    private void cargarClientes() {
+        listaClientes = ClienteDAO.obtenerClientes();
+
+        if (listaClientes != null && !listaClientes.isEmpty()) {
+            ObservableList<String> nombresClientes = FXCollections.observableArrayList();
+            for (Cliente cliente : listaClientes) {
+                Persona persona = cliente.getPersona();
+                if (persona != null) {
+                    String nombreCompleto = persona.getNombre() + " " + 
+                                            persona.getApellidoPaterno() + " " + 
+                                            persona.getApellidoMaterno();
+                    nombresClientes.add(nombreCompleto);
+                }
+            }
+            cbCliente.setItems(nombresClientes); 
+        } else {
+            Utilidades.mostrarAlertaSimple("Sin Clientes", 
+                    "No se encontraron clientes disponibles.", Alert.AlertType.INFORMATION);
         }
     }
+
+
+private void esconderLabelsDeError() {
+    lbErrorCalle.setVisible(false);
+    lbErrorColonia.setVisible(false);
+    lbErrorNumero.setVisible(false);
+    lbErrorCP.setVisible(false);
+    lbErrorCiudad.setVisible(false);
+    lbErrorEstado.setVisible(false);
+    lbErrorCliente.setVisible(false);
+    lbErrorOrigen.setVisible(false);
+    lbErrorNumGuia.setVisible(false);
+    lbErrorPrecio.setVisible(false);
+}
+    
+    private void llenarContenedorEnvios() {
+    Mensaje respuesta = EnviosDAO.obtenerTodosLosEnvios();
+
+    fpEnvios.getChildren().clear();
+
+    if (respuesta != null && !respuesta.getError()) {
+        try {
+            if (respuesta.getObjeto() instanceof Map) {
+                Map<String, Object> objeto = (Map<String, Object>) respuesta.getObjeto();
+
+                if (objeto.containsKey("value") && objeto.get("value") instanceof String) {
+                    String jsonEnvios = (String) objeto.get("value");
+
+                   
+                    Gson gson = new Gson();
+                    Type tipoListaEnvios = new TypeToken<List<Envio>>() {}.getType();
+                    List<Envio> listaEnvios = gson.fromJson(jsonEnvios, tipoListaEnvios);
+
+                    if (listaEnvios != null && !listaEnvios.isEmpty()) {
+                        // Filtra y valida los datos antes de mostrarlos
+                        listaEnvios.removeIf(envio -> envio.getCliente() == null || envio.getDestino() == null);
+                        if (listaEnvios.isEmpty()) {
+                            Utilidades.mostrarAlertaSimple("No hay registros válidos",
+                                    "Se encontraron envíos, pero los datos están incompletos.", Alert.AlertType.WARNING);
+                        } else {
+                            llenarTarjetasEnvios(listaEnvios);
+                        }
+                    } else {
+                        Utilidades.mostrarAlertaSimple("No hay registros",
+                                "Por el momento no se tienen registros de envíos.", Alert.AlertType.INFORMATION);
+                    }
+                } else {
+                    Utilidades.mostrarAlertaSimple("Datos inesperados",
+                            "El campo 'value' no tiene el formato esperado.", Alert.AlertType.ERROR);
+                }
+            } else {
+                Utilidades.mostrarAlertaSimple("Datos inesperados",
+                        "El objeto recibido no tiene la estructura esperada.", Alert.AlertType.ERROR);
+            }
+        } catch (Exception e) {
+            Utilidades.mostrarAlertaSimple("Error al procesar los datos",
+                    "Hubo un problema al interpretar los datos de envíos: " + e.getMessage(), Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
+    } else {
+        String mensajeError = (respuesta != null) ? respuesta.getMensaje() : "Error desconocido.";
+        Utilidades.mostrarAlertaSimple("Problemas al obtener envíos",
+                "Por el momento no se pueden obtener los envíos. Detalles: " + mensajeError, Alert.AlertType.ERROR);
+    }
+}
+
+    private void llenarTarjetasEnvios(List<Envio> lista) {
+        try {
+            for (Envio envio : lista) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/timefastdesktop/panes/card/FXMLCardEnvios.fxml"));
+                Parent tarjetaPresentacion = loader.load();
+                FXMLCardEnviosController controller = loader.getController();
+                controller.setEnvioData(this, envio);
+                fpEnvios.getChildren().add(tarjetaPresentacion);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void notificacionOperacion(String titulo, String nombre) {
+        llenarContenedorEnvios();
+    }
+    
+    @FXML
+    private void botonPresionado(ActionEvent event) {
+        //if (validarFormulario()) {
+          //  llenarPojo();
+        //}
+    }
+    
+private Cliente obtenerClienteSeleccionado() {
+    String clienteSeleccionado = cbCliente.getValue();
+    if (clienteSeleccionado != null && !clienteSeleccionado.isEmpty()) {
+        for (Cliente cliente : listaClientes) {
+            Persona persona = cliente.getPersona();
+            if (persona != null) {
+                String nombreCompleto = persona.getNombre() + " " + 
+                                        persona.getApellidoPaterno() + " " + 
+                                        persona.getApellidoMaterno();
+                if (nombreCompleto.equals(clienteSeleccionado)) {
+                    return cliente; 
+                }
+            }
+        }
+    }
+    return null; 
+}
+
+    
+@FXML
+private void btnSeleccionarCliente(ActionEvent event) {
+    Cliente cliente = obtenerClienteSeleccionado();
+    if (cliente != null) {
+        Utilidades.mostrarAlertaSimple("Cliente Seleccionado", 
+                "ID: " + cliente.getId() + "\nNombre: " + cliente.getPersona().getNombre() +
+                "\nTeléfono: " + cliente.getTelefono(), Alert.AlertType.INFORMATION);
+    } else {
+        Utilidades.mostrarAlertaSimple("Error", 
+                "Debe seleccionar un cliente válido.", Alert.AlertType.WARNING);
+    }
+}
+
+
+private void cargarDireccionesOrigen() {
+    Mensaje respuesta = EnviosDAO.obtenerDireccionesOrigen();
+
+    if (respuesta != null && !respuesta.getError()) {
+        List<Direccion> listaDirecciones = (List<Direccion>) respuesta.getObjeto();
+
+        if (listaDirecciones != null && !listaDirecciones.isEmpty()) {
+            ObservableList<String> idsDirecciones = FXCollections.observableArrayList();
+
+            for (Direccion direccion : listaDirecciones) {
+                idsDirecciones.add(String.valueOf(direccion.getIdDireccion())); // Agregar solo el ID como String
+            }
+
+            cbOrigen.setItems(idsDirecciones); // Establecer los IDs en el ComboBox
+        } else {
+            Utilidades.mostrarAlertaSimple("Sin Direcciones", 
+                    "No se encontraron direcciones de origen disponibles.", Alert.AlertType.INFORMATION);
+        }
+    } else {
+        String mensajeError = (respuesta != null) ? respuesta.getMensaje() : "Error desconocido.";
+        Utilidades.mostrarAlertaSimple("Error al Obtener Direcciones", 
+                "No fue posible cargar las direcciones de origen. Detalles: " + mensajeError, Alert.AlertType.ERROR);
+    }
+}
+
+
+    @FXML
+    private void seleccionarDireccionOrigen(ActionEvent event) {
+        String direccionSeleccionada = cbOrigen.getValue();
+        if (direccionSeleccionada != null && !direccionSeleccionada.isEmpty()) {
+            Utilidades.mostrarAlertaSimple("Dirección Seleccionada", 
+                    "Has seleccionado la dirección: " + direccionSeleccionada, Alert.AlertType.INFORMATION);
+        } else {
+            Utilidades.mostrarAlertaSimple("Error", 
+                    "Por favor selecciona una dirección válida.", Alert.AlertType.WARNING);
+        }
+    }
+
 
 }

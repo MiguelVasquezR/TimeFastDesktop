@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import timefastdesktop.modelo.dao.LoginDAO;
 import timefastdesktop.pojo.Mensaje;
 import timefastdesktop.utilidades.Navegacion;
+import timefastdesktop.utilidades.SesionUsuario;
 import timefastdesktop.utilidades.Utilidades;
 
 public class FXMLLoginController implements Initializable {
@@ -39,16 +40,20 @@ public class FXMLLoginController implements Initializable {
 
     @FXML
     private void btnIngresar(ActionEvent event) {
-        if(!camposVacios()){
+        if (!camposVacios()) {
             Mensaje msj = LoginDAO.iniciarSesion(txEmail.getText(), psPassword.getText());
-            if(msj.getError() == false){
+            if (!msj.getError()) {
+                // Guardar el noPersonal en la sesión global
+                SesionUsuario.getInstancia().setNoPersonal(txEmail.getText()); // Aquí asumimos que `txEmail` contiene el noPersonal
+
                 Utilidades.mostrarAlertaSimple("Sesión Iniciada", msj.getMensaje(), Alert.AlertType.CONFIRMATION);
                 Navegacion.cambiarPantalla(lbErrorEmail, "TimeFast | Pantalla Principal", "FXMLPrincipal.fxml", this.getClass());
-            }else{
+            } else {
                 Utilidades.mostrarAlertaSimple("Error al iniciar sesión", msj.getMensaje(), Alert.AlertType.ERROR);
             }
         }
     }
+
 
     private boolean camposVacios() {
         boolean band = false;

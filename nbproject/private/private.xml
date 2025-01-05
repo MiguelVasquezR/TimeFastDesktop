@@ -4,17 +4,30 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/modelo/dao/PaqueteDAO.java</file>
-            <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/pojo/Paquete.java</file>
-            <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/FXMLPrincipalController.java</file>
-            <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/panes/FXMLPaquetesPaneController.java</file>
             <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/pojo/Mensaje.java</file>
+            <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/FXMLLoginController.java</file>
             <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/panes/card/FXMLCardClienteController.java</file>
-            <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/FXMLOlvideContrasenaController.java</file>
             <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/pojo/Direccion.java</file>
-            <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/observador/NotificadorOperacion.java</file>
             <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/panes/FXMLUsuariosPaneController.java</file>
-            <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/panes/card/FXMLCardPaquetesController.java</file>
+            <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/panes/EnvioEstado.fxml</file>
             <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/pojo/Envio.java</file>
+            <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/utilidades/SesionUsuario.java</file>
+            <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/panes/card/FXMLAsignarConductorController.java</file>
+            <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/pojo/Paquete.java</file>
+            <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/modelo/dao/ClienteDAO.java</file>
+            <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/FXMLPrincipalController.java</file>
+            <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/modelo/dao/UnidadDAO.java</file>
+            <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/modelo/dao/LoginDAO.java</file>
+            <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/panes/FXMLPaquetesPaneController.java</file>
+            <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/panes/FXMLColaboradorPaneController.java</file>
+            <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/panes/card/FXMLCardEnviosController.java</file>
+            <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/panes/card/FXMLCardUnidadController.java</file>
+            <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/pojo/Colaborador.java</file>
+            <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/observador/NotificadorOperacion.java</file>
+            <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/panes/card/FXMLAsignarConductor.fxml</file>
+            <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/panes/EnvioEstadoController.java</file>
+            <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/panes/card/FXMLCardPaquetesController.java</file>
+            <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/panes/FXMLEnviosPaneController.java</file>
             <file>file:/C:/Users/CDGN_/Desktop/desktop/TimeFastDesktop/src/timefastdesktop/modelo/dao/EnviosDAO.java</file>
         </group>
     </open-files>
