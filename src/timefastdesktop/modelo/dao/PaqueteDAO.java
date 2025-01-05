@@ -1,6 +1,9 @@
 package timefastdesktop.modelo.dao;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +16,7 @@ import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import timefastdesktop.utilidades.Constantes;
+import timefastdesktop.pojo.Envio;
 
 public class PaqueteDAO {
 
@@ -43,7 +47,8 @@ public class PaqueteDAO {
         if (respuestaWS.getCodigoRespuesta() == HttpURLConnection.HTTP_OK) {
             Gson gson = new Gson();
             try {
-                Type tipoListaPaquete = new TypeToken<List<Paquete>>() {}.getType();
+                Type tipoListaPaquete = new TypeToken<List<Paquete>>() {
+                }.getType();
                 paquetes = gson.fromJson(respuestaWS.getContenido(), tipoListaPaquete);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -109,7 +114,6 @@ public class PaqueteDAO {
         return msj;
     }
 
-
     public static Mensaje obtenerTodosLosNumGuia() {
         Mensaje mensaje = new Mensaje();
         String url = Constantes.URL_WS + "/envios/todos-num-guia";
@@ -118,7 +122,8 @@ public class PaqueteDAO {
         if (respuestaWS.getCodigoRespuesta() == HttpURLConnection.HTTP_OK) {
             Gson gson = new Gson();
             try {
-                Type tipoRespuesta = new TypeToken<Mensaje>() {}.getType();
+                Type tipoRespuesta = new TypeToken<Mensaje>() {
+                }.getType();
                 Mensaje respuestaServidor = gson.fromJson(respuestaWS.getContenido(), tipoRespuesta);
 
                 if (!respuestaServidor.getError()) {
@@ -143,71 +148,76 @@ public class PaqueteDAO {
         }
         return mensaje;
     }
-    
-    public static Mensaje obtenerTodosLosIdEnvio() {
-            Mensaje mensaje = new Mensaje();
-            String url = Constantes.URL_WS + "/envios/todos-id-envio";
-            RespuestaHTTP respuestaWS = ConexionWS.peticionGET(url);
-            if (respuestaWS.getCodigoRespuesta() == HttpURLConnection.HTTP_OK) {
-                Gson gson = new Gson();
-                try {
-                    Type tipoRespuesta = new TypeToken<Mensaje>() {}.getType();
-                    Mensaje respuestaServidor = gson.fromJson(respuestaWS.getContenido(), tipoRespuesta);
-                    if (!respuestaServidor.getError()) {
 
-                        String objetoComoString = (String) respuestaServidor.getObjeto();
-                        List<Integer> idsEnvio = Arrays.stream(objetoComoString.split("\\s+"))
-                                                       .map(Integer::parseInt)
-                                                       .collect(Collectors.toList());
-                        mensaje.setObjeto(idsEnvio);
-                        mensaje.setError(false);
-                        mensaje.setMensaje("IDs de envío obtenidos exitosamente");
-                    } else {
-                        mensaje.setError(true);
-                        mensaje.setMensaje(respuestaServidor.getMensaje());
-                    }
-                } catch (Exception e) {
+    public static Mensaje obtenerTodosEnvio() {
+        Mensaje mensaje = new Mensaje();
+        String url = Constantes.URL_WS + "/envios/todos-envios";
+        RespuestaHTTP respuestaWS = ConexionWS.peticionGET(url);
+        if (respuestaWS.getCodigoRespuesta() == HttpURLConnection.HTTP_OK) {
+            Gson gson = new Gson();
+            try {
+                Type tipoRespuesta = new TypeToken<Mensaje>() {
+                }.getType();
+                Mensaje respuestaServidor = gson.fromJson(respuestaWS.getContenido(), tipoRespuesta);
+                if (!respuestaServidor.getError()) {
+                    String objetoComoString = gson.toJson(respuestaServidor.getObjeto());
+                    JsonObject jsonObject = JsonParser.parseString(objetoComoString).getAsJsonObject();
+                    String valueAsString = jsonObject.get("value").getAsString();
+                    JsonArray jsonArray = JsonParser.parseString(valueAsString).getAsJsonArray();
+                    List<Envio> envios = gson.fromJson(
+                            jsonArray,
+                            new TypeToken<List<Envio>>() {
+                            }.getType()
+                    );
+                    mensaje.setObjeto(envios);
+                    mensaje.setError(false);
+                    mensaje.setMensaje("IDs de envío obtenidos exitosamente");
+                } else {
                     mensaje.setError(true);
-                    mensaje.setMensaje(e.getMessage());
+                    mensaje.setMensaje(respuestaServidor.getMensaje());
                 }
-            } else {
+            } catch (Exception e) {
+                e.printStackTrace();
                 mensaje.setError(true);
-                mensaje.setMensaje("Error al obtener los IDs de envío.");
+                mensaje.setMensaje(e.getMessage());
             }
-            return mensaje;
-        }
-    
-    public static Mensaje obtenerPaquetesPorEnvio(int idEnvio) {
-    Mensaje mensaje = new Mensaje();
-    String url = Constantes.URL_WS + "/paquetes/obtener-paquetes-por-envio/" + idEnvio;
-    RespuestaHTTP respuestaWS = ConexionWS.peticionGET(url);
-    
-    if (respuestaWS.getCodigoRespuesta() == HttpURLConnection.HTTP_OK) {
-        Gson gson = new Gson();
-        try {
-            Type tipoListaPaquete = new TypeToken<List<Paquete>>() {}.getType();
-            List<Paquete> paquetes = gson.fromJson(respuestaWS.getContenido(), tipoListaPaquete);
-            
-            if (paquetes != null && !paquetes.isEmpty()) {
-                mensaje.setObjeto(paquetes);
-                mensaje.setError(false);
-                mensaje.setMensaje("Paquetes obtenidos correctamente");
-            } else {
-                mensaje.setError(true);
-                mensaje.setMensaje("No se encontraron paquetes para el envío con ID: " + idEnvio);
-            }
-        } catch (Exception e) {
+        } else {
             mensaje.setError(true);
-            mensaje.setMensaje(e.getMessage());
+            mensaje.setMensaje("Error al obtener los IDs de envío.");
         }
-    } else {
-        mensaje.setError(true);
-        mensaje.setMensaje("Error al obtener los paquetes.");
+        return mensaje;
     }
-    
-    return mensaje;
-}
 
+    public static Mensaje obtenerPaquetesPorEnvio(int idEnvio) {
+        Mensaje mensaje = new Mensaje();
+        String url = Constantes.URL_WS + "/paquetes/obtener-paquetes-por-envio/" + idEnvio;
+        RespuestaHTTP respuestaWS = ConexionWS.peticionGET(url);
 
+        if (respuestaWS.getCodigoRespuesta() == HttpURLConnection.HTTP_OK) {
+            Gson gson = new Gson();
+            try {
+                Type tipoListaPaquete = new TypeToken<List<Paquete>>() {
+                }.getType();
+                List<Paquete> paquetes = gson.fromJson(respuestaWS.getContenido(), tipoListaPaquete);
+
+                if (paquetes != null && !paquetes.isEmpty()) {
+                    mensaje.setObjeto(paquetes);
+                    mensaje.setError(false);
+                    mensaje.setMensaje("Paquetes obtenidos correctamente");
+                } else {
+                    mensaje.setError(true);
+                    mensaje.setMensaje("No se encontraron paquetes para el envío con ID: " + idEnvio);
+                }
+            } catch (Exception e) {
+                mensaje.setError(true);
+                mensaje.setMensaje(e.getMessage());
+            }
+        } else {
+            mensaje.setError(true);
+            mensaje.setMensaje("Error al obtener los paquetes.");
+        }
+
+        return mensaje;
+    }
 
 }

@@ -125,7 +125,7 @@ public class Envio {
 
     @Override
     public String toString() {
-        return "Envio{" + "idEnvio=" + idEnvio + ", idOrigen=" + idOrigen + ", idDestino=" + idDestino + ", origen=" + origen + ", destino=" + destino + ", cliente=" + cliente + ", costo=" + costo + ", fecha=" + fecha + ", numGuia=" + numGuia + ", paquetes=" + paquetes + '}';
+        return numGuia;
     }
     
     

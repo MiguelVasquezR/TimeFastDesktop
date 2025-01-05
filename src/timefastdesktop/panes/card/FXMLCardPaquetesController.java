@@ -17,6 +17,7 @@ import timefastdesktop.pojo.Paquete;
 import timefastdesktop.utilidades.Alertas;
 import timefastdesktop.utilidades.Utilidades;
 import timefastdesktop.observador.NotificadorOperacion;
+import timefastdesktop.pojo.Envio;
 
 public class FXMLCardPaquetesController implements Initializable {
 
@@ -62,9 +63,8 @@ public class FXMLCardPaquetesController implements Initializable {
     @FXML
     private void btnEditar(ActionEvent event) {
         if (controllerPaquetesPane != null) {
-
+            System.out.println("entro");
             controllerPaquetesPane.obtenerPaqueteHijo(this.paquete, true);
-            System.out.println("Entro");
         }
         
     }
