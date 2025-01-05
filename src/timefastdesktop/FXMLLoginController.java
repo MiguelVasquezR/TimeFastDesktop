@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import timefastdesktop.modelo.dao.LoginDAO;
 import timefastdesktop.pojo.Mensaje;
 import timefastdesktop.utilidades.Navegacion;
+import timefastdesktop.utilidades.SesionUsuario;
 import timefastdesktop.utilidades.Utilidades;
 
 public class FXMLLoginController implements Initializable {
@@ -45,6 +46,7 @@ public class FXMLLoginController implements Initializable {
             }
         }
     }
+
 
     private boolean camposVacios() {
         boolean band = false;
