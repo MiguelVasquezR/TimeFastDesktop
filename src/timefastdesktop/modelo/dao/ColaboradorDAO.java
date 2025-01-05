@@ -13,8 +13,28 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 
 public class ColaboradorDAO {
-    
-     public static Mensaje agregarColaborador(Colaborador colaborador) {
+
+    public static Mensaje recuperarContrasena(String correo) {
+        Mensaje msj = new Mensaje();
+        String url = Constantes.URL_WS + "/colaborador/recuperar-contrasena/" + correo;
+        Gson gson = new Gson();
+        try {
+            RespuestaHTTP respuesta = ConexionWS.peticionPOSTJSON(url, "");
+            if (respuesta.getCodigoRespuesta() == HttpURLConnection.HTTP_OK) {
+                msj = gson.fromJson(respuesta.getContenido(), Mensaje.class);
+            } else {
+                msj.setError(true);
+                msj.setMensaje(respuesta.getContenido());
+            }
+        } catch (Exception e) {
+            msj.setError(true);
+            msj.setMensaje(e.getMessage());
+        }
+
+        return msj;
+    }
+
+    public static Mensaje agregarColaborador(Colaborador colaborador) {
         Mensaje msj = new Mensaje();
         String url = Constantes.URL_WS + "/colaborador/agregar";
         Gson gson = new Gson();
@@ -34,7 +54,7 @@ public class ColaboradorDAO {
 
         return msj;
     }
-    
+
     public static Mensaje actualizarFoto(Integer id, byte[] foto) {
         Mensaje msj = new Mensaje();
         String url = Constantes.URL_WS + "/colaborador/actualizar-foto/" + id;
@@ -53,8 +73,8 @@ public class ColaboradorDAO {
         }
         return msj;
     }
-    
-     public static String obtenerUltimoID() {
+
+    public static String obtenerUltimoID() {
         String id = "";
         String url = Constantes.URL_WS + "/colaborador/obtener-ultimo-id";
         Gson gson = new Gson();
@@ -72,7 +92,7 @@ public class ColaboradorDAO {
     }
 
     public static List<Colaborador> obtenerClientes() {
-         List<Colaborador> clientes = new ArrayList<>();
+        List<Colaborador> clientes = new ArrayList<>();
         String url = Constantes.URL_WS + "/colaborador/obtener-colaboradores";
         RespuestaHTTP respuestaWS = ConexionWS.peticionGET(url);
         if (respuestaWS.getCodigoRespuesta() == HttpURLConnection.HTTP_OK) {
@@ -87,8 +107,8 @@ public class ColaboradorDAO {
         }
         return clientes;
     }
-    
-     public static Mensaje eliminarColaborador(Colaborador colaborador) {
+
+    public static Mensaje eliminarColaborador(Colaborador colaborador) {
         Mensaje msj = new Mensaje();
         String url = Constantes.URL_WS + "/colaborador/eliminar";
         Gson gson = new Gson();
@@ -122,6 +142,5 @@ public class ColaboradorDAO {
         }
         return msj;
     }
-    
-    
+
 }

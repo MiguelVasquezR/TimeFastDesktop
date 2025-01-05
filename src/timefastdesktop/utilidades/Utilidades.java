@@ -26,6 +26,7 @@ import javafx.scene.paint.Color;
 
 import javax.imageio.ImageIO;
 
+
 public class Utilidades {
 
     public static void estilizarBarraScroll(ScrollPane scroll) {
@@ -95,42 +96,41 @@ public class Utilidades {
     }
 
     public static String imagenToArchivo(Image imagen) {
-    String ruta = "src/timefastdesktop/recursos/imagen.jpeg"; 
-    try {
-        File directorio = new File("src/timefastdesktop/recursos/");
-        if (!directorio.exists()) {
-            boolean dirsCreado = directorio.mkdirs();
-            if (dirsCreado) {
-                System.out.println("Directorio creado: " + directorio.getAbsolutePath());
-            } else {
-                System.out.println("No se pudo crear el directorio.");
+        String ruta = "src/timefastdesktop/recursos/imagen.jpeg";
+        try {
+            File directorio = new File("src/timefastdesktop/recursos/");
+            if (!directorio.exists()) {
+                boolean dirsCreado = directorio.mkdirs();
+                if (dirsCreado) {
+                    System.out.println("Directorio creado: " + directorio.getAbsolutePath());
+                } else {
+                    System.out.println("No se pudo crear el directorio.");
+                }
             }
-        }
-        BufferedImage bufferedImage = javafx.embed.swing.SwingFXUtils.fromFXImage(imagen, null);
-        File file = new File(ruta);
-        if (file.exists()) {
-            System.out.println("El archivo ya existe, se sobrescribirá.");
-        } else {
-            if (file.createNewFile()) {
-                System.out.println("El archivo fue creado con éxito.");
+            BufferedImage bufferedImage = javafx.embed.swing.SwingFXUtils.fromFXImage(imagen, null);
+            File file = new File(ruta);
+            if (file.exists()) {
+                System.out.println("El archivo ya existe, se sobrescribirá.");
             } else {
-                System.out.println("No se pudo crear el archivo.");
+                if (file.createNewFile()) {
+                    System.out.println("El archivo fue creado con éxito.");
+                } else {
+                    System.out.println("No se pudo crear el archivo.");
+                    return null;
+                }
+            }
+            boolean guardado = ImageIO.write(bufferedImage, "jpeg", file);
+            if (guardado) {
+                System.out.println("Imagen convertida y guardada como archivo.");
+                return ruta;
+            } else {
+                System.out.println("No se pudo guardar la imagen.");
                 return null;
             }
-        }
-        boolean guardado = ImageIO.write(bufferedImage, "jpeg", file);
-        if (guardado) {
-            System.out.println("Imagen convertida y guardada como archivo.");
-            return ruta;
-        } else {
-            System.out.println("No se pudo guardar la imagen.");
+        } catch (IOException e) {
+            e.printStackTrace();
             return null;
         }
-    } catch (IOException e) {
-        e.printStackTrace();
-        return null;
     }
-}
-
 
 }
