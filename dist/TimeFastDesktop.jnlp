@@ -8,8 +8,14 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+<<<<<<< HEAD
     <jar href="TimeFastDesktop.jar" size="1591105" download="eager" />
     <jar href="lib\gson-2.9.1.jar" size="265030" download="eager" />
+=======
+    <jar href="TimeFastDesktop.jar" size="1419872" download="eager" />
+    <jar href="lib/gson-2.9.1.jar" size="265030" download="eager" />
+    <jar href="lib/javax.mail-1.6.2.jar" size="659031" download="eager" />
+>>>>>>> e6e7ef957b63425db83d1fb103ab00431266f060
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="TimeFastDesktop" >
     <param name="requiredFXVersion" value="8.0+"/>

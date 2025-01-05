@@ -7,11 +7,15 @@ import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
+import timefastdesktop.modelo.dao.ColaboradorDAO;
+import timefastdesktop.pojo.Mensaje;
 import timefastdesktop.utilidades.Navegacion;
+import timefastdesktop.utilidades.Utilidades;
 
 public class FXMLOlvideContrasenaController implements Initializable {
 
@@ -33,15 +37,22 @@ public class FXMLOlvideContrasenaController implements Initializable {
 
     @FXML
     private void btnRecuperar(ActionEvent event) {
+        btnRecuperarC.setDisable(true);
+
         String correo = txCorreo.getText();
         lbCorreoError.setText("");
         if (!esCorreo(correo)) {
             lbCorreoError.setText("Debes ingresar un correo valido");
-            return;
+            btnRecuperarC.setDisable(false);
+        } else {
+            Mensaje msj = ColaboradorDAO.recuperarContrasena(correo);
+            if (msj.getError() == false) {
+                procesarRecuperacion();
+            } else {
+                Utilidades.mostrarAlertaSimple("Error", "Por el momento el servicio no está disponible, intentelo más tarde", Alert.AlertType.ERROR);
+                btnRecuperarC.setDisable(false);
+            }
         }
-
-        procesarRecuperacion();
-
     }
 
     private boolean esCorreo(String correo) {
