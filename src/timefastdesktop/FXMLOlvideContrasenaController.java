@@ -37,16 +37,20 @@ public class FXMLOlvideContrasenaController implements Initializable {
 
     @FXML
     private void btnRecuperar(ActionEvent event) {
+        btnRecuperarC.setDisable(true);
+
         String correo = txCorreo.getText();
         lbCorreoError.setText("");
         if (!esCorreo(correo)) {
             lbCorreoError.setText("Debes ingresar un correo valido");
+            btnRecuperarC.setDisable(false);
         } else {
             Mensaje msj = ColaboradorDAO.recuperarContrasena(correo);
             if (msj.getError() == false) {
                 procesarRecuperacion();
             } else {
                 Utilidades.mostrarAlertaSimple("Error", "Por el momento el servicio no está disponible, intentelo más tarde", Alert.AlertType.ERROR);
+                btnRecuperarC.setDisable(false);
             }
         }
     }
