@@ -23,6 +23,17 @@ public class Direccion {
         this.estado = estado;
     }
 
+    // Constructor de copia
+    public Direccion(Direccion direccion) {
+        this.idDireccion = direccion.getIdDireccion();
+        this.calle = direccion.getCalle();
+        this.colonia = direccion.getColonia();
+        this.numero = direccion.getNumero();
+        this.codigoPostal = direccion.getCodigoPostal();
+        this.ciudad = direccion.getCiudad();
+        this.estado = direccion.getEstado();
+    }
+
     public Integer getIdDireccion() {
         return idDireccion;
     }
@@ -81,9 +92,6 @@ public class Direccion {
 
     @Override
     public String toString() {
-        return "Direccion{" + "idDireccion=" + idDireccion + ", calle=" + calle + ", colonia=" + colonia + ", numero=" + numero + ", codigoPostal=" + codigoPostal + ", ciudad=" + ciudad + ", estado=" + estado + '}';
+        return calle + " #" + numero + ", " + colonia + ", " + ciudad + ", " + estado;
     }
-    
-    
-
 }

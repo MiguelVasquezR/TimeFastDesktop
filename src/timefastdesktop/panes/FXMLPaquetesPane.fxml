@@ -79,13 +79,13 @@
                               <Font name="Roboto Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Label layoutX="20.0" layoutY="440.0" text="Alto" textFill="WHITE">
+                        <Label layoutX="20.0" layoutY="337.0" text="Alto" textFill="WHITE">
                            <font>
                               <Font name="Roboto Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="tfAlto" layoutX="20.0" layoutY="460.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
-                        <Label fx:id="lbErrorAlto" layoutX="20.0" layoutY="487.0" prefWidth="230.0" text="El alto es necesario" textFill="#da4040">
+                        <TextField fx:id="tfAlto" layoutX="20.0" layoutY="357.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
+                        <Label fx:id="lbErrorAlto" layoutX="20.0" layoutY="384.0" prefWidth="230.0" text="El alto es necesario" textFill="#da4040">
                            <font>
                               <Font name="Roboto" size="12.0" />
                            </font>
@@ -93,13 +93,13 @@
                               <Insets left="4.0" />
                            </padding>
                         </Label>
-                        <Label layoutX="20.0" layoutY="509.0" prefWidth="230.0" text="Ancho" textFill="WHITE">
+                        <Label layoutX="20.0" layoutY="406.0" prefWidth="230.0" text="Ancho" textFill="WHITE">
                            <font>
                               <Font name="Roboto Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="tfAncho" layoutX="20.0" layoutY="530.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
-                        <Label fx:id="lbErrorAncho" layoutX="20.0" layoutY="557.0" prefWidth="230.0" text="El ancho es necesario" textFill="#da4040">
+                        <TextField fx:id="tfAncho" layoutX="20.0" layoutY="427.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
+                        <Label fx:id="lbErrorAncho" layoutX="20.0" layoutY="454.0" prefWidth="230.0" text="El ancho es necesario" textFill="#da4040">
                            <font>
                               <Font name="Roboto" size="12.0" />
                            </font>
@@ -107,12 +107,12 @@
                               <Insets left="4.0" />
                            </padding>
                         </Label>
-                        <Label layoutX="20.0" layoutY="157.0" text="Seleccione envío:" textFill="WHITE">
+                        <Label layoutX="20.0" layoutY="54.0" text="Seleccione envío:" textFill="WHITE">
                            <font>
                               <Font name="Roboto Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lbErrorEnvio" layoutX="20.0" layoutY="205.0" prefWidth="230.0" text="Envio necesario" textFill="#da4040">
+                        <Label fx:id="lbErrorEnvio" layoutX="20.0" layoutY="102.0" prefWidth="230.0" text="Envio necesario" textFill="#da4040">
                            <font>
                               <Font name="Roboto" size="12.0" />
                            </font>
@@ -120,18 +120,18 @@
                               <Insets left="4.0" />
                            </padding>
                         </Label>
-                        <Label layoutX="20.0" layoutY="418.0" text="Dimensiones" textFill="WHITE">
+                        <Label layoutX="20.0" layoutY="315.0" text="Dimensiones" textFill="WHITE">
                            <font>
                               <Font name="Roboto Bold" size="15.0" />
                            </font>
                         </Label>
-                        <Label layoutX="20.0" layoutY="579.0" prefWidth="230.0" text="Profundidad" textFill="WHITE">
+                        <Label layoutX="20.0" layoutY="476.0" prefWidth="230.0" text="Profundidad" textFill="WHITE">
                            <font>
                               <Font name="Roboto Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="tfProfundidad" layoutX="20.0" layoutY="600.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
-                        <Label fx:id="lbErrorProfundidad" layoutX="20.0" layoutY="627.0" prefWidth="230.0" text="La profundidad es necesaria" textFill="#da4040">
+                        <TextField fx:id="tfProfundidad" layoutX="20.0" layoutY="497.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
+                        <Label fx:id="lbErrorProfundidad" layoutX="20.0" layoutY="524.0" prefWidth="230.0" text="La profundidad es necesaria" textFill="#da4040">
                            <font>
                               <Font name="Roboto" size="12.0" />
                            </font>
@@ -139,13 +139,13 @@
                               <Insets left="4.0" />
                            </padding>
                         </Label>
-                        <Label layoutX="20.0" layoutY="650.0" prefWidth="230.0" text="Peso" textFill="WHITE">
+                        <Label layoutX="20.0" layoutY="547.0" prefWidth="230.0" text="Peso" textFill="WHITE">
                            <font>
                               <Font name="Roboto Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="tfPeso" layoutX="20.0" layoutY="671.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
-                        <Label fx:id="lbErrorPeso" layoutX="20.0" layoutY="698.0" prefWidth="230.0" text="El precio es necesario" textFill="#da4040">
+                        <TextField fx:id="tfPeso" layoutX="20.0" layoutY="568.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
+                        <Label fx:id="lbErrorPeso" layoutX="20.0" layoutY="595.0" prefWidth="230.0" text="El precio es necesario" textFill="#da4040">
                            <font>
                               <Font name="Roboto" size="12.0" />
                            </font>
@@ -153,18 +153,18 @@
                               <Insets left="4.0" />
                            </padding>
                         </Label>
-                        <Button fx:id="btnGuardar" layoutX="96.0" layoutY="729.0" mnemonicParsing="false" onAction="#botonPresionado" prefHeight="29.0" prefWidth="84.0" style="-fx-background-color: #F66B0E; -fx-background-radius: 12px;" text="Guardar" textAlignment="CENTER" textFill="WHITE">
+                        <Button fx:id="btnGuardar" layoutX="96.0" layoutY="626.0" mnemonicParsing="false" onAction="#botonPresionado" prefHeight="29.0" prefWidth="84.0" style="-fx-background-color: #F66B0E; -fx-background-radius: 12px;" text="Guardar" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font name="Roboto Bold" size="15.0" />
                            </font>
                         </Button>
-                        <TextArea fx:id="taDescripcion" layoutX="20.0" layoutY="249.0" prefHeight="132.0" prefWidth="230.0" />
-                        <Label layoutX="20.0" layoutY="232.0" text="Descripción" textFill="WHITE">
+                        <TextArea fx:id="taDescripcion" layoutX="20.0" layoutY="146.0" prefHeight="132.0" prefWidth="230.0" />
+                        <Label layoutX="20.0" layoutY="129.0" text="Descripción" textFill="WHITE">
                            <font>
                               <Font name="Roboto Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lbErrorDescripcion" layoutX="20.0" layoutY="385.0" prefWidth="230.0" text="Descripcion necesaria" textFill="#da4040">
+                        <Label fx:id="lbErrorDescripcion" layoutX="20.0" layoutY="282.0" prefWidth="230.0" text="Descripcion necesaria" textFill="#da4040">
                            <font>
                               <Font name="Roboto" size="12.0" />
                            </font>
@@ -172,21 +172,7 @@
                               <Insets left="4.0" />
                            </padding>
                         </Label>
-                        <Label layoutX="19.0" layoutY="59.0" text="Búscar Cliente:" textFill="WHITE">
-                           <font>
-                              <Font name="Roboto Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="tfCliente" layoutX="19.0" layoutY="77.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4px;" />
-                        <Label fx:id="lbErrorCliente" layoutX="19.0" layoutY="107.0" prefWidth="230.0" text="Cliente necesario" textFill="#da4040">
-                           <font>
-                              <Font name="Roboto" size="12.0" />
-                           </font>
-                           <padding>
-                              <Insets left="4.0" />
-                           </padding>
-                        </Label>
-                        <ComboBox fx:id="cbEnvios" layoutX="20.0" layoutY="175.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4;" />
+                        <ComboBox fx:id="cbEnvios" layoutX="20.0" layoutY="72.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 4;" />
                      </children>
                   </Pane>
                </children>

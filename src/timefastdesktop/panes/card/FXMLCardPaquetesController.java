@@ -16,6 +16,7 @@ import timefastdesktop.pojo.Mensaje;
 import timefastdesktop.pojo.Paquete;
 import timefastdesktop.utilidades.Alertas;
 import timefastdesktop.utilidades.Utilidades;
+import timefastdesktop.observador.NotificadorOperacion;
 
 public class FXMLCardPaquetesController implements Initializable {
 
@@ -57,21 +58,10 @@ public class FXMLCardPaquetesController implements Initializable {
         lbPeso.setText(this.paquete.getPeso() != null ? String.valueOf(this.paquete.getPeso()) + " kg" : "N/A");
         lbDescripcion.setText(this.paquete.getDescripcion() != null ? this.paquete.getDescripcion() : "N/A");
     }
-
-
-
-   /* @FXML
-    private void btnEditar(ActionEvent event) {
-        if (controllerPaquetesPane != null) {
-            //controllerPaquetesPane.obtenerPaqueteHijo(this.paquete, true);
-        }
-    }*/
-    
-    
+        
     @FXML
     private void btnEditar(ActionEvent event) {
-
-        if (controllerPaquetesPane != null && this.paquete != null) {
+        if (controllerPaquetesPane != null) {
 
             controllerPaquetesPane.obtenerPaqueteHijo(this.paquete, true);
             System.out.println("Entro");
@@ -79,20 +69,22 @@ public class FXMLCardPaquetesController implements Initializable {
         
     }
 
-
     @FXML
     private void btnEliminar(ActionEvent event) {
-        Alert alerta = Alertas.mostrarAlertaSimple("Eliminar Paquete", "¿Estás seguro(a) de eliminar el paquete con guía " + lbGuia.getText()
-                + "?", Alert.AlertType.CONFIRMATION);
-        Optional<ButtonType> respuesta = alerta.showAndWait();
-        if (respuesta.isPresent() && respuesta.get().getText().equals("Aceptar")) {
-            Mensaje mensaje = PaqueteDAO.eliminarPaquete(this.paquete.getIdPaquete());
-            if (!mensaje.getError()) {
-                Utilidades.mostrarAlertaSimple("Eliminar Paquete", "El paquete ha sido eliminado correctamente.", Alert.AlertType.INFORMATION);
-                this.observador.notificacionOperacion("Paquete Eliminado", "");
-            } else {
-                Utilidades.mostrarAlertaSimple("Eliminar Paquete", "No se ha podido eliminar el paquete, inténtelo más tarde, por favor.", Alert.AlertType.ERROR);
+            Alert alerta = Alertas.mostrarAlertaSimple("Eliminar Paquete", "¿Estás seguro(a) de eliminar el paquete con guía " + lbGuia.getText()
+                    + "?", Alert.AlertType.CONFIRMATION);
+            Optional<ButtonType> respuesta = alerta.showAndWait();
+            if (respuesta.isPresent() && respuesta.get().getText().equals("Aceptar")) {
+                Mensaje mensaje = PaqueteDAO.eliminarPaquete(this.paquete.getIdPaquete());
+                if (!mensaje.getError()) {
+                    if (observador != null) {
+                        observador.notificacionOperacion("Paquete Eliminado", "El paquete con guía " + lbGuia.getText() + " ha sido eliminado correctamente.");
+                    }
+                } else {
+                    Utilidades.mostrarAlertaSimple("Eliminar Paquete", "No se ha podido eliminar el paquete, inténtelo más tarde, por favor.", Alert.AlertType.ERROR);
+                }
             }
         }
-    }
+
+
 }
