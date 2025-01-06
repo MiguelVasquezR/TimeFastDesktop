@@ -107,9 +107,10 @@ public class FXMLColaboradorPaneController implements Initializable, Notificador
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         llenarComboBox();
-        Utilidades.estilizarBarraScroll(scroll);
+        
         llenarContenedorColaboradores();
         btn.setLayoutY(829);
+        Utilidades.estilizarBarraScroll(scroll);
     }
 
     private void llenarComboBox() {

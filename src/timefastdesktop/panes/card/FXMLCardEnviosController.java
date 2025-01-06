@@ -1,8 +1,9 @@
 package timefastdesktop.panes.card;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,19 +12,18 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import timefastdesktop.modelo.dao.EnviosDAO;
 import timefastdesktop.observador.NotificadorOperacion;
 import timefastdesktop.panes.EnvioEstadoController;
+import timefastdesktop.panes.FXMLEnviosPaneController;
+import timefastdesktop.panes.FXMLPaquetesPaneController;
 import timefastdesktop.pojo.Envio;
+import timefastdesktop.pojo.EstadoEnvio;
 import timefastdesktop.pojo.Mensaje;
-import timefastdesktop.utilidades.Alertas;
-import timefastdesktop.utilidades.SesionUsuario;
 import timefastdesktop.utilidades.Utilidades;
-
 
 public class FXMLCardEnviosController implements Initializable {
 
@@ -50,10 +50,12 @@ public class FXMLCardEnviosController implements Initializable {
 
     private Envio envio;
     private NotificadorOperacion observador;
+    private FXMLEnviosPaneController padre;
 
-    public void setEnvioData(NotificadorOperacion notificacionOperacion, Envio envio) {
+    public void setEnvioData(NotificadorOperacion notificacionOperacion, Envio envio, FXMLEnviosPaneController padre) {
         this.observador = notificacionOperacion;
         this.envio = envio;
+        this.padre = padre;
         imprimirInformacion();
     }
 
@@ -70,34 +72,49 @@ public class FXMLCardEnviosController implements Initializable {
                 ? envio.getDestino().getNumero()
                 : "N/A");
 
-        lbDestino.setText(envio.getDestino() != null && envio.getDestino().getColonia() != null
-                ? envio.getDestino().getColonia()
-                : "N/A");
+        String direccion = (envio.getOrigen() != null)
+                ? String.format("%s %s, %s, %s, %s, %s",
+                        envio.getOrigen().getCalle(),
+                        envio.getOrigen().getNumero(),
+                        envio.getOrigen().getColonia() != null ? envio.getOrigen().getColonia() : "N/A",
+                        envio.getOrigen().getCiudad(),
+                        envio.getOrigen().getEstado(),
+                        envio.getOrigen().getCodigoPostal())
+                : "N/A";
+        lbDestino.setText(direccion);
 
         lbCiudad.setText(envio.getDestino() != null && envio.getDestino().getCiudad() != null
                 ? envio.getDestino().getCiudad()
                 : "N/A");
 
+        // Actualizar código postal de destino
         lbCodigoPostal.setText(envio.getDestino() != null && envio.getDestino().getCodigoPostal() != null
                 ? envio.getDestino().getCodigoPostal()
                 : "N/A");
 
-        lbEstado.setText(envio.getDestino() != null && envio.getDestino().getEstado() != null
-                ? envio.getDestino().getEstado()
-                : "N/A");
+        Mensaje msj = EnviosDAO.obtenerEstadosEnvios(envio.getIdEnvio());
 
-        lbEstadoPaquete.setText("Pendiente");
+        if (msj != null && msj.getObjeto() != null) {
+            Gson gson = new Gson();
+            JsonObject json = gson.fromJson(msj.getObjeto().toString(), JsonObject.class);
+            EstadoEnvio ee = gson.fromJson(json.get("value"), EstadoEnvio.class);
+            if (this.envio.getIdEnvio() == ee.getIdEnvio()) {
+                lbEstadoPaquete.setText(ee != null ? ee.getEstado() : "Estado desconocido");
+            }
+
+        } else {
+            lbEstadoPaquete.setText("Error al obtener el estado");
+        }
+
         lbNombreConductor.setText(envio.getConductor() != null && envio.getConductor().getPersona() != null
                 ? envio.getConductor().getPersona().getNombre()
                 : "No asignado");
     }
 
-
     @FXML
     private void btnEditar(ActionEvent event) {
-
+        padre.llenarFormularioEditar(this.envio);
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -111,7 +128,7 @@ public class FXMLCardEnviosController implements Initializable {
             Parent root = loader.load();
 
             EnvioEstadoController controller = loader.getController();
-            controller.setEnvio(envio); 
+            controller.setEnvio(this.envio);
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
@@ -122,7 +139,6 @@ public class FXMLCardEnviosController implements Initializable {
             e.printStackTrace();
         }
     }
-
 
     @FXML
     private void btnAsignarConductor(ActionEvent event) {
@@ -140,9 +156,8 @@ public class FXMLCardEnviosController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
 
-            
             if (controller.isConductorAsignado()) {
-                imprimirInformacion(); 
+                imprimirInformacion();
             }
 
         } catch (IOException e) {
@@ -150,7 +165,5 @@ public class FXMLCardEnviosController implements Initializable {
             Utilidades.mostrarAlertaSimple("Error", "No se pudo cargar la ventana de asignación de conductor.", Alert.AlertType.ERROR);
         }
     }
-
-
 
 }
