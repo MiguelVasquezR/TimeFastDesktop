@@ -26,18 +26,15 @@ import timefastdesktop.utilidades.Utilidades;
 import timefastdesktop.observador.NotificadorOperacion;
 import java.lang.reflect.Type;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
-
 import timefastdesktop.modelo.dao.ClienteDAO;
 import timefastdesktop.pojo.Cliente;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.input.KeyEvent;
-import timefastdesktop.pojo.EstadoEnvio;
 import timefastdesktop.pojo.Persona;
 
 public class FXMLEnviosPaneController implements Initializable, NotificadorOperacion {
@@ -334,6 +331,10 @@ public class FXMLEnviosPaneController implements Initializable, NotificadorOpera
             lbErrorNumero.setText("El número es obligatorio.");
             lbErrorNumero.setVisible(true);
             valido = false;
+        } else if (!Utilidades.esNumero((tfNumero.getText()))) {
+            lbErrorNumero.setText("Debe ser un número.");
+            lbErrorNumero.setVisible(true);
+            valido = false;
         }
 
         if (tfCP.getText().isEmpty()) {
@@ -374,6 +375,10 @@ public class FXMLEnviosPaneController implements Initializable, NotificadorOpera
 
         if (tfPrecio.getText().isEmpty()) {
             lbErrorPrecio.setText("El precio es obligatorio.");
+            lbErrorPrecio.setVisible(true);
+            valido = false;
+        } else if (!Utilidades.esNumero((tfPrecio.getText()))) {
+            lbErrorPrecio.setText("Debe ser un número.");
             lbErrorPrecio.setVisible(true);
             valido = false;
         }

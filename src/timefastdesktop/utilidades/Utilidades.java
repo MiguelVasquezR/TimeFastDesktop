@@ -15,6 +15,8 @@ import java.nio.file.Files;
 import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.control.ScrollPane;
@@ -25,7 +27,6 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
 import javax.imageio.ImageIO;
-
 
 public class Utilidades {
 
@@ -131,6 +132,43 @@ public class Utilidades {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static Boolean esCorreo(String correo) {
+        String EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        if (correo != null) {
+            Pattern pattern = Pattern.compile(EMAIL_REGEX);
+            Matcher matcher = pattern.matcher(correo);
+            return matcher.matches();
+        }
+        return false;
+    }
+
+    public static Boolean esNumero(String numero) {
+        try {
+            if (numero != null) {
+                int num = Integer.parseInt(numero);
+                if (num > 0) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public static Boolean curpValida(String curp) {
+        if ((curp != null || !curp.isEmpty()) && curp.length() == 18) {
+            String CURP_REGEX
+                    = "^[A-Z]{1}[AEIOU]{1}[A-Z]{2}\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])[HM]{1}"
+                    + "(AS|BC|BS|CC|CH|CL|CM|CS|DF|DG|GR|GT|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TL|TS|VZ|YN|ZS|NE)"
+                    + "[B-DF-HJ-NP-TV-Z]{3}[0-9A-Z]{1}\\d{1}$";
+            Pattern pattern = Pattern.compile(CURP_REGEX);
+            Matcher matcher = pattern.matcher(curp);
+            return matcher.matches();
+        }
+        return false;
     }
 
 }

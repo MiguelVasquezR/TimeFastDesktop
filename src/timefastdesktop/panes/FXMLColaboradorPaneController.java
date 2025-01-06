@@ -7,6 +7,8 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -186,14 +188,20 @@ public class FXMLColaboradorPaneController implements Initializable, Notificador
         }
 
         if (tfCurp.getText().trim().isEmpty()) {
-            lbErrorCurp.setText("La CURP es obligatoria.");
+            lbErrorCurp.setText("La CURP es obligatorio.");
+            esValido = false;
+        } else if (!Utilidades.curpValida(tfCurp.getText())) {
+            lbErrorCurp.setText("El formato de CURP no es correcto.");
             esValido = false;
         } else {
             lbErrorCurp.setText("");
         }
 
         if (tfNumeroColaborador.getText().trim().isEmpty()) {
-            lbErrorNumPersonal.setText("El correo es obligatorio.");
+            lbErrorNumPersonal.setText("El número del colaborador es obligatorio.");
+            esValido = false;
+        } else if (!Utilidades.esNumero(tfNumeroColaborador.getText())) {
+            lbErrorNumPersonal.setText("Debe ser un número valido");
             esValido = false;
         } else {
             lbErrorNumPersonal.setText("");
@@ -201,6 +209,9 @@ public class FXMLColaboradorPaneController implements Initializable, Notificador
 
         if (tfCorreo.getText().trim().isEmpty()) {
             lbErrorCorreo.setText("El correo es obligatorio.");
+            esValido = false;
+        } else if (!Utilidades.esCorreo(tfCorreo.getText())) {
+            lbErrorCorreo.setText("Formato Incorrecto.");
             esValido = false;
         } else {
             lbErrorCorreo.setText("");
@@ -222,6 +233,8 @@ public class FXMLColaboradorPaneController implements Initializable, Notificador
 
         return esValido;
     }
+
+    
 
     private Colaborador generarColaboradorDesdeFormulario() {
         Persona persona = new Persona();
