@@ -11,9 +11,10 @@ import timefastdesktop.utilidades.Constantes;
 import timefastdesktop.pojo.Unidad;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
+import timefastdesktop.pojo.Colaborador;
 
 public class UnidadDAO {
-
+    
     public static Mensaje agregarUnidad(Unidad unidad) {
         Mensaje msj = new Mensaje();
         String url = Constantes.URL_WS + "/unidades/agregar";
@@ -33,7 +34,7 @@ public class UnidadDAO {
         }
         return msj;
     }
-
+    
     public static Mensaje actualizarFoto(Integer id, byte[] foto) {
         Mensaje msj = new Mensaje();
         String url = Constantes.URL_WS + "/unidades/actualizar-foto/" + id;
@@ -52,7 +53,7 @@ public class UnidadDAO {
         }
         return msj;
     }
-
+    
     public static String obtenerUltimoID() {
         String id = "";
         String url = Constantes.URL_WS + "/unidades/obtener-ultimo-id";
@@ -69,7 +70,7 @@ public class UnidadDAO {
         }
         return id;
     }
-
+    
     public static List<Unidad> obtenerUnidades() {
         List<Unidad> unidades = new ArrayList<>();
         String url = Constantes.URL_WS + "/unidades/obtener-unidades";
@@ -86,9 +87,9 @@ public class UnidadDAO {
         }
         return unidades;
     }
-
+    
     public static Mensaje eliminarUnidad(Integer id) {
-         Mensaje msj = new Mensaje();
+        Mensaje msj = new Mensaje();
         String url = Constantes.URL_WS + "/unidades/eliminar/" + id;
         Gson gson = new Gson();
         try {
@@ -106,8 +107,8 @@ public class UnidadDAO {
         return msj;
     }
     
-    public static Mensaje editarUnidad(Unidad unidad){
-         Mensaje msj = new Mensaje();
+    public static Mensaje editarUnidad(Unidad unidad) {
+        Mensaje msj = new Mensaje();
         String url = Constantes.URL_WS + "/unidades/actualizar";
         Gson gson = new Gson();
         try {
@@ -125,5 +126,30 @@ public class UnidadDAO {
         }
         return msj;
     }
-
+    
+    public static Mensaje asignarConductor(Colaborador c, Unidad unidadCliente) {
+        Mensaje msj = new Mensaje();
+        String idColaborador = "0";
+        if (c != null) {
+            idColaborador = String.valueOf(c.getIdColaborador());
+        }
+        String url = Constantes.URL_WS + "/unidades/asociar-conductor/" + idColaborador
+                + "/"
+                + unidadCliente.getId();
+        Gson gson = new Gson();
+        try {
+            RespuestaHTTP respuesta = ConexionWS.peticionPUTJSON(url, "");
+            if (respuesta.getCodigoRespuesta() == HttpURLConnection.HTTP_OK) {
+                msj = gson.fromJson(respuesta.getContenido(), Mensaje.class);
+            } else {
+                msj.setError(true);
+                msj.setMensaje(respuesta.getContenido());
+            }
+        } catch (Exception e) {
+            msj.setError(true);
+            msj.setMensaje(e.getMessage());
+        }
+        return msj;
+    }
+    
 }
