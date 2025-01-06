@@ -86,10 +86,11 @@ public class FXMLPaquetesPaneController implements Initializable, NotificadorOpe
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Utilidades.estilizarBarraScroll(scroll);
+        
         cargarPaquetes();
         cargarIdsEnvio();
         resetearLabelErrors();
+        Utilidades.estilizarBarraScroll(scroll);
     }
 
     @Override
@@ -183,7 +184,7 @@ public class FXMLPaquetesPaneController implements Initializable, NotificadorOpe
                 llenarTarjetasPaquetes(listaPaquetes); // Llenar las tarjetas con la lista completa
             }
         } else {
-            Utilidades.mostrarAlertaSimple("Error", "No se pudieron obtener los paquetes. Intente más tarde.", Alert.AlertType.ERROR);
+            Utilidades.mostrarAlertaSimple("Sin paquetes", "Por el momento no se tiene registro de paquetes.", Alert.AlertType.ERROR);
         }
     }
 
@@ -241,7 +242,7 @@ public class FXMLPaquetesPaneController implements Initializable, NotificadorOpe
                 Utilidades.mostrarAlertaSimple("Sin Envíos", "No se encontraron envíos disponibles.", Alert.AlertType.INFORMATION);
             }
         } else {
-            Utilidades.mostrarAlertaSimple("Error", "No se pudieron obtener los envíos. Intente más tarde.", Alert.AlertType.ERROR);
+            Utilidades.mostrarAlertaSimple("Sin envíos", "No se tiene registro de envíos", Alert.AlertType.INFORMATION);
         }
     }
 

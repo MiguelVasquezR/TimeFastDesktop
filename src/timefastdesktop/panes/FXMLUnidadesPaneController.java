@@ -66,10 +66,11 @@ public class FXMLUnidadesPaneController implements Initializable, NotificadorOpe
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Utilidades.estilizarBarraScroll(spContenedor);
+        
         tfNII.setEditable(false);
         llenarTiposUnidad();
         obtenerUnidades();
+        Utilidades.estilizarBarraScroll(spContenedor);
     }
 
     @FXML
@@ -281,10 +282,10 @@ public class FXMLUnidadesPaneController implements Initializable, NotificadorOpe
     private void obtenerUnidades() {
         this.unidadesWS = UnidadDAO.obtenerUnidades();
         fpContenedor.getChildren().clear();
-        if (unidadesWS.size() > 1) {
+        if (unidadesWS.size() > 0) {
             llenarTarjetaUnidad(unidadesWS);
         } else {
-            Utilidades.mostrarAlertaSimple("Error obtener unidades", "Se tuvo problemas al obtener las unidades, intentelo más tarde", Alert.AlertType.ERROR);
+            Utilidades.mostrarAlertaSimple("Error obtener unidades", "No se tiene registro de unidades", Alert.AlertType.INFORMATION);
         }
     }
 

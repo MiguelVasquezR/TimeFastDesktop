@@ -234,7 +234,7 @@
             </TextField>
          </children>
       </Pane>
-      <ScrollPane fx:id="scrollClientes" fitToHeight="true" fitToWidth="true" layoutX="20.0" layoutY="170.0" prefHeight="540.0" prefWidth="600.0" style="-fx-background-radius: 12; -fx-border-radius: 12; -fx-background-color: #112b3c; -fx-border-color: #112b3c;" vbarPolicy="ALWAYS">
+      <ScrollPane fx:id="scrollClientes" fitToHeight="true" fitToWidth="true" layoutX="30.0" layoutY="180.0" prefHeight="540.0" prefWidth="600.0" style="-fx-background-radius: 12; -fx-border-radius: 12; -fx-background-color: #112b3c; -fx-border-color: #112b3c;" vbarPolicy="ALWAYS">
          <content>
             <AnchorPane fx:id="contenedorClientes" prefWidth="600.0" style="-fx-background-color: #112b3c;">
                <children>

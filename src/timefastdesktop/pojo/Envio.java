@@ -15,11 +15,13 @@ public class Envio {
     private String fecha;
     private String numGuia;
     private ArrayList<Paquete> paquetes;
+    private Integer idCliente;
+    private EstadoEnvio estadoEnvio;
 
     public Envio() {
     }
 
-    public Envio(Integer idEnvio, Integer idOrigen, Integer idDestino, Direccion origen, Direccion destino, Cliente cliente, Double costo, String fecha, String numGuia, ArrayList<Paquete> paquetes, Colaborador conductor) {
+    public Envio(Integer idEnvio, Integer idOrigen, Integer idDestino, Direccion origen, Direccion destino, Cliente cliente, Double costo, String fecha, String numGuia, ArrayList<Paquete> paquetes, Colaborador conductor, Integer idCliente, EstadoEnvio estadoEnvio) {
         this.idEnvio = idEnvio;
         this.idOrigen = idOrigen;
         this.idDestino = idDestino;
@@ -31,6 +33,8 @@ public class Envio {
         this.numGuia = numGuia;
         this.paquetes = paquetes;
         this.conductor = conductor;
+        this.idCliente = idCliente;
+        this.estadoEnvio = estadoEnvio;
     }
 
     public Integer getIdEnvio() {
@@ -120,14 +124,44 @@ public class Envio {
     public void setConductor(Colaborador conductor) {
         this.conductor = conductor;
     }
-    
-    
+
+    public Integer getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(Integer idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public EstadoEnvio getEstadoEnvio() {
+        return estadoEnvio;
+    }
+
+    public void setEstadoEnvio(EstadoEnvio estadoEnvio) {
+        this.estadoEnvio = estadoEnvio;
+    }
 
     @Override
     public String toString() {
         return numGuia;
     }
-    
-    
+
+    public String imprimir() {
+        return "Envio{"
+                + "idEnvio=" + idEnvio
+                + ", idOrigen=" + idOrigen
+                + ", idDestino=" + idDestino
+                + ", origen=" + (origen != null ? origen.toString() : "null")
+                + ", destino=" + (destino != null ? destino.toString() : "null")
+                + ", cliente=" + (cliente != null ? cliente.toString() : "null")
+                + ", conductor=" + (conductor != null ? conductor.toString() : "null")
+                + ", costo=" + costo
+                + ", fecha='" + fecha + '\''
+                + ", numGuia='" + numGuia + '\''
+                + ", paquetes=" + (paquetes != null ? paquetes.toString() : "null")
+                + ", idCliente=" + idCliente
+                + ", estadoEnvio=" + (estadoEnvio != null ? estadoEnvio.toString() : "null")
+                + '}';
+    }
 
 }
