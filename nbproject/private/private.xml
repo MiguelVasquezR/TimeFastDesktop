@@ -5,9 +5,10 @@
         <group>
             <file>file:/Users/vasquez/Desktop/proyectoIntegracion/TimeFastDesktop/src/timefastdesktop/panes/FXMLEnviosPaneController.java</file>
             <file>file:/Users/vasquez/Desktop/proyectoIntegracion/TimeFastDesktop/src/timefastdesktop/panes/FXMLPaquetesPaneController.java</file>
-            <file>file:/Users/vasquez/Desktop/proyectoIntegracion/TimeFastDesktop/src/timefastdesktop/panes/card/FXMLCardEnviosController.java</file>
-            <file>file:/Users/vasquez/Desktop/proyectoIntegracion/TimeFastDesktop/src/timefastdesktop/modelo/dao/EnviosDAO.java</file>
-            <file>file:/Users/vasquez/Desktop/proyectoIntegracion/TimeFastDesktop/src/timefastdesktop/panes/card/FXMLAsignarConductorController.java</file>
+            <file>file:/Users/vasquez/Desktop/proyectoIntegracion/TimeFastDesktop/src/timefastdesktop/panes/EnvioEstadoController.java</file>
+            <file>file:/Users/vasquez/Desktop/proyectoIntegracion/TimeFastDesktop/src/timefastdesktop/panes/FXMLColaboradorPaneController.java</file>
+            <file>file:/Users/vasquez/Desktop/proyectoIntegracion/TimeFastDesktop/src/timefastdesktop/panes/FXMLUnidadesPaneController.java</file>
+            <file>file:/Users/vasquez/Desktop/proyectoIntegracion/TimeFastDesktop/src/timefastdesktop/panes/FXMLUsuariosPaneController.java</file>
         </group>
     </open-files>
 </project-private>

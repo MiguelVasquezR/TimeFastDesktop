@@ -3,6 +3,7 @@ package timefastdesktop.panes;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -107,10 +108,31 @@ public class FXMLColaboradorPaneController implements Initializable, Notificador
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         llenarComboBox();
-        
+
         llenarContenedorColaboradores();
         btn.setLayoutY(829);
         Utilidades.estilizarBarraScroll(scroll);
+
+        obtenerNuevaContrasena();
+    }
+
+    private void obtenerNuevaContrasena() {
+        String password = generatePassword(16);
+        psPassword.setText(password);
+        pfConfirmarPassword.setText(password);
+
+    }
+
+    public static String generatePassword(int length) {
+
+        String validCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+";
+        SecureRandom random = new SecureRandom();
+        StringBuilder password = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(validCharacters.length());
+            password.append(validCharacters.charAt(index));
+        }
+        return password.toString();
     }
 
     private void llenarComboBox() {
@@ -269,6 +291,8 @@ public class FXMLColaboradorPaneController implements Initializable, Notificador
         File file = new File("src/timefastdesktop/recursos/colaboradorPerfil.png");
         Image image = new Image(file.toURI().toString());
         ivPerfil.setImage(image);
+
+        obtenerNuevaContrasena();
     }
 
     //Seleccionar Foto
