@@ -43,6 +43,11 @@
                   <Image url="@recursos/iconsMenu/unidad.png" />
                </image>
             </ImageView>
+            <ImageView fitHeight="56.0" fitWidth="56.0" layoutX="41.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@recursos/time-fast-logo-primary.png" />
+               </image>
+            </ImageView>
          </children>
       </Pane>
       <Pane fx:id="paneSustituto" layoutX="150.0" prefHeight="724.0" prefWidth="974.0" style="-fx-background-color: #205375;" />

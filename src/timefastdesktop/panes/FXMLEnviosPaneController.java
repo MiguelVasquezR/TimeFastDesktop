@@ -30,6 +30,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.UUID;
 
 import timefastdesktop.modelo.dao.ClienteDAO;
 import timefastdesktop.pojo.Cliente;
@@ -108,6 +109,10 @@ public class FXMLEnviosPaneController implements Initializable, NotificadorOpera
         esconderLabelsDeError();
         cargarClientes();
         Utilidades.estilizarBarraScroll(scrollEnvios);
+        tfNumGuia.setDisable(false);
+        String uuid = UUID.randomUUID().toString().replace("-", "");
+        String first10Digits = uuid.substring(0, 22);
+        tfNumGuia.setText(first10Digits);
     }
 
     private void cargarClientes() {
