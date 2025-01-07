@@ -21,12 +21,12 @@
             <Font name="Roboto Bold" size="40.0" />
          </font>
       </Label>
-      <Label fx:id="lbUsuario" layoutX="708.0" layoutY="55.0" text="Miguel Vásquez" textFill="WHITE">
+      <Label fx:id="lbUsuario" layoutX="708.0" layoutY="29.0" prefHeight="70.0" prefWidth="130.0" text="Miguel Vásquez" textFill="WHITE" wrapText="true">
          <font>
             <Font name="Roboto Bold" size="18.0" />
          </font>
       </Label>
-      <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="858.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="ivPerfilCola" fitHeight="70.0" fitWidth="70.0" layoutX="858.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../recursos/iconHeader.png" />
          </image>

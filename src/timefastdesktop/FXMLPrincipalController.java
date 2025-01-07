@@ -24,7 +24,14 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import timefastdesktop.panes.FXMLColaboradorPaneController;
+import timefastdesktop.panes.FXMLEnviosPaneController;
+import timefastdesktop.panes.FXMLPaquetesPaneController;
+import timefastdesktop.panes.FXMLUnidadesPaneController;
+import timefastdesktop.panes.FXMLUsuariosPaneController;
+import timefastdesktop.pojo.Colaborador;
 import timefastdesktop.utilidades.Alertas;
+import timefastdesktop.utilidades.Utilidades;
 
 public class FXMLPrincipalController implements Initializable {
 
@@ -45,8 +52,15 @@ public class FXMLPrincipalController implements Initializable {
     @FXML
     private Pane paneSustituto;
 
+    private Colaborador colaborador = null;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+    }
+
+    public void setColaborador(Colaborador colaborador) {
+        this.colaborador = colaborador;
         cambiarPane(obtenerNombrePane("itemColaboradores"));
     }
 
@@ -89,6 +103,41 @@ public class FXMLPrincipalController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("panes/" + nombreFXML));
             Parent nuevaVista = loader.load();
+            if (nombreFXML.equals("FXMLColaboradorPane.fxml")) {
+                FXMLColaboradorPaneController fxmlColaboradorPaneController = loader.getController();
+                String nombreColaborador = this.colaborador.getPersona().getNombre();
+                Image fotoPerfil = Utilidades.convertirImagenDesdeBase64(this.colaborador.getPersona().getFotoBase64());
+                fxmlColaboradorPaneController.datosColaborador(nombreColaborador, fotoPerfil);
+            }
+
+            if (nombreFXML.equals("FXMLEnviosPane.fxml")) {
+                FXMLEnviosPaneController fxmlEnviosPaneController = loader.getController();
+                String nombreColaborador = this.colaborador.getPersona().getNombre();
+                Image fotoPerfil = Utilidades.convertirImagenDesdeBase64(this.colaborador.getPersona().getFotoBase64());
+                fxmlEnviosPaneController.datosColaborador(nombreColaborador, fotoPerfil);
+            }
+
+            if (nombreFXML.equals("FXMLUnidadesPane.fxml")) {
+                FXMLUnidadesPaneController fxmlUnidadesPaneController = loader.getController();
+                String nombreColaborador = this.colaborador.getPersona().getNombre();
+                Image fotoPerfil = Utilidades.convertirImagenDesdeBase64(this.colaborador.getPersona().getFotoBase64());
+                fxmlUnidadesPaneController.datosColaborador(nombreColaborador, fotoPerfil);
+            }
+
+            if (nombreFXML.equals("FXMLUsuariosPane.fxml")) {
+                FXMLUsuariosPaneController fxmlUsuariosPaneController = loader.getController();
+                String nombreColaborador = this.colaborador.getPersona().getNombre();
+                Image fotoPerfil = Utilidades.convertirImagenDesdeBase64(this.colaborador.getPersona().getFotoBase64());
+                fxmlUsuariosPaneController.datosColaborador(nombreColaborador, fotoPerfil);
+            }
+
+            if (nombreFXML.equals("FXMLPaquetesPane.fxml")) {
+                FXMLPaquetesPaneController fxmlPaquetesPaneController = loader.getController();
+                String nombreColaborador = this.colaborador.getPersona().getNombre();
+                Image fotoPerfil = Utilidades.convertirImagenDesdeBase64(this.colaborador.getPersona().getFotoBase64());
+                fxmlPaquetesPaneController.datosColaborador(nombreColaborador, fotoPerfil);
+            }
+
             paneSustituto.getChildren().clear();
             paneSustituto.getChildren().add(nuevaVista);
         } catch (IOException ex) {

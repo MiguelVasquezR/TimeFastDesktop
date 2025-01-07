@@ -63,6 +63,8 @@ public class FXMLUnidadesPaneController implements Initializable, NotificadorOpe
     private ScrollPane spContenedor;
     @FXML
     private FlowPane fpContenedor;
+    @FXML
+    private ImageView ivPerfilCola;
 
     private File imagenSeleccionada;
     private List<Unidad> unidadesWS;
@@ -341,6 +343,11 @@ public class FXMLUnidadesPaneController implements Initializable, NotificadorOpe
             i++;
         }
         return index;
+    }
+
+    public void datosColaborador(String nombre, Image foto){
+        this.lbUsuario.setText(nombre);
+        ivPerfilCola.setImage(foto);
     }
 
 }

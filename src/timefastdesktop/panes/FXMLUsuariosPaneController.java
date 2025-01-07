@@ -15,6 +15,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
@@ -89,6 +91,8 @@ public class FXMLUsuariosPaneController implements Initializable, NotificadorOpe
     private FlowPane fpClientes;
     @FXML
     private Button btnFormulario;
+    @FXML
+    private ImageView ivPerfilCola;
     
     private List<Cliente> listaCliente = new ArrayList<Cliente>();
     private Boolean estaEditando = false;
@@ -385,6 +389,11 @@ public class FXMLUsuariosPaneController implements Initializable, NotificadorOpe
         tfEstado.setText(cliente.getDireccion().getEstado());
         tfTelefono.setText(cliente.getTelefono());
         tfCorreo.setText(cliente.getPersona().getCorreo());
+    }
+
+     public void datosColaborador(String nombre, Image foto){
+        this.lbUsuario.setText(nombre);
+        ivPerfilCola.setImage(foto);
     }
 
 }

@@ -30,6 +30,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import timefastdesktop.observador.NotificadorOperacion;
@@ -79,6 +81,8 @@ public class FXMLPaquetesPaneController implements Initializable, NotificadorOpe
     private ScrollPane scrollClientes;
     @FXML
     private AnchorPane contenedorClientes;
+    @FXML
+    private ImageView ivPerfilCola;
 
     private Paquete paqueteEditar;
     private Boolean estaEditando = false;
@@ -351,6 +355,11 @@ public class FXMLPaquetesPaneController implements Initializable, NotificadorOpe
     @FXML
     private void cbCambio(ActionEvent event) {
         this.envioSeleccionado = cbEnvios.getValue();
+    }
+
+     public void datosColaborador(String nombre, Image foto){
+        this.lbUsuario.setText(nombre);
+        ivPerfilCola.setImage(foto);
     }
 
 }
