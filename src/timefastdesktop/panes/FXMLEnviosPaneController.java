@@ -34,6 +34,8 @@ import timefastdesktop.modelo.dao.ClienteDAO;
 import timefastdesktop.pojo.Cliente;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import timefastdesktop.pojo.Persona;
 
@@ -94,6 +96,8 @@ public class FXMLEnviosPaneController implements Initializable, NotificadorOpera
 
     @FXML
     private ComboBox<String> cbCliente;
+    @FXML
+    private ImageView ivPerfilCola;
 
     private List<Cliente> listaClientes;
     private Boolean estaEditando = false;
@@ -491,6 +495,11 @@ public class FXMLEnviosPaneController implements Initializable, NotificadorOpera
         if (!tfBuscar.getText().isEmpty()) {
             buscarNumGuia(tfBuscar.getText());
         }
+    }
+
+     public void datosColaborador(String nombre, Image foto){
+        this.lbUsuario.setText(nombre);
+        ivPerfilCola.setImage(foto);
     }
 
 }

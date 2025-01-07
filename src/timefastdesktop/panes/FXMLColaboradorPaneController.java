@@ -103,10 +103,19 @@ public class FXMLColaboradorPaneController implements Initializable, Notificador
     private AnchorPane contenedorColaborador;
     @FXML
     private FlowPane fpColaborador;
+    @FXML
+    private ImageView ivPerfilCola;
+    
 
     private List<Colaborador> listaColaborador = null;
     private Colaborador colaboradorEditar = null;
 
+    
+    public void datosColaborador(String nombre, Image foto){
+        this.lbUsuario.setText(nombre);
+        ivPerfilCola.setImage(foto);
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         llenarComboBox();

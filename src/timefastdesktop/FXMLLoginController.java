@@ -1,5 +1,7 @@
 package timefastdesktop;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -11,9 +13,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import timefastdesktop.modelo.dao.LoginDAO;
+import timefastdesktop.pojo.Colaborador;
 import timefastdesktop.pojo.Mensaje;
 import timefastdesktop.utilidades.Navegacion;
-import timefastdesktop.utilidades.SesionUsuario;
 import timefastdesktop.utilidades.Utilidades;
 
 public class FXMLLoginController implements Initializable {
@@ -38,15 +40,17 @@ public class FXMLLoginController implements Initializable {
 
         if (!camposVacios()) {
             Mensaje msj = LoginDAO.iniciarSesion(txEmail.getText(), psPassword.getText());
+            Gson gson = new Gson();
             if (msj.getError() == false) {
                 Utilidades.mostrarAlertaSimple("Sesión Iniciada", msj.getMensaje(), Alert.AlertType.CONFIRMATION);
-                Navegacion.cambiarPantalla(lbErrorEmail, "TimeFast | Pantalla Principal", "FXMLPrincipal.fxml", this.getClass());
+                JsonObject json = gson.fromJson(msj.getObjeto().toString(), JsonObject.class);
+                Colaborador colaboradorJSON = gson.fromJson(json.get("value"), Colaborador.class);
+                Navegacion.cambiarPantallaInicioSesion(lbErrorEmail, "TimeFast | Pantalla Principal", "FXMLPrincipal.fxml", this.getClass(), colaboradorJSON);
             } else {
                 Utilidades.mostrarAlertaSimple("Error al iniciar sesión", msj.getMensaje(), Alert.AlertType.ERROR);
             }
         }
     }
-
 
     private boolean camposVacios() {
         boolean band = false;
