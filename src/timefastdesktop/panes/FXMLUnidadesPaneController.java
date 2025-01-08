@@ -78,6 +78,7 @@ public class FXMLUnidadesPaneController implements Initializable, NotificadorOpe
         llenarTiposUnidad();
         obtenerUnidades();
         Utilidades.estilizarBarraScroll(spContenedor);
+        
     }
 
     @FXML
@@ -193,7 +194,7 @@ public class FXMLUnidadesPaneController implements Initializable, NotificadorOpe
             mensaje.append(" Selecciona un tipo de Unidad");
         }
         if (mensaje.length() > 1) {
-            Utilidades.mostrarAlertaSimple("Error en datos", "Te cuidado" + mensaje, Alert.AlertType.INFORMATION);
+            Utilidades.mostrarAlertaSimple("Error en datos", "Ten cuidado" + mensaje, Alert.AlertType.INFORMATION);
             return false;
         } else {
             tfNII.setText(generarNII(tfAno.getText(), tfVin.getText()));

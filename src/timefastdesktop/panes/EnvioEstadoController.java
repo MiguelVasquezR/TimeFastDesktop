@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import timefastdesktop.modelo.dao.EnviosDAO;
+import timefastdesktop.observador.NotificadorOperacion;
 import timefastdesktop.pojo.Direccion;
 import timefastdesktop.pojo.Envio;
 import timefastdesktop.pojo.EstadoEnvio;
@@ -29,6 +30,14 @@ public class EnvioEstadoController implements Initializable {
     ObservableList<String> estados;
     @FXML
     private TextArea taDescripcion;
+    
+    private NotificadorOperacion observador;
+
+
+    public void setObservador(NotificadorOperacion observador) {
+        this.observador = observador;
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -95,27 +104,31 @@ public class EnvioEstadoController implements Initializable {
         }
     }
 
-    @FXML
-    private void btnAceptar(ActionEvent event) {
+        @FXML
+       private void btnAceptar(ActionEvent event) {
+           if (taDescripcion.getText().isEmpty() || taDescripcion == null) {
+               Utilidades.mostrarAlertaSimple("Completa los campos", "Se necesita una descripción para cambiar el estado", Alert.AlertType.WARNING);
+               return;
+           }
 
-        if (taDescripcion.getText().isEmpty() || taDescripcion == null) {
-            Utilidades.mostrarAlertaSimple("Completa los campos", "Se necesita una descripción para cambiar el estado", Alert.AlertType.WARNING);
-            return;
-        }
+           String nuevoEstado = cbEstado.getSelectionModel().getSelectedItem();
+           EstadoEnvio ee = new EstadoEnvio();
+           ee.setEstado(nuevoEstado);
+           ee.setEnvio(this.envio);
+           ee.setIdEnvio(this.envio.getIdEnvio());
+           ee.setDescripcion(taDescripcion.getText());
+           Mensaje mensaje = EnviosDAO.actualizarEstado(ee);
+           if (mensaje.getError() == false) {
+               // Notificar al observador
+               if (observador != null) {
+                   observador.notificacionOperacion("Estado actualizado", "El estado del envío ha cambiado.");
+               }
+               cerrarVentana();
+           } else {
+               Utilidades.mostrarAlertaSimple("Error al actualizar", "Por el momento no es posible actualizar el estado, intentelo más tarde.", Alert.AlertType.WARNING);
+           }
+       }
 
-        String nuevoEstado = cbEstado.getSelectionModel().getSelectedItem();
-        EstadoEnvio ee = new EstadoEnvio();
-        ee.setEstado(nuevoEstado);
-        ee.setEnvio(this.envio);
-        ee.setIdEnvio(this.envio.getIdEnvio());
-        ee.setDescripcion(taDescripcion.getText());
-        Mensaje mensaje = EnviosDAO.actualizarEstado(ee);
-        if (mensaje.getError() == false) {
-            cerrarVentana();
-        } else {
-            Utilidades.mostrarAlertaSimple("Error al actualizar", "Por el momento no es posible actualizar el estado, intentelo más tarde.", Alert.AlertType.WARNING);
-        }
-    }
 
     @FXML
     private void btnCancelar(ActionEvent event) {

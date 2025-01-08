@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import timefastdesktop.modelo.dao.ColaboradorDAO;
 import timefastdesktop.modelo.dao.UnidadDAO;
@@ -41,7 +42,7 @@ public class FXMLCardColaboradorController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
     }
 
     public void setPadreController(FXMLColaboradorPaneController controladorColaboradorPane) {
@@ -56,7 +57,7 @@ public class FXMLCardColaboradorController implements Initializable {
     }
 
     private void imprimirInformacion() {
-        lbNombre.setText(this.colaborador.getPersona().getNombre() + this.colaborador.getPersona().getApellidoPaterno() + this.colaborador.getPersona().getApellidoMaterno());
+        lbNombre.setText(this.colaborador.getPersona().getNombre() + " "+ this.colaborador.getPersona().getApellidoPaterno() + " "+ this.colaborador.getPersona().getApellidoMaterno());
         lbCurp.setText(this.colaborador.getPersona().getCURP());
         lbCorreo.setText(this.colaborador.getPersona().getCorreo());
         lbNumPersonal.setText(this.colaborador.getNoPersonal());
@@ -89,5 +90,5 @@ public class FXMLCardColaboradorController implements Initializable {
             }
         }
     }
-
+    
 }

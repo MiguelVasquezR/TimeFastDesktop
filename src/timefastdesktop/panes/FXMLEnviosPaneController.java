@@ -110,6 +110,7 @@ public class FXMLEnviosPaneController implements Initializable, NotificadorOpera
         esconderLabelsDeError();
         cargarClientes();
         Utilidades.estilizarBarraScroll(scrollEnvios);
+        Utilidades.estilizarBarraScroll(scroll);
         tfNumGuia.setDisable(false);
         String uuid = UUID.randomUUID().toString().replace("-", "");
         String first10Digits = uuid.substring(0, 22);
@@ -226,11 +227,10 @@ public class FXMLEnviosPaneController implements Initializable, NotificadorOpera
     private void llenarTarjetasEnvios(List<Envio> lista) {
         try {
             for (Envio envio : lista) {
-
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/timefastdesktop/panes/card/FXMLCardEnvios.fxml"));
                 Parent tarjetaPresentacion = loader.load();
                 FXMLCardEnviosController controller = loader.getController();
-                controller.setEnvioData(this, envio, this);
+                controller.setEnvioData(this, envio, this); // Asignar el observador
                 fpEnvios.getChildren().add(tarjetaPresentacion);
             }
         } catch (IOException ex) {
@@ -238,10 +238,13 @@ public class FXMLEnviosPaneController implements Initializable, NotificadorOpera
         }
     }
 
+
     @Override
     public void notificacionOperacion(String titulo, String nombre) {
-        llenarContenedorEnvios();
+        Utilidades.mostrarAlertaSimple(titulo, nombre, Alert.AlertType.INFORMATION);
+        llenarContenedorEnvios(); 
     }
+
 
     public void llenarFormularioEditar(Envio envio) {
         if (envio != null) {
@@ -475,7 +478,9 @@ public class FXMLEnviosPaneController implements Initializable, NotificadorOpera
                     filtrado.add(envio);
                 }
             }
+            fpEnvios.getChildren().clear();
             llenarTarjetasEnvios(filtrado);
+            
         }
     }
 
@@ -497,9 +502,9 @@ public class FXMLEnviosPaneController implements Initializable, NotificadorOpera
         }
     }
 
-     public void datosColaborador(String nombre, Image foto){
-        this.lbUsuario.setText(nombre);
-        ivPerfilCola.setImage(foto);
+    public void datosColaborador(String nombreColaborador, Image fotoPerfil) {
+        lbUsuario.setText(nombreColaborador);
+        ivPerfilCola.setImage(fotoPerfil);
     }
 
 }
