@@ -139,25 +139,27 @@ public class FXMLEnviosPaneController implements Initializable, NotificadorOpera
     }
 
     private void obtenerDireccionClienteSeleccionado() {
-        String nombre = cbCliente.getValue();
-        if (nombre != null || !nombre.isEmpty()) {
-            ObservableList<String> direccionClientes = FXCollections.observableArrayList();
-            for (Cliente cliente : listaClientes) {
-                Persona persona = cliente.getPersona();
-                String nombreCompleto = persona.getNombre() + " "
-                        + persona.getApellidoPaterno() + " "
-                        + persona.getApellidoMaterno();
+        try {
+            String nombre = cbCliente.getValue();
+            if (nombre != null || !nombre.isEmpty()) {
+                ObservableList<String> direccionClientes = FXCollections.observableArrayList();
+                for (Cliente cliente : listaClientes) {
+                    Persona persona = cliente.getPersona();
+                    String nombreCompleto = persona.getNombre() + " "
+                            + persona.getApellidoPaterno() + " "
+                            + persona.getApellidoMaterno();
 
-                if (nombreCompleto.equals(nombre)) {
-                    Direccion direccion = cliente.getDireccion();
-                    String direccionString = direccion.getCalle() + " #" + direccion.getNumero() + " Col. "
-                            + direccion.getColonia() + " C.P." + direccion.getCodigoPostal() + " "
-                            + direccion.getCiudad() + ", " + direccion.getCiudad();
-                    direccionClientes.add(direccionString);
+                    if (nombreCompleto.equals(nombre)) {
+                        Direccion direccion = cliente.getDireccion();
+                        String direccionString = direccion.getCalle() + " #" + direccion.getNumero() + " Col. "
+                                + direccion.getColonia() + " C.P." + direccion.getCodigoPostal() + " "
+                                + direccion.getCiudad() + ", " + direccion.getCiudad();
+                        direccionClientes.add(direccionString);
+                    }
                 }
+                cbOrigen.setItems(direccionClientes);
             }
-            cbOrigen.setItems(direccionClientes);
-        }
+        } catch (Exception e) {}
     }
 
     private void esconderLabelsDeError() {
