@@ -502,4 +502,9 @@ public class FXMLEnviosPaneController implements Initializable, NotificadorOpera
         }
     }
 
+    public void datosColaborador(String nombreColaborador, Image fotoPerfil) {
+        lbUsuario.setText(nombreColaborador);
+        ivPerfilCola.setImage(fotoPerfil);
+    }
+
 }
