@@ -91,6 +91,7 @@ public class FXMLPaquetesPaneController implements Initializable, NotificadorOpe
         cargarIdsEnvio();
         resetearLabelErrors();
         Utilidades.estilizarBarraScroll(scroll);
+        Utilidades.estilizarBarraScroll(scrollClientes);
     }
 
     @Override

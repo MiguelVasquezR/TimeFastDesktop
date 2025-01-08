@@ -5,66 +5,46 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="152.0" prefWidth="152.0" style="-fx-background-radius: 8px; -fx-border-radius: 8px; -fx-background-color: white;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="timefastdesktop.panes.card.FXMLCardClienteController">
+<Pane prefHeight="280.0" prefWidth="262.0" style="-fx-background-radius: 8px; -fx-border-radius: 8px; -fx-background-color: white;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="timefastdesktop.panes.card.FXMLCardClienteController">
    <children>
       <Label layoutX="9.0" layoutY="4.0" text="Nombre">
          <font>
-            <Font name="Roboto Bold" size="8.0" />
+            <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="lbNombre" layoutX="9.0" layoutY="14.0" prefHeight="10.0" prefWidth="112.0" text="Nombre">
+      <Label fx:id="lbNombre" layoutX="9.0" layoutY="20.0" prefHeight="17.0" prefWidth="187.0" text="Nombre" />
+      <Label layoutX="9.0" layoutY="41.0" text="Apellidos">
          <font>
-            <Font name="Roboto" size="8.0" />
+            <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="9.0" layoutY="26.0" text="Apellidos">
+      <Label layoutX="8.0" layoutY="81.0" prefHeight="24.0" prefWidth="80.0" text="Dirección">
          <font>
-            <Font name="Roboto Bold" size="8.0" />
+            <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="9.0" layoutY="47.0" text="Dirección">
+      <Label fx:id="lbApellidos" layoutX="9.0" layoutY="59.0" prefHeight="17.0" prefWidth="166.0" text="Nombre" />
+      <Label fx:id="lbDireccion" alignment="TOP_LEFT" layoutX="8.0" layoutY="103.0" prefHeight="24.0" prefWidth="187.0" text="Nombre" wrapText="true" />
+      <Label layoutX="8.0" layoutY="128.0" prefHeight="24.0" prefWidth="53.0" text="Teléfono">
          <font>
-            <Font name="Roboto Bold" size="8.0" />
+            <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="lbApellidos" layoutX="9.0" layoutY="36.0" prefHeight="10.0" prefWidth="112.0" text="Nombre">
+      <Label fx:id="lbTeléfono" layoutX="9.0" layoutY="146.0" prefHeight="24.0" prefWidth="215.0" text="Nombre" />
+      <Label layoutX="10.0" layoutY="172.0" prefHeight="24.0" prefWidth="65.0" text="Correo">
          <font>
-            <Font name="Roboto" size="8.0" />
+            <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="lbDireccion" alignment="TOP_LEFT" layoutX="9.0" layoutY="58.0" prefHeight="10.0" prefWidth="135.0" text="Nombre" wrapText="true">
+      <Label fx:id="lbCorreo" layoutX="10.0" layoutY="190.0" prefHeight="24.0" prefWidth="134.0" text="Nombre" wrapText="true" />
+      <Button layoutX="25.0" layoutY="241.0" mnemonicParsing="false" onAction="#btnEditar" prefHeight="30.0" prefWidth="101.0" style="-fx-background-color: #F66B0E;" text="Editar" textFill="WHITE">
          <font>
-            <Font name="Roboto" size="8.0" />
-         </font>
-      </Label>
-      <Label layoutX="9.0" layoutY="70.0" text="Teléfono">
-         <font>
-            <Font name="Roboto Bold" size="8.0" />
-         </font>
-      </Label>
-      <Label fx:id="lbTeléfono" layoutX="9.0" layoutY="82.0" prefHeight="10.0" prefWidth="130.0" text="Nombre">
-         <font>
-            <Font name="Roboto" size="8.0" />
-         </font>
-      </Label>
-      <Label layoutX="9.0" layoutY="94.0" text="Correo">
-         <font>
-            <Font name="Roboto Bold" size="8.0" />
-         </font>
-      </Label>
-      <Label fx:id="lbCorreo" layoutX="9.0" layoutY="106.0" prefHeight="12.0" prefWidth="134.0" text="Nombre" wrapText="true">
-         <font>
-            <Font name="Roboto" size="8.0" />
-         </font>
-      </Label>
-      <Button layoutX="10.0" layoutY="131.0" mnemonicParsing="false" onAction="#btnEditar" prefHeight="12.0" prefWidth="50.0" style="-fx-background-color: #F66B0E;" text="Editar" textFill="WHITE">
-         <font>
-            <Font name="Roboto" size="8.0" />
+            <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button layoutX="92.0" layoutY="130.0" mnemonicParsing="false" onAction="#btnEliminar" prefHeight="12.0" prefWidth="50.0" style="-fx-background-color: #F6160E;" text="Eliminar" textFill="WHITE">
+      <Button layoutX="143.0" layoutY="240.0" mnemonicParsing="false" onAction="#btnEliminar" prefHeight="30.0" prefWidth="101.0" style="-fx-background-color: #F6160E;" text="Eliminar" textFill="WHITE">
          <font>
-            <Font name="Roboto" size="8.0" />
+            <Font name="System Bold" size="12.0" />
          </font>
       </Button>
    </children>

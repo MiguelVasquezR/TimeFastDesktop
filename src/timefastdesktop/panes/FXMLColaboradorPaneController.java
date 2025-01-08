@@ -114,7 +114,7 @@ public class FXMLColaboradorPaneController implements Initializable, Notificador
         llenarContenedorColaboradores();
         btn.setLayoutY(829);
         Utilidades.estilizarBarraScroll(scroll);
-
+        Utilidades.estilizarBarraScroll(scrollColaborador);
         obtenerNuevaContrasena();
     }
 
@@ -122,7 +122,7 @@ public class FXMLColaboradorPaneController implements Initializable, Notificador
         String password = generatePassword(16);
         psPassword.setText(password);
         pfConfirmarPassword.setText(password);
-
+        
     }
 
     public static String generatePassword(int length) {
@@ -143,7 +143,8 @@ public class FXMLColaboradorPaneController implements Initializable, Notificador
     }
 
     private void validarConductor() {
-        if (cbRol.getSelectionModel().getSelectedItem().equals("Conductor") && cbRol != null) {
+        try{
+            if (cbRol.getSelectionModel().getSelectedItem().equals("Conductor") && cbRol != null) {
             tfNumLicencia.setVisible(true);
             lbNumeroLicencia.setVisible(true);
             btn.setLayoutY(910);
@@ -151,7 +152,11 @@ public class FXMLColaboradorPaneController implements Initializable, Notificador
             tfNumLicencia.setVisible(false);
             lbNumeroLicencia.setVisible(false);
             btn.setLayoutY(829);
+            }
+        }catch(Exception e){
+            
         }
+
     }
 
     private boolean validarCampos() {
@@ -366,6 +371,7 @@ public class FXMLColaboradorPaneController implements Initializable, Notificador
                         if (msj.getError() == false) {
                             Utilidades.mostrarAlertaSimple("Almacenamiento exitoso", "La foto y los datos han sido agregados correctamente", Alert.AlertType.INFORMATION);
                             vaciarCampos();
+                            llenarContenedorColaboradores();
                         } else {
                             Utilidades.mostrarAlertaSimple("Error en colaborador", "No fue posible actualizar la foto del colaborador, intente editando al colaborador", Alert.AlertType.ERROR);
                         }

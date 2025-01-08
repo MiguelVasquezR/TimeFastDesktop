@@ -50,6 +50,8 @@ public class FXMLCardEnviosController implements Initializable {
     private Envio envio;
     private NotificadorOperacion observador;
     private FXMLEnviosPaneController padre;
+    @FXML
+    private Label idGuia;
 
     public void setEnvioData(NotificadorOperacion notificacionOperacion, Envio envio, FXMLEnviosPaneController padre) {
         this.observador = notificacionOperacion;
@@ -90,6 +92,10 @@ public class FXMLCardEnviosController implements Initializable {
         lbCodigoPostal.setText(envio.getDestino() != null && envio.getDestino().getCodigoPostal() != null
                 ? envio.getDestino().getCodigoPostal()
                 : "N/A");
+        
+        idGuia.setText(envio.getCliente() != null && envio.getNumGuia() != null
+                ? envio.getNumGuia()
+                : "No disponible");
 
         Mensaje msj = EnviosDAO.obtenerEstadosEnvios(envio.getIdEnvio());
 
@@ -128,6 +134,7 @@ public class FXMLCardEnviosController implements Initializable {
 
             EnvioEstadoController controller = loader.getController();
             controller.setEnvio(this.envio);
+            controller.setObservador(observador); // Asignar el observador
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
@@ -138,6 +145,7 @@ public class FXMLCardEnviosController implements Initializable {
             e.printStackTrace();
         }
     }
+
 
     @FXML
     private void btnAsignarConductor(ActionEvent event) {
