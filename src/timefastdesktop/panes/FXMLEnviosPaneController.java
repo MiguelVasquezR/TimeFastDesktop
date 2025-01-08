@@ -238,13 +238,11 @@ public class FXMLEnviosPaneController implements Initializable, NotificadorOpera
         }
     }
 
-
     @Override
     public void notificacionOperacion(String titulo, String nombre) {
         Utilidades.mostrarAlertaSimple(titulo, nombre, Alert.AlertType.INFORMATION);
-        llenarContenedorEnvios(); 
+        llenarContenedorEnvios();
     }
-
 
     public void llenarFormularioEditar(Envio envio) {
         if (envio != null) {
@@ -299,6 +297,7 @@ public class FXMLEnviosPaneController implements Initializable, NotificadorOpera
                     if (msjWS.getError() == false) {
                         Utilidades.mostrarAlertaSimple("Actualizado correctamente", "Se ha actualizado correctamente el envío", Alert.AlertType.INFORMATION);
                         llenarContenedorEnvios();
+                        limpiarCampos();
                     } else {
                         Utilidades.mostrarAlertaSimple("Error al actualizar el envio", "Por el momento no es posible actualizar el envío, intentelo más tarde.", Alert.AlertType.ERROR);
                     }
@@ -308,6 +307,7 @@ public class FXMLEnviosPaneController implements Initializable, NotificadorOpera
                     if (msjWS.getError() == false) {
                         Utilidades.mostrarAlertaSimple("Almacenado correctamente", "Se ha guardado correctamente el envío", Alert.AlertType.INFORMATION);
                         llenarContenedorEnvios();
+                        limpiarCampos();
                     } else {
                         Utilidades.mostrarAlertaSimple("Error al agregar el envio", "Por el momento no es posible agregar el envío, intentelo más tarde.", Alert.AlertType.ERROR);
                     }
@@ -480,7 +480,7 @@ public class FXMLEnviosPaneController implements Initializable, NotificadorOpera
             }
             fpEnvios.getChildren().clear();
             llenarTarjetasEnvios(filtrado);
-            
+
         }
     }
 
@@ -505,6 +505,22 @@ public class FXMLEnviosPaneController implements Initializable, NotificadorOpera
     public void datosColaborador(String nombreColaborador, Image fotoPerfil) {
         lbUsuario.setText(nombreColaborador);
         ivPerfilCola.setImage(fotoPerfil);
+    }
+
+    private void limpiarCampos() {
+        tfCalle.clear();
+        tfColonia.clear();
+        tfNumero.clear();
+        tfCP.clear();
+        tfCiudad.clear();
+        tfEstado.clear();
+        String uuid = UUID.randomUUID().toString().replace("-", "");
+        String first10Digits = uuid.substring(0, 22);
+        tfNumGuia.setText(first10Digits);
+        tfPrecio.clear();
+        cbOrigen.getSelectionModel().clearSelection();
+        cbCliente.getSelectionModel().clearSelection();
+        estaEditando = false;
     }
 
 }
