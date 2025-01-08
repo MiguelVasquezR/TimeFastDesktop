@@ -90,7 +90,7 @@ public class FXMLPaquetesPaneController implements Initializable, NotificadorOpe
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         cargarPaquetes();
         cargarIdsEnvio();
         resetearLabelErrors();
@@ -277,20 +277,15 @@ public class FXMLPaquetesPaneController implements Initializable, NotificadorOpe
             paquete.setDescripcion(taDescripcion.getText());
             paquete.setDimensiones(construirDimensiones(tfAlto.getText(), tfAncho.getText(), tfProfundidad.getText()));
             paquete.setPeso(Double.parseDouble(tfPeso.getText()));
-
-            if (cbEnvios.getValue() != null) {
-                paquete.setIdEnvio(cbEnvios.getValue().getIdEnvio());
-            } else {
-                paquete.setIdEnvio(this.paqueteEditar.getEnvio().getIdEnvio());
-            }
+            paquete.setIdEnvio(this.envioSeleccionado.getIdEnvio());
+            
+            System.out.println(this.envioSeleccionado.getCosto());
 
             if (estaEditando) {
                 paquete.setId(this.paqueteEditar.getIdPaquete());
                 paquete.setIdPaquete(this.paqueteEditar.getIdPaquete());
-
+                
                 Mensaje msj = PaqueteDAO.editarPaquete(paquete);
-                System.out.println(paquete + "este fue el paquete   ");
-                System.out.println(msj);
                 if (!msj.getError()) {
                     Utilidades.mostrarAlertaSimple("Paquete Actualizado", "El paquete ha sido actualizado exitosamente.", Alert.AlertType.INFORMATION);
                 } else {
@@ -329,7 +324,6 @@ public class FXMLPaquetesPaneController implements Initializable, NotificadorOpe
     private void llenarFormularioEditarPaquete(Paquete paquete) {
         try {
             String[] dimensiones = paquete.getDimensiones().split("x");
-            System.out.println(dimensiones);
             tfAlto.setText(dimensiones[0]);
             tfAncho.setText(dimensiones[1]);
             tfProfundidad.setText(dimensiones[2]);
@@ -341,6 +335,8 @@ public class FXMLPaquetesPaneController implements Initializable, NotificadorOpe
         tfPeso.setText(String.valueOf(paquete.getPeso()));
         taDescripcion.setText(paquete.getDescripcion());
         cbEnvios.getSelectionModel().select(paquete.getEnvio());
+        paquete.getEnvio().setIdEnvio(paquete.getIdEnvio());
+        this.envioSeleccionado = paquete.getEnvio();
     }
 
     private void limpiarCampos() {
@@ -357,7 +353,7 @@ public class FXMLPaquetesPaneController implements Initializable, NotificadorOpe
         this.envioSeleccionado = cbEnvios.getValue();
     }
 
-     public void datosColaborador(String nombre, Image foto){
+    public void datosColaborador(String nombre, Image foto) {
         this.lbUsuario.setText(nombre);
         ivPerfilCola.setImage(foto);
     }
