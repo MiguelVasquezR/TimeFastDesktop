@@ -85,6 +85,6 @@
             <Font name="Roboto Bold" size="10.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cbConductor" layoutX="80.0" layoutY="266.0" onAction="#cambioComboBox" prefHeight="20.0" prefWidth="130.0" promptText="Asignar" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-width: 0 0 1 0;" />
+      <ComboBox fx:id="cbConductor" layoutX="80.0" layoutY="266.0" onAction="#cambioComboBox" prefHeight="20.0" prefWidth="130.0" promptText="Seleccionar" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-width: 0 0 1 0;" />
    </children>
 </Pane>

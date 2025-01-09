@@ -159,7 +159,8 @@ public class FXMLEnviosPaneController implements Initializable, NotificadorOpera
                 }
                 cbOrigen.setItems(direccionClientes);
             }
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 
     private void esconderLabelsDeError() {

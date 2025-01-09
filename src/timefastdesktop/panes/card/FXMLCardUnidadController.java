@@ -92,10 +92,7 @@ public class FXMLCardUnidadController implements Initializable {
                     + unidad.getConductos().getPersona().getApellidoMaterno();
             int i = 0;
             for (String nombreLista : cbConductor.getItems()) {
-                System.out.println(nombreLista);
-                System.out.println(nombre);
                 if (nombreLista.equals(nombre)) {
-                    System.out.println(nombreLista);
                     cbConductor.getSelectionModel().select(i);
                 }
                 i++;
@@ -157,30 +154,34 @@ public class FXMLCardUnidadController implements Initializable {
 
     @FXML
     private void cambioComboBox(ActionEvent event) {
-        String nombre = cbConductor.getSelectionModel().getSelectedItem();
+        try {
+            String nombre = cbConductor.getSelectionModel().getSelectedItem();
 
-        if (nombre.equals("Seleccionar")) {
-            Mensaje msjWS = UnidadDAO.asignarConductor(null, this.unidadCliente);
-            if (msjWS.getError() == true) {
-                Utilidades.mostrarAlertaSimple("Error al Asignar Conductor", msjWS.getMensaje(), Alert.AlertType.ERROR);
-                cbConductor.getSelectionModel().select(-1);
+            if (nombre.equals("Seleccionar")) {
+                Mensaje msjWS = UnidadDAO.asignarConductor(null, this.unidadCliente);
+                if (msjWS.getError() == true) {
+                    Utilidades.mostrarAlertaSimple("Error al Asignar Conductor", msjWS.getMensaje(), Alert.AlertType.ERROR);
+                    cbConductor.getSelectionModel().clearSelection();
+                }
             }
-        }
 
-        if (listaConductores != null && !listaConductores.isEmpty()) {
-            for (int i = 0; i < listaConductores.size(); i++) {
-                Colaborador c = listaConductores.get(i);
-                String nombreLista = c.getPersona().getNombre() + " "
-                        + c.getPersona().getApellidoPaterno() + " "
-                        + c.getPersona().getApellidoMaterno();
-                if (nombreLista.equals(nombre)) {
-                    Mensaje msjWS = UnidadDAO.asignarConductor(c, this.unidadCliente);
-                    if (msjWS.getError() == true) {
-                        Utilidades.mostrarAlertaSimple("Error al Asignar Conductor", msjWS.getMensaje(), Alert.AlertType.ERROR);
-                        cbConductor.getSelectionModel().select(-1);
+            if (listaConductores != null && !listaConductores.isEmpty()) {
+                for (int i = 0; i < listaConductores.size(); i++) {
+                    Colaborador c = listaConductores.get(i);
+                    String nombreLista = c.getPersona().getNombre() + " "
+                            + c.getPersona().getApellidoPaterno() + " "
+                            + c.getPersona().getApellidoMaterno();
+                    if (nombreLista.equals(nombre)) {
+                        Mensaje msjWS = UnidadDAO.asignarConductor(c, this.unidadCliente);
+                        if (msjWS.getError() == true) {
+                            Utilidades.mostrarAlertaSimple("Error al Asignar Conductor", msjWS.getMensaje(), Alert.AlertType.ERROR);
+                            cbConductor.getSelectionModel().clearSelection();
+                        }
                     }
                 }
             }
+        } catch (Exception e) {
+            
         }
     }
 
