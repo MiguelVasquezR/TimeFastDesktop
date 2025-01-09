@@ -16,8 +16,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,12 +24,9 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
-import timefastdesktop.modelo.dao.ColaboradorDAO;
-import timefastdesktop.modelo.dao.EnviosDAO;
 import timefastdesktop.modelo.dao.UnidadDAO;
 import timefastdesktop.observador.NotificadorOperacion;
 import timefastdesktop.panes.card.FXMLCardUnidadController;
-import timefastdesktop.pojo.Colaborador;
 import timefastdesktop.pojo.Mensaje;
 import timefastdesktop.pojo.Unidad;
 
@@ -264,11 +259,11 @@ public class FXMLUnidadesPaneController implements Initializable, NotificadorOpe
                 String marca = unidad.getMarca();
                 String nii = unidad.getNumIdentificacion();
 
-                if (vin.contains(busqueda)) {
+                if (vin.toLowerCase().contains(busqueda.toLowerCase())) {
                     listaFiltrada.add(unidad);
-                } else if (marca.contains(busqueda)) {
+                } else if (marca.toLowerCase().contains(busqueda.toLowerCase())) {
                     listaFiltrada.add(unidad);
-                } else if (nii.contains(busqueda)) {
+                } else if (nii.toLowerCase().contains(busqueda.toLowerCase())) {
                     listaFiltrada.add(unidad);
                 }
             }

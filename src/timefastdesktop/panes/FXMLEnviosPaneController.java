@@ -477,7 +477,7 @@ public class FXMLEnviosPaneController implements Initializable, NotificadorOpera
         if (!numGuia.isEmpty()) {
             List<Envio> filtrado = new ArrayList<>();
             for (Envio envio : listaEnvios) {
-                if (envio.getNumGuia().contains(numGuia)) {
+                if (envio.getNumGuia().toLowerCase().contains(numGuia.toLowerCase())) {
                     filtrado.add(envio);
                 }
             }

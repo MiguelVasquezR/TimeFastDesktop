@@ -3,7 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/Users/vasquez/Desktop/proyectoIntegracion/TimeFastDesktop/src/timefastdesktop/panes/FXMLPaquetesPaneController.java</file>
+            <file>file:/Users/vasquez/Desktop/proyectoIntegracion/TimeFastDesktop/src/timefastdesktop/modelo/dao/PaqueteDAO.java</file>
             <file>file:/Users/vasquez/Desktop/proyectoIntegracion/TimeFastDesktop/src/timefastdesktop/panes/FXMLEnviosPaneController.java</file>
+            <file>file:/Users/vasquez/Desktop/proyectoIntegracion/TimeFastDesktop/src/timefastdesktop/modelo/dao/EnviosDAO.java</file>
+            <file>file:/Users/vasquez/Desktop/proyectoIntegracion/TimeFastDesktop/src/timefastdesktop/utilidades/Constantes.java</file>
+            <file>file:/Users/vasquez/Desktop/proyectoIntegracion/TimeFastDesktop/src/timefastdesktop/panes/FXMLColaboradorPaneController.java</file>
+            <file>file:/Users/vasquez/Desktop/proyectoIntegracion/TimeFastDesktop/src/timefastdesktop/FXMLLoginController.java</file>
+            <file>file:/Users/vasquez/Desktop/proyectoIntegracion/TimeFastDesktop/src/timefastdesktop/panes/FXMLUsuariosPaneController.java</file>
         </group>
     </open-files>
 </project-private>

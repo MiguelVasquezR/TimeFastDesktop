@@ -7,8 +7,6 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -488,11 +486,11 @@ public class FXMLColaboradorPaneController implements Initializable, Notificador
                 String nuPersonal = colaborador.getNoPersonal();
                 String rol = colaborador.getRol().getRol();
 
-                if (nombre.toLowerCase().contains(busqueda)) {
+                if (nombre.toLowerCase().contains(busqueda.toLowerCase())) {
                     listaFiltrada.add(colaborador);
-                } else if (nuPersonal.toLowerCase().contains(busqueda)) {
+                } else if (nuPersonal.toLowerCase().contains(busqueda.toLowerCase())) {
                     listaFiltrada.add(colaborador);
-                } else if (rol.toLowerCase().contains(busqueda)) {
+                } else if (rol.toLowerCase().contains(busqueda.toLowerCase())) {
                     listaFiltrada.add(colaborador);
                 }
             }

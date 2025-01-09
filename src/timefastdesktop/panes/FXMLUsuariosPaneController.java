@@ -332,11 +332,11 @@ public class FXMLUsuariosPaneController implements Initializable, NotificadorOpe
                 String nombreCompleto = cliente.getPersona().getNombre() + " " + cliente.getPersona().getApellidoPaterno() + " " + cliente.getPersona().getApellidoPaterno();
                 String correo = cliente.getPersona().getCorreo();
                 String telefono = cliente.getTelefono();
-                if (telefono.contains(busqueda)) {
+                if (telefono.toLowerCase().contains(busqueda.toLowerCase())) {
                     listaFiltrada.add(cliente);
-                } else if (correo.contains(busqueda)) {
+                } else if (correo.toLowerCase().contains(busqueda.toLowerCase())) {
                     listaFiltrada.add(cliente);
-                } else if (nombreCompleto.contains(busqueda)) {
+                } else if (nombreCompleto.toLowerCase().contains(busqueda.toLowerCase())) {
                     listaFiltrada.add(cliente);
                 }
             }

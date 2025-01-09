@@ -147,7 +147,7 @@ public class Utilidades {
     public static Boolean esNumero(String numero) {
         try {
             if (numero != null) {
-                int num = Integer.parseInt(numero);
+                Double num = Double.parseDouble(numero);
                 if (num > 0) {
                     return true;
                 }

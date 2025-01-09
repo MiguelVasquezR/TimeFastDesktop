@@ -279,8 +279,6 @@ public class FXMLPaquetesPaneController implements Initializable, NotificadorOpe
             paquete.setDimensiones(construirDimensiones(tfAlto.getText(), tfAncho.getText(), tfProfundidad.getText()));
             paquete.setPeso(Double.parseDouble(tfPeso.getText()));
             paquete.setIdEnvio(this.envioSeleccionado.getIdEnvio());
-            
-            System.out.println(this.envioSeleccionado.getCosto());
 
             if (estaEditando) {
                 paquete.setId(this.paqueteEditar.getIdPaquete());
